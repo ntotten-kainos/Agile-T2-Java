@@ -4,10 +4,12 @@ Properties file
 ---
 1. Create a file in the base of your cloned directory called 'employeesdb.properties'
 1. Add the following values to the file:
+```
 user: <username>
 password: <password>
 host: <database host>
 database: <database name>
+```
 
 How to start the java-dropwizard-swagger-jdbc application
 ---
