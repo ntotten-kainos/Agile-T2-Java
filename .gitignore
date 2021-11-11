@@ -25,3 +25,4 @@ hs_err_pid*
 target/*
 
 employeesdb.properties
+.idea/workspace.xml

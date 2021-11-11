@@ -1,5 +1,12 @@
 # WebService
 
+Database
+---
+1. Run the following command from the base of your cloned directory to create the required database structure:
+```
+mysql --host=<localhost> --user=<your_username> --password=<your_password>  -e "employeesdb.sql"
+```
+
 Properties file
 ---
 1. Create a file in the base of your cloned directory called 'employeesdb.properties'
