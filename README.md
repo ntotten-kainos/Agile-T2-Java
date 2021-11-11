@@ -18,6 +18,10 @@ host: <database host>
 database: <database name>
 ```
 
+Database
+---
+1. Load the 'employees.sql' file into the database reference in the properties file above
+
 How to start the java-dropwizard-swagger-jdbc application
 ---
 
