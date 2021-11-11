@@ -1,10 +1,11 @@
-# WebService
+# java-dropwizard-swagger-jdbc
 
 Database
 ---
+1. Create an empty database
 1. Run the following command from the base of your cloned directory to create the required database structure:
 ```
-mysql --host=<localhost> --user=<your_username> --password=<your_password>  -e "employeesdb.sql"
+mysql --host=<localhost> --user=<your_username> --password=<your_password> <your_database_name> < employeesdb.sql
 ```
 
 Properties file
