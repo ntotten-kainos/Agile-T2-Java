@@ -14,7 +14,7 @@ CREATE TABLE `employee` (
   `bankNo` varchar(12) DEFAULT NULL,
   `nin` char(9) DEFAULT NULL,
   PRIMARY KEY (`employeeId`)
-)
+);
 
 CREATE TABLE `deliveryEmployee` (
   `employeeId` smallint unsigned NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `deliveryEmployee` (
   `favTech` tinytext,
   PRIMARY KEY (`employeeId`),
   CONSTRAINT `fkEmployeeIdDelivery` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`employeeId`) ON DELETE CASCADE
-)
+);
 
 CREATE TABLE `salesEmployee` (
   `employeeId` smallint unsigned NOT NULL AUTO_INCREMENT,
@@ -31,7 +31,7 @@ CREATE TABLE `salesEmployee` (
   `totalSalesMonth` decimal(11,2) DEFAULT NULL,
   PRIMARY KEY (`employeeId`),
   CONSTRAINT `fkEmployeeIdSales` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`employeeId`) ON DELETE CASCADE
-)
+);
 
 
 

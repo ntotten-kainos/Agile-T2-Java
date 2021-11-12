@@ -2,6 +2,7 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.exception.DatabaseConnectionException;
 import com.kainos.ea.model.Employee;
+import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
 import com.kainos.ea.service.EmployeeService;
 import com.kainos.ea.service.SalesEmployeeService;
@@ -27,6 +28,18 @@ public class HR {
     public HR() {
         employeeService = new EmployeeService();
         salesEmployeeService = new SalesEmployeeService();
+    }
+
+    @GET
+    @Path("/employee")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEmployee() {
+        try {
+            return Response.ok(employeeService.getEmployees()).build();
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.out.println(e);
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+        }
     }
 
     @GET
@@ -57,11 +70,11 @@ public class HR {
     @Path("/employee")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createEmployee(Employee employee) {
+    public Response createEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SQLException {
         try {
-            employeeService.insertEmployee(employee);
-            return Response.status(HttpStatus.CREATED_201).build();
-        } catch (SQLException | DatabaseConnectionException e) {
+            int id = employeeService.insertEmployee(employee);
+            return Response.status(HttpStatus.CREATED_201).entity(id).build();
+        } catch (Exception e) {
             System.out.println(e);
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
         }

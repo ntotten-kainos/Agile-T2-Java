@@ -1,16 +1,19 @@
 package com.kainos.ea.dao;
 
 import com.kainos.ea.model.Employee;
+import com.kainos.ea.model.EmployeeRequest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeDao {
 
-    public int insertEmployee(Employee emp1, Connection c) throws SQLException {
+    public int insertEmployee(EmployeeRequest emp1, Connection c) throws SQLException {
         String insertEmployeeQuery = "insert into employee (fName, lName, email, address, address2," +
                 "city, county, postalCode, country, phoneNo, salary, bankNo, nin)"
                 + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -77,5 +80,37 @@ public class EmployeeDao {
             return employee;
         }
         return null;
+    }
+
+    public List<Employee> getEmployees(Connection c) throws SQLException {
+        Statement st = c.createStatement();
+
+        ResultSet rs = st.executeQuery(
+                "SELECT * "
+                        + "FROM employee;");
+
+        List<Employee> employees = new ArrayList<>();
+
+        while (rs.next()) {
+            Employee employee = new Employee(
+                    rs.getFloat("salary"),
+                    rs.getString("fname"),
+                    rs.getString("lname"),
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("address2"),
+                    rs.getString("city"),
+                    rs.getString("county"),
+                    rs.getString("postalCode"),
+                    rs.getString("country"),
+                    rs.getString("phoneNo"),
+                    rs.getString("bankNo"),
+                    rs.getString("nin")
+            );
+
+            employee.setEmployeeId(rs.getInt("employeeId"));
+            employees.add(employee);
+        }
+        return employees;
     }
 }
