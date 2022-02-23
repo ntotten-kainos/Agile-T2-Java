@@ -8,15 +8,14 @@ Database
 mysql --host=<localhost> --user=<your_username> --password=<your_password> <your_database_name> < employeesdb.sql
 ```
 
-Properties file
+Config
 ---
-1. Create a file in the base of your cloned directory called 'employeesdb.properties'
-1. Add the following values to the file:
+1. The following environment variables need to be set to enable database connection:
 ```
-user: <username>
-password: <password>
-host: <database host>
-database: <database name>
+DB_USERNAME
+DB_PASSWORD
+DB_HOST
+DB_NAME
 ```
 
 How to start the java-dropwizard-swagger-jdbc application
