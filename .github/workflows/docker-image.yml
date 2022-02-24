@@ -15,9 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag api:latest
-      with:
+      env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_NAME: ${{ secrets.DB_NAME }}
+      run: docker build . --file Dockerfile --tag api:latest
