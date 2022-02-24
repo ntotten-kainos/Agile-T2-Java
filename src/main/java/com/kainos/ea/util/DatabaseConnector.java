@@ -21,12 +21,6 @@ public class DatabaseConnector {
         }
 
         try {
-            FileInputStream propsStream =
-                    new FileInputStream("employeesdb.properties");
-
-            Properties props = new Properties();
-            props.load(propsStream);
-
             user            = System.getenv("DB_USERNAME");
             password        = System.getenv("DB_PASSWORD");
             host            = System.getenv("DB_HOST");
