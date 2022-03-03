@@ -6,9 +6,8 @@ COPY . /code
 
 RUN mvn clean install
 
-#ENV -- set env var DB_USERNAME,DB_PASSWORD,DB_HOST,DB_NAME and reference git secrets when setup
+ENV DB_USERNAME = root, DB_PASSWORD = example, DB_HOST = mysql, DB_NAME = localdb
 
 EXPOSE 8080
-EXPOSE 3306
 
 CMD ["java","-jar", "/code/target/JavaWebService-1.0-SNAPSHOT.jar", "server", "/code/config.yml"]

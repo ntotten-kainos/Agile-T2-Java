@@ -1,0 +1,25 @@
+version: '1'
+services:
+  api:
+    container_name: JDBC
+    hostname: jdbc
+    environment:
+      - DB_USERNAME=root
+      - DB_PASSWORD=example
+      - DB_HOST=mysqldb
+      - DB_NAME=localdb
+    ports:
+      - "8080:8080"
+    image: kainos-engacademy:jdbc
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    container_name: MYSQLDB
+    hostname: mysqldb
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: example
