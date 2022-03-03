@@ -48,7 +48,7 @@ pre-requisite = docker and docker compose are installed in your local system.
     Now run "docker run -p <chosen port to host locally on your machine>:8080 <your image 
     name given>", this will then spin up your image and host on the given port.
     
-2.  You can also deploy by docker compose which handles the network traffice between 
+2.  You can also deploy by docker compose which handles the network traffic between 
     containers also will deploy a mysql container also.
     pre-requisite = ensure your docker image is available or build with docker compose, ensure 
     that name is in the image name for docker compose.
