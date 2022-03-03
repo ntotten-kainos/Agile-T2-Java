@@ -33,7 +33,7 @@ To see your applications Swagger UI `http://localhost:8080/swagger`
 Build and run the service through docker
 ---
 
-You can build the api in a number of ways using docker and integrsate it with a database, these are listed below:
+You can build the api in a number of ways using docker and integrate it with a database, these are listed below:
 pre-requisite = docker and docker compose are installed in your local system.
 
 1.  Ensure the environment variables are correct for your chosen db or enter these as 
