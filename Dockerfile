@@ -1,12 +1,21 @@
 FROM maven:latest
 #set maven dependency to specific version?
+
 WORKDIR /code
 
 COPY . /code
 
-RUN mvn clean install
+ARG DB_HOST
+ARG DB_PASSWORD
+ARG DB_USERNAME
+ARG DB_NAME
 
-#ENV -- set env var DB_USERNAME,DB_PASSWORD,DB_HOST,DB_NAME and reference git secrets when setup
+ENV DB_HOST ${DB_HOST}
+ENV DB_PASSWORD ${DB_PASSWORD}
+ENV DB_USERNAME ${DB_USERNAME}
+ENV DB_NAME ${DB_NAME}
+
+RUN mvn clean install
 
 EXPOSE 8080
 EXPOSE 3306
