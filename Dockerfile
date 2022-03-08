@@ -1,12 +1,21 @@
 FROM maven:latest
 #set maven dependency to specific version?
+
 WORKDIR /code
 
 COPY . /code
 
-RUN mvn clean install
+ARG DB_HOST
+ARG DB_PASSWORD
+ARG DB_USERNAME
+ARG DB_NAME
 
-ENV DB_USERNAME = root, DB_PASSWORD = example, DB_HOST = mysql, DB_NAME = localdb
+ENV DB_HOST ${DB_HOST}
+ENV DB_PASSWORD ${DB_PASSWORD}
+ENV DB_USERNAME ${DB_USERNAME}
+ENV DB_NAME ${DB_NAME}
+
+RUN mvn clean install
 
 EXPOSE 8080
 
