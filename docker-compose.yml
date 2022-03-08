@@ -11,15 +11,16 @@ services:
     ports:
       - "8080:8080"
     image: kainos-engacademy:jdbc
-    depends_on:
-      - db
-
-  db:
-    image: mysql
-    container_name: MYSQLDB
-    hostname: mysqldb
-    ports:
-      - "3306:3306"
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+# Below code is required to use a local containerised db
+#    depends_on:
+#      - db
+#
+#  db:
+#    image: mysql
+#    container_name: MYSQLDB
+#    hostname: mysqldb
+#    ports:
+#      - "3306:3306"
+#    command: --default-authentication-plugin=mysql_native_password
+#    environment:
+#      MYSQL_ROOT_PASSWORD: example

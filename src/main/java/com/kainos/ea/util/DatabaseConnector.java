@@ -5,18 +5,19 @@ import com.kainos.ea.exception.DatabaseConnectionException;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnector {
     private static Connection conn;
 
-    public static Connection getConnection() throws DatabaseConnectionException {
+    public static Connection getConnection() throws DatabaseConnectionException, SQLException {
         String user;
         String password;
         String host;
         String database;
 
-        if (conn != null) {
+        if (conn != null && !conn.isClosed()) {
             return conn;
         }
 
@@ -28,8 +29,7 @@ public class DatabaseConnector {
 
             if (user == null || password == null || host == null)
                 throw new IllegalArgumentException(
-                        "Properties file must exist and must contain "
-                                + "user, password, and host properties.");
+                        "Environment variables not set.");
 
             conn = DriverManager.getConnection("jdbc:mysql://"
                     + host + "/" + database + "?allowPublicKeyRetrieval=true&useSSL=false", user, password);
