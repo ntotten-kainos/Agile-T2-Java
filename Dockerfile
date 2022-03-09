@@ -18,6 +18,5 @@ ENV DB_NAME ${DB_NAME}
 RUN mvn clean install
 
 EXPOSE 8080
-EXPOSE 3306
 
 CMD ["java","-jar", "/code/target/JavaWebService-1.0-SNAPSHOT.jar", "server", "/code/config.yml"]
