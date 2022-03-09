@@ -1,11 +1,14 @@
 package com.kainos.ea.controller;
 
+import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.Employee;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
 import com.kainos.ea.service.EmployeeService;
 import com.kainos.ea.service.SalesEmployeeService;
+import com.kainos.ea.validator.EmployeeValidator;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -24,6 +27,7 @@ import java.sql.SQLException;
 public class HR {
     private static EmployeeService employeeService;
     private static SalesEmployeeService salesEmployeeService;
+    private static EmployeeValidator employeeValidator;
 
     public HR() {
         employeeService = new EmployeeService();
@@ -70,13 +74,17 @@ public class HR {
     @Path("/employee")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SQLException {
-        try {
-            int id = employeeService.insertEmployee(employee);
-            return Response.status(HttpStatus.CREATED_201).entity(id).build();
-        } catch (Exception e) {
-            System.out.println(e);
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+    public Response createEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SalaryTooLowException, BankNumberLengthException {
+        if (employeeValidator.isValidEmployee(employee)) {
+            try {
+                int id = employeeService.insertEmployee(employee);
+                return Response.status(HttpStatus.CREATED_201).entity(id).build();
+            } catch (Exception e) {
+                System.out.println(e);
+                return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+            }
+        } else {
+            return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
 

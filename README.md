@@ -29,3 +29,8 @@ Swagger
 ---
 
 To see your applications Swagger UI `http://localhost:8080/swagger`
+
+Tests
+---
+
+1. Run `mvn clean tests` to run unit tests
