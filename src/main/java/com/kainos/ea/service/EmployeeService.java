@@ -13,8 +13,8 @@ import static com.kainos.ea.util.DatabaseConnector.getConnection;
 public class EmployeeService {
     public EmployeeDao employeeDao;
 
-    public EmployeeService() {
-        this.employeeDao = new EmployeeDao();
+    public EmployeeService(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
     }
 
     public int insertEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SQLException {

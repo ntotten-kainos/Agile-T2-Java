@@ -1,9 +1,9 @@
 package com.kainos.ea.controller;
 
+import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
 import com.kainos.ea.exception.SalaryTooLowException;
-import com.kainos.ea.model.Employee;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
 import com.kainos.ea.service.EmployeeService;
@@ -30,14 +30,15 @@ public class HR {
     private static EmployeeValidator employeeValidator;
 
     public HR() {
-        employeeService = new EmployeeService();
+        employeeService = new EmployeeService(new EmployeeDao());
         salesEmployeeService = new SalesEmployeeService();
+        employeeValidator = new EmployeeValidator();
     }
 
     @GET
     @Path("/employee")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmployee() {
+    public Response getEmployees() {
         try {
             return Response.ok(employeeService.getEmployees()).build();
         } catch (SQLException | DatabaseConnectionException e) {
@@ -49,7 +50,7 @@ public class HR {
     @GET
     @Path("/employee/{employeeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmployee(@PathParam("employeeId") int employeeId) {
+    public Response getEmployeeById(@PathParam("employeeId") int employeeId) {
         try {
             return Response.status(HttpStatus.OK_200).entity(employeeService.getEmployee(employeeId)).build();
         } catch (SQLException | DatabaseConnectionException e) {
@@ -61,7 +62,7 @@ public class HR {
     @GET
     @Path("/salesEmployee/{salesEmployeeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSalesEmployee(@PathParam("salesEmployeeId") int salesEmployeeId){
+    public Response getSalesEmployeeById(@PathParam("salesEmployeeId") int salesEmployeeId){
         try {
             return Response.status(HttpStatus.OK_200).entity(salesEmployeeService.getSalesEmployee(salesEmployeeId)).build();
         } catch (SQLException | DatabaseConnectionException e) {
