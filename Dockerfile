@@ -15,7 +15,7 @@ ENV DB_PASSWORD ${DB_PASSWORD}
 ENV DB_USERNAME ${DB_USERNAME}
 ENV DB_NAME ${DB_NAME}
 
-RUN mvn clean install
+RUN mvn clean install -DskipTests=true
 
 EXPOSE 8080
 
