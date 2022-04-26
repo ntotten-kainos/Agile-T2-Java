@@ -1,6 +1,7 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.dao.EmployeeDao;
+import com.kainos.ea.dao.SalesEmployeeDao;
 import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
 import com.kainos.ea.exception.SalaryTooLowException;
@@ -8,6 +9,7 @@ import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
 import com.kainos.ea.service.EmployeeService;
 import com.kainos.ea.service.SalesEmployeeService;
+import com.kainos.ea.util.DatabaseConnector;
 import com.kainos.ea.validator.EmployeeValidator;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
@@ -20,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 @Api("API for HR app")
@@ -30,8 +33,9 @@ public class HR {
     private static EmployeeValidator employeeValidator;
 
     public HR() {
-        employeeService = new EmployeeService(new EmployeeDao());
-        salesEmployeeService = new SalesEmployeeService();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        employeeService = new EmployeeService(new EmployeeDao(), databaseConnector);
+        salesEmployeeService = new SalesEmployeeService(new SalesEmployeeDao(), databaseConnector);
         employeeValidator = new EmployeeValidator();
     }
 

@@ -3,6 +3,7 @@ package com.kainos.ea.service;
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.exception.DatabaseConnectionException;
 import com.kainos.ea.model.EmployeeRequest;
+import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -20,8 +21,9 @@ import static org.mockito.ArgumentMatchers.isA;
 class EmployeeServiceTest {
 
     EmployeeDao employeeDao = Mockito.mock(EmployeeDao.class);
+    DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
 
-    EmployeeService employeeService = new EmployeeService(employeeDao);
+    EmployeeService employeeService = new EmployeeService(employeeDao, databaseConnector);
 
     EmployeeRequest employeeRequest = new EmployeeRequest(
             30000,
@@ -39,10 +41,13 @@ class EmployeeServiceTest {
             "AA1A11AA"
     );
 
+    Connection conn;
+
     @Test
     void insertEmployee_shouldReturnId_whenDaoReturnsId() throws DatabaseConnectionException, SQLException {
         int expectedResult = 1;
-        Mockito.when(employeeDao.insertEmployee(eq(employeeRequest), isA(Connection.class))).thenReturn(expectedResult);
+        Mockito.when(databaseConnector.getConnection()).thenReturn(conn);
+        Mockito.when(employeeDao.insertEmployee(employeeRequest, conn)).thenReturn(expectedResult);
 
         int result = employeeService.insertEmployee(employeeRequest);
 
@@ -50,8 +55,9 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void insertEmployee_shouldThrowSqlException_whenDaoThrowsSqlException() throws SQLException {
-        Mockito.when(employeeDao.insertEmployee(eq(employeeRequest), isA(Connection.class))).thenThrow(SQLException.class);
+    void insertEmployee_shouldThrowSqlException_whenDaoThrowsSqlException() throws SQLException, DatabaseConnectionException {
+        Mockito.when(databaseConnector.getConnection()).thenReturn(conn);
+        Mockito.when(employeeDao.insertEmployee(employeeRequest, conn)).thenThrow(SQLException.class);
 
         assertThrows(SQLException.class,
                 () -> employeeService.insertEmployee(employeeRequest));
