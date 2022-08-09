@@ -2,7 +2,9 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.dao.SalesEmployeeDao;
-import com.kainos.ea.exception.*;
+import com.kainos.ea.exception.BankNumberLengthException;
+import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
 import com.kainos.ea.service.EmployeeService;
@@ -58,8 +60,6 @@ public class HR {
         } catch (SQLException | DatabaseConnectionException e) {
             System.out.println(e);
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
-        } catch (UserDoesNotExistException e) {
-            return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
 
@@ -79,20 +79,16 @@ public class HR {
     @Path("/employee")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SalaryTooLowException, BankNumberLengthException, NinLengthException {
-        try {
-            if (employeeValidator.isValidEmployee(employee)) {
-                try {
-                    int id = employeeService.insertEmployee(employee);
-                    return Response.status(HttpStatus.CREATED_201).entity(id).build();
-                } catch (Exception e) {
-                    System.out.println(e);
-                    return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
-                }
-            } else {
-                return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    public Response createEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SalaryTooLowException, BankNumberLengthException {
+        if (employeeValidator.isValidEmployee(employee)) {
+            try {
+                int id = employeeService.insertEmployee(employee);
+                return Response.status(HttpStatus.CREATED_201).entity(id).build();
+            } catch (Exception e) {
+                System.out.println(e);
+                return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
             }
-        } catch(SalaryTooLowException | BankNumberLengthException e) {
+        } else {
             return Response.status(HttpStatus.BAD_REQUEST_400).build();
         }
     }
