@@ -1,6 +1,7 @@
 package com.kainos.ea.service;
 
 import com.kainos.ea.dao.EmployeeDao;
+import com.kainos.ea.exception.UserDoesNotExistException;
 import com.kainos.ea.model.Employee;
 import com.kainos.ea.exception.DatabaseConnectionException;
 import com.kainos.ea.model.EmployeeRequest;
@@ -22,8 +23,14 @@ public class EmployeeService {
         return employeeDao.insertEmployee(employee, databaseConnector.getConnection());
     }
 
-    public Employee getEmployee(int employeeId) throws DatabaseConnectionException, SQLException {
-        return employeeDao.getEmployee(employeeId, databaseConnector.getConnection());
+    public Employee getEmployee(int employeeId) throws DatabaseConnectionException, SQLException, UserDoesNotExistException {
+        Employee employee = employeeDao.getEmployee(employeeId, databaseConnector.getConnection());
+
+        if (employee == null) {
+            throw new UserDoesNotExistException();
+        }
+
+        return employee;
     }
 
     public List<Employee> getEmployees() throws DatabaseConnectionException, SQLException {
