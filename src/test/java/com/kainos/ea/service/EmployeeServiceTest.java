@@ -14,8 +14,6 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -80,23 +78,11 @@ class EmployeeServiceTest {
 
     Write a unit test for the getEmployee method
 
-    When the dao returns an id
+    When the dao returns an employee
 
-    Expect the id to be returned
+    Expect the employee to be returned
 
     This should pass without code changes
-     */
-
-    /*
-    Mocking Exercise 3
-
-    Write a unit test for the getEmployee method
-
-    When the id parameter is null
-
-    Expect the dao not to be called
-
-    This should fail, make code changes to make this test pass
      */
 
     /*

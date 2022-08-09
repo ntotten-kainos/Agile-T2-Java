@@ -5,7 +5,8 @@ import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.EmployeeRequest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EmployeeValidatorTest {
 
@@ -83,7 +84,7 @@ class EmployeeValidatorTest {
 
     Write a unit test for the isValidEmployee method
 
-    When the first name than 50 characters
+    When the first name more than 50 characters
 
     Expect false to be returned
 
