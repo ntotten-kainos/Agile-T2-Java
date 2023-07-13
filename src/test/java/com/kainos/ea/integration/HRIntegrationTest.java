@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
@@ -34,6 +35,16 @@ public class HRIntegrationTest {
     }
 
     @Test
+    void getEmployee_shouldReturnEmployee() {
+        Response response = APP.client().target("http://localhost:8080/hr/employee/1")
+                .request()
+                .get();
+
+        Assertions.assertEquals(200,response.getStatus());
+        Assertions.assertEquals(1, response.readEntity(Employee.class).getEmployeeId());
+    }
+
+    @Test
     void postEmployee_shouldReturnIdOfEmployee() {
         EmployeeRequest employeeRequest = new EmployeeRequest(
                 30000,
@@ -51,12 +62,12 @@ public class HRIntegrationTest {
                 "AA1A11AA"
         );
 
-        int response = APP.client().target("http://localhost:8080/hr/employee")
+        int id = APP.client().target("http://localhost:8080/hr/employee")
                 .request()
                 .post(Entity.entity(employeeRequest, MediaType.APPLICATION_JSON_TYPE))
                 .readEntity(Integer.class);
 
-        Assertions.assertNotNull(response);
+        Assertions.assertNotNull(id);
     }
 
     /*

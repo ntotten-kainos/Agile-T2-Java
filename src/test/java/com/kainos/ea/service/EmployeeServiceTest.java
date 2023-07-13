@@ -2,6 +2,8 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.UserDoesNotExistException;
+import com.kainos.ea.model.Employee;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -86,7 +89,7 @@ class EmployeeServiceTest {
      */
 
     /*
-    Mocking Exercise 4
+    Mocking Exercise 3
 
     Write a unit test for the getEmployee method
 
@@ -98,25 +101,13 @@ class EmployeeServiceTest {
      */
 
     /*
-    Mocking Exercise 5
+    Mocking Exercise 4
 
     Write a unit test for the getEmployees method
 
     When the dao returns a list of employees
 
     Expect the list of employees to be returned
-
-    This should pass without code changes
-     */
-
-    /*
-    Mocking Exercise 6
-
-    Write a unit test for the getEmployees method
-
-    When the dao throws a SQLException
-
-    Expect SQLException to be thrown
 
     This should pass without code changes
      */
