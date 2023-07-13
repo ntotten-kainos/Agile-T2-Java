@@ -2,8 +2,6 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.exception.DatabaseConnectionException;
-import com.kainos.ea.exception.UserDoesNotExistException;
-import com.kainos.ea.model.Employee;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
@@ -13,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
