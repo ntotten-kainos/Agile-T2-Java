@@ -87,7 +87,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-            dependency>
+        <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
             <version>1.9.10</version>
