@@ -78,9 +78,9 @@ class EmployeeServiceTest {
 
     Write a unit test for the getEmployee method
 
-    When the dao returns an employee
+    When the dao throws a DatabaseConnectionException
 
-    Expect the employee to be returned
+    Expect DatabaseConnectionException to be thrown
 
     This should pass without code changes
      */
@@ -90,21 +90,69 @@ class EmployeeServiceTest {
 
     Write a unit test for the getEmployee method
 
+    When the dao returns an employee
+
+    Expect the employee to be returned
+
+    This should pass without code changes
+     */
+
+    /*
+    Mocking Exercise 4
+
+    Write a unit test for the getEmployee method
+
     When the dao returns null
 
-    Expect UserDoesNotExistException to be thrown
+    Expect DoesNotExistException to be thrown
 
     This should fail, make code changes to make this test pass
      */
 
     /*
-    Mocking Exercise 4
+    Mocking Exercise 5
 
     Write a unit test for the getEmployees method
 
     When the dao returns a list of employees
 
     Expect the list of employees to be returned
+
+    This should pass without code changes
+     */
+
+    /*
+    Mocking Exercise 6
+
+    Write a unit test for the getEmployees method
+
+    When the dao throws a SQL Exception
+
+    Expect the SQL Exception to be returned
+
+    This should pass without code changes
+     */
+
+    /*
+    Mocking Exercise 7
+
+    Write a unit test for the getEmployees method
+
+    When the dao throws a DatabaseConnectionException
+
+    Expect DatabaseConnectionException to be thrown
+
+    This should pass without code changes
+     */
+
+    /*
+    Mocking Exercise 8
+
+    Write a unit test for the insertEmployee method
+
+    When the dao throws a DatabaseConnectionException
+
+    Expect DatabaseConnectionException to be thrown
 
     This should pass without code changes
      */
