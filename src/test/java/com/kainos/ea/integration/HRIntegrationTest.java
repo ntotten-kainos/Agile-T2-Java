@@ -4,7 +4,6 @@ import com.kainos.ea.WebServiceApplication;
 import com.kainos.ea.WebServiceConfiguration;
 import com.kainos.ea.model.Employee;
 import com.kainos.ea.model.EmployeeRequest;
-import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 
@@ -12,31 +11,34 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class HRIntegrationTest {
-
-    static final DropwizardAppExtension<WebServiceConfiguration> APP = new DropwizardAppExtension<>(
-            WebServiceApplication.class, null,
-            new ResourceConfigurationSourceProvider()
-    );
+    private static final DropwizardAppExtension<WebServiceConfiguration> APP =
+            new DropwizardAppExtension<>(WebServiceApplication.class);
 
     @Test
     void getEmployees_shouldReturnListOfEmployees() {
-        List<Employee> response = APP.client().target("http://localhost:8080/hr/employee")
+        Client client = APP.client();
+
+        List<Employee> response = client
+                .target("http://localhost:8080/hr/employee")
                 .request()
                 .get(List.class);
 
-        Assertions.assertTrue(response.size() > 0);
+        Assertions.assertFalse(response.isEmpty());
     }
 
     @Test
     void getEmployee_shouldReturnEmployee() {
-        Response response = APP.client().target("http://localhost:8080/hr/employee/1")
+        Client client = APP.client();
+
+        Response response = client
+                .target("http://localhost:8080/hr/employee/1")
                 .request()
                 .get();
 
@@ -62,12 +64,15 @@ public class HRIntegrationTest {
                 "AA1A11AA"
         );
 
-        int id = APP.client().target("http://localhost:8080/hr/employee")
+        Client client = APP.client();
+
+        int id = client
+                .target("http://localhost:8080/hr/employee")
                 .request()
-                .post(Entity.entity(employeeRequest, MediaType.APPLICATION_JSON_TYPE))
+                .post(Entity.json(employeeRequest))
                 .readEntity(Integer.class);
 
-        Assertions.assertNotNull(id);
+        Assertions.assertTrue(id > 0);
     }
 
     /*
@@ -117,7 +122,7 @@ public class HRIntegrationTest {
 
     Call the GET /hr/employee/{id} endpoint will an id of 123456
 
-    Expect a response with error code 400 to be returned
+    Expect a response with error code 404 to be returned
 
     This should fail, make code changes to make this test pass
      */
