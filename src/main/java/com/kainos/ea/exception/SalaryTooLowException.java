@@ -1,4 +1,4 @@
 package com.kainos.ea.exception;
 
-public class SalaryTooLowException extends Throwable {
+public class SalaryTooLowException extends Exception {
 }

@@ -42,7 +42,7 @@ public class HRIntegrationTest {
                 .request()
                 .get();
 
-        Assertions.assertEquals(200,response.getStatus());
+        Assertions.assertEquals(200, response.getStatus());
         Assertions.assertEquals(1, response.readEntity(Employee.class).getEmployeeId());
     }
 

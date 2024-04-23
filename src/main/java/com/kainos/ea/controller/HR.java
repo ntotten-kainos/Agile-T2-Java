@@ -1,7 +1,5 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.dao.EmployeeDao;
-import com.kainos.ea.dao.SalesEmployeeDao;
 import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
 import com.kainos.ea.exception.SalaryTooLowException;
@@ -9,8 +7,6 @@ import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
 import com.kainos.ea.service.EmployeeService;
 import com.kainos.ea.service.SalesEmployeeService;
-import com.kainos.ea.util.DatabaseConnector;
-import com.kainos.ea.validator.EmployeeValidator;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -22,21 +18,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 @Api("API for HR app")
 @Path("/hr")
 public class HR {
-    private static EmployeeService employeeService;
-    private static SalesEmployeeService salesEmployeeService;
-    private static EmployeeValidator employeeValidator;
+    private final EmployeeService employeeService;
+    private final SalesEmployeeService salesEmployeeService;
 
-    public HR() {
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        employeeService = new EmployeeService(new EmployeeDao(), databaseConnector);
-        salesEmployeeService = new SalesEmployeeService(new SalesEmployeeDao(), databaseConnector);
-        employeeValidator = new EmployeeValidator();
+    public HR(EmployeeService employeeService, SalesEmployeeService salesEmployeeService) {
+        this.employeeService = employeeService;
+        this.salesEmployeeService = salesEmployeeService;
     }
 
     @GET
@@ -79,17 +71,17 @@ public class HR {
     @Path("/employee")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createEmployee(EmployeeRequest employee) throws DatabaseConnectionException, SalaryTooLowException, BankNumberLengthException {
-        if (employeeValidator.isValidEmployee(employee)) {
-            try {
-                int id = employeeService.insertEmployee(employee);
-                return Response.status(HttpStatus.CREATED_201).entity(id).build();
-            } catch (Exception e) {
-                System.out.println(e);
-                return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
-            }
-        } else {
-            return Response.status(HttpStatus.BAD_REQUEST_400).build();
+    public Response createEmployee(EmployeeRequest employee) {
+        try {
+            int id = employeeService.insertEmployee(employee);
+            return Response.status(HttpStatus.CREATED_201).entity(id).build();
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.out.println(e);
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
+                    .build();
+        } catch (SalaryTooLowException | BankNumberLengthException e) {
+            System.out.println(e);
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 

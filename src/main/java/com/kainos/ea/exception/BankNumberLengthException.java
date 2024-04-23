@@ -1,4 +1,4 @@
 package com.kainos.ea.exception;
 
-public class BankNumberLengthException extends Throwable {
+public class BankNumberLengthException extends Exception {
 }

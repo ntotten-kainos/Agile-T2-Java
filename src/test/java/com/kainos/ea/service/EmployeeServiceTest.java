@@ -1,9 +1,12 @@
 package com.kainos.ea.service;
 
 import com.kainos.ea.dao.EmployeeDao;
+import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.util.DatabaseConnector;
+import com.kainos.ea.validator.EmployeeValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -19,9 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class EmployeeServiceTest {
 
     EmployeeDao employeeDao = Mockito.mock(EmployeeDao.class);
+    EmployeeValidator employeeValidator = Mockito.mock(EmployeeValidator.class);
     DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
 
-    EmployeeService employeeService = new EmployeeService(employeeDao, databaseConnector);
+    EmployeeService employeeService = new EmployeeService(employeeDao, employeeValidator, databaseConnector);
 
     EmployeeRequest employeeRequest = new EmployeeRequest(
             30000,
@@ -42,14 +46,16 @@ class EmployeeServiceTest {
     Connection conn;
 
     @Test
-    void insertEmployee_shouldReturnId_whenDaoReturnsId() throws DatabaseConnectionException, SQLException {
+    void insertEmployee_shouldReturnId_whenDaoReturnsId()
+            throws DatabaseConnectionException, SQLException,
+            BankNumberLengthException, SalaryTooLowException {
         int expectedResult = 1;
         Mockito.when(databaseConnector.getConnection()).thenReturn(conn);
         Mockito.when(employeeDao.insertEmployee(employeeRequest, conn)).thenReturn(expectedResult);
 
         int result = employeeService.insertEmployee(employeeRequest);
 
-        assertEquals(result, expectedResult);
+        assertEquals(expectedResult, result);
     }
 
     @Test
@@ -153,6 +159,30 @@ class EmployeeServiceTest {
     When the dao throws a DatabaseConnectionException
 
     Expect DatabaseConnectionException to be thrown
+
+    This should pass without code changes
+     */
+
+    /*
+    Mocking Exercise 9
+
+    Write a unit test for the insertEmployee method
+
+    When the validator throws a SalaryTooLowException
+
+    Expect SalaryTooLowException to be thrown
+
+    This should pass without code changes
+     */
+
+    /*
+    Mocking Exercise 10
+
+    Write a unit test for the insertEmployee method
+
+    When the validator throws a BankNumberLengthException
+
+    Expect BankNumberLengthException to be thrown
 
     This should pass without code changes
      */
