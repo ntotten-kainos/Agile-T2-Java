@@ -2,6 +2,7 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.NinLengthException;
 import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.model.SalesEmployee;
@@ -79,7 +80,7 @@ public class HR {
             System.out.println(e);
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
                     .build();
-        } catch (SalaryTooLowException | BankNumberLengthException e) {
+        } catch ( NinLengthException | SalaryTooLowException | BankNumberLengthException e) {
             System.out.println(e);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

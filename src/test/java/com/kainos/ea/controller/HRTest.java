@@ -2,6 +2,7 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.NinLengthException;
 import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.service.EmployeeService;
@@ -41,7 +42,7 @@ class HRTest {
 
     @Test
     void createEmployee_shouldReturnId_whenInsertSuccessful() throws DatabaseConnectionException, SQLException,
-            BankNumberLengthException, SalaryTooLowException {
+            BankNumberLengthException, SalaryTooLowException, NinLengthException {
         int expectedId = 1;
 
         when(employeeService.insertEmployee(employeeRequest)).thenReturn(expectedId);

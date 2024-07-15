@@ -3,6 +3,7 @@ package com.kainos.ea.service;
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.exception.BankNumberLengthException;
 import com.kainos.ea.exception.DatabaseConnectionException;
+import com.kainos.ea.exception.NinLengthException;
 import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.EmployeeRequest;
 import com.kainos.ea.util.DatabaseConnector;
@@ -48,7 +49,7 @@ class EmployeeServiceTest {
     @Test
     void insertEmployee_shouldReturnId_whenDaoReturnsId()
             throws DatabaseConnectionException, SQLException,
-            BankNumberLengthException, SalaryTooLowException {
+            BankNumberLengthException, SalaryTooLowException, NinLengthException {
         int expectedResult = 1;
         Mockito.when(databaseConnector.getConnection()).thenReturn(conn);
         Mockito.when(employeeDao.insertEmployee(employeeRequest, conn)).thenReturn(expectedResult);

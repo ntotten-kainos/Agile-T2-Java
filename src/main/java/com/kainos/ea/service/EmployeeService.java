@@ -2,6 +2,7 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.exception.BankNumberLengthException;
+import com.kainos.ea.exception.NinLengthException;
 import com.kainos.ea.exception.SalaryTooLowException;
 import com.kainos.ea.model.Employee;
 import com.kainos.ea.exception.DatabaseConnectionException;
@@ -25,7 +26,7 @@ public class EmployeeService {
 
     public int insertEmployee(EmployeeRequest employee)
             throws DatabaseConnectionException, SQLException,
-            BankNumberLengthException, SalaryTooLowException {
+            BankNumberLengthException, SalaryTooLowException, NinLengthException {
         employeeValidator.isValidEmployee(employee);
 
         return employeeDao.insertEmployee(employee, databaseConnector.getConnection());
