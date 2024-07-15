@@ -47,9 +47,12 @@ public class HR {
     public Response getEmployeeById(@PathParam("employeeId") int employeeId) {
         try {
             return Response.status(HttpStatus.OK_200).entity(employeeService.getEmployee(employeeId)).build();
-        } catch (DoesNotExistException| SQLException | DatabaseConnectionException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             System.out.println(e);
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+        } catch (DoesNotExistException e) {
+            System.err.println(e);
+            return Response.status(HttpStatus.NOT_FOUND_404).build();
         }
     }
 

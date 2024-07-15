@@ -90,7 +90,42 @@ public class HRIntegrationTest {
 
     This should pass without code changes
      */
+    @Test
+    void getEmployeeByID_shouldReturnEmployeeMatchingProvidedID() {
+        EmployeeRequest employeeRequest = new EmployeeRequest(
+                30000,
+                "Integration",
+                "Test",
+                "tbloggs@email.com",
+                "1 Main Street",
+                "Main Road",
+                "Belfast",
+                "Antrim",
+                "BT99BT",
+                "Northern Ireland",
+                "12345678901",
+                "12345678",
+                "AA1A11A1A"
+        );
 
+        Client client = APP.client();
+
+        int id = client
+                .target("http://localhost:8080/hr/employee")
+                .request()
+                .post(Entity.json(employeeRequest))
+                .readEntity(Integer.class);
+
+        Assertions.assertTrue(id > 0);
+
+        Response response = client
+                .target("http://localhost:8080/hr/employee/" + id)
+                .request()
+                .get();
+
+        Assertions.assertEquals(200, response.getStatus());
+        Assertions.assertEquals(id, response.readEntity(Employee.class).getEmployeeId());
+    }
     /*
     Integration Test Exercise 2
 
@@ -102,7 +137,32 @@ public class HRIntegrationTest {
 
     This should fail, make code changes to make this test pass
      */
+    @Test
+    void postEmployee_shouldReturn400_whenSalaryTooLow() {
+        EmployeeRequest employeeRequest = new EmployeeRequest(
+                10000,
+                "Integration",
+                "Test",
+                "tbloggs@email.com",
+                "1 Main Street",
+                "Main Road",
+                "Belfast",
+                "Antrim",
+                "BT99BT",
+                "Northern Ireland",
+                "12345678901",
+                "12345678",
+                "AA1A11A1A"
+        );
+        Client client = APP.client();
 
+        Response response = client
+                .target("http://localhost:8080/hr/employee")
+                .request()
+                .post(Entity.json(employeeRequest));
+
+        Assertions.assertEquals(400, response.getStatus());
+    }
     /*
     Integration Test Exercise 3
 
@@ -114,7 +174,32 @@ public class HRIntegrationTest {
 
     This should fail, make code changes to make this test pass
      */
+    @Test
+    void postEmployee_shouldReturn400_whenBankNumTooShort() {
+        EmployeeRequest employeeRequest = new EmployeeRequest(
+                25000,
+                "Integration",
+                "Test",
+                "tbloggs@email.com",
+                "1 Main Street",
+                "Main Road",
+                "Belfast",
+                "Antrim",
+                "BT99BT",
+                "Northern Ireland",
+                "12345678901",
+                "123",
+                "AA1A11A1A"
+        );
+        Client client = APP.client();
 
+        Response response = client
+                .target("http://localhost:8080/hr/employee")
+                .request()
+                .post(Entity.json(employeeRequest));
+
+        Assertions.assertEquals(400, response.getStatus());
+    }
     /*
     Integration Test Exercise 4
 
@@ -126,4 +211,17 @@ public class HRIntegrationTest {
 
     This should fail, make code changes to make this test pass
      */
+    @Test
+    void getEmployeeByID_shouldReturn404_whenEmployeeWithIDCantBeFound() {
+        Client client = APP.client();
+
+        int id = 1234567;
+
+        Response response = client
+                .target("http://localhost:8080/hr/employee/" + id)
+                .request()
+                .get();
+
+        Assertions.assertEquals(404, response.getStatus());
+    }
 }
