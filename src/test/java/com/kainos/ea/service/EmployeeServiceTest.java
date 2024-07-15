@@ -41,7 +41,7 @@ class EmployeeServiceTest {
             "Northern Ireland",
             "12345678901",
             "12345678",
-            "AA1A11AA"
+            "AA1A11AA1"
     );
 
     Connection conn;

@@ -27,7 +27,7 @@ class EmployeeValidatorTest {
                 "Northern Ireland",
                 "12345678901",
                 "12345678",
-                "AA1A11AA"
+                "AA1A11AA0"
         );
 
         assertTrue(employeeValidator.isValidEmployee(employeeRequest));
@@ -48,7 +48,7 @@ class EmployeeValidatorTest {
                 "Northern Ireland",
                 "12345678901",
                 "12345678",
-                "AA1A11AA"
+                "AA1A11AA3"
         );
 
         assertThrows(SalaryTooLowException.class,
@@ -81,7 +81,7 @@ class EmployeeValidatorTest {
                 "Northern Ireland",
                 "12345678901",
                 "1234567",
-                "AA1A11AA"
+                "AA1A11AA4"
         );
         assertThrows(BankNumberLengthException.class,
                 () -> employeeValidator.isValidEmployee(employeeRequest));
@@ -113,7 +113,7 @@ class EmployeeValidatorTest {
                 "Northern Ireland",
                 "12345678901",
                 "12345678910",
-                "AA1A11AA"
+                "AA1A11AA6"
         );
         assertThrows(BankNumberLengthException.class,
                 () -> employeeValidator.isValidEmployee(employeeRequest));
@@ -145,7 +145,7 @@ class EmployeeValidatorTest {
                 "Northern Ireland",
                 "12345678901",
                 "12345678",
-                "AA1A11AA"
+                "AA1A11AA6"
         );
         assertFalse(employeeValidator.isValidEmployee(employeeRequest));
     }
@@ -176,7 +176,7 @@ class EmployeeValidatorTest {
                 "Northern Ireland",
                 "12345678901",
                 "12345678",
-                "AA1A11AA"
+                "AA1A11AA7"
         );
         assertFalse(employeeValidator.isValidEmployee(employeeRequest));
     }

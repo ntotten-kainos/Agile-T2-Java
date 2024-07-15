@@ -61,7 +61,7 @@ public class HRIntegrationTest {
                 "Northern Ireland",
                 "12345678901",
                 "12345678",
-                "AA1A11AA"
+                "AA1A11A1A"
         );
 
         Client client = APP.client();
