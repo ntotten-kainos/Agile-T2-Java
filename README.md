@@ -1,4 +1,4 @@
-# Agile Team 2 - Backend
+# Agile Team 2 - Backend API
 
 Database
 ---
