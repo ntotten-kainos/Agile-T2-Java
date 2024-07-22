@@ -2,9 +2,10 @@
 
 Database
 ---
-1. Create a new test database locally. E.g. `CREATE DATABASE JobPortal_Test_<your username>`.
-2. Make note of your test db name as this will be needed to point your dev environment with `DB_NAME`.
-3. Select this database with `USE JobPortal_Test_<your username>`.
+1. Using a tool such as MySQLWorkbench or DBeaver:
+2. Create a new test database locally. E.g. `CREATE DATABASE JobPortal_Test_<your username>`.
+3. Make note of your test db name as this will be needed to point your dev environment with `DB_NAME`.
+4. Select this database with `USE JobPortal_Test_<your username>`.
 
 
 Config
