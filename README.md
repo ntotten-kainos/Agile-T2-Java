@@ -1,12 +1,8 @@
-# java-dropwizard-swagger-jdbc
+# Agile Team 2 - Backend
 
 Database
 ---
-1. Create an empty database
-1. Run the following command from the base of your cloned directory to create the required database structure:
-```
-mysql --host=<localhost> --user=<your_username> --password=<your_password> <your_database_name> < employeesdb.sql
-```
+1. 
 
 Config
 ---
@@ -18,7 +14,7 @@ DB_HOST
 DB_NAME
 ```
 
-How to start the java-dropwizard-swagger-jdbc application
+How to start the application
 ---
 
 1. Run `mvn clean install -DskipTests=true` to build your application
