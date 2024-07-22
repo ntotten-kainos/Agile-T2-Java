@@ -4,7 +4,6 @@ import com.kainos.ea.controller.AuthController;
 import com.kainos.ea.controller.UserController;
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.services.AuthService;
-import com.kainos.ea.util.DatabaseConnector;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;

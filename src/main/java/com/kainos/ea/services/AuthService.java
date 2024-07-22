@@ -1,12 +1,12 @@
 package com.kainos.ea.services;
 
-import io.jsonwebtoken.Jwts;
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.InvalidException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
+import io.jsonwebtoken.Jwts;
 
 import java.sql.SQLException;
 import java.util.Date;
