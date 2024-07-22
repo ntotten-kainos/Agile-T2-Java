@@ -5,16 +5,18 @@ import com.kainos.ea.enums.Capabilities;
 import org.joda.time.DateTime;
 import com.kainos.ea.enums.Locations;
 
+import java.util.Date;
+
 public class Role {
     int jobRoleId;
     String roleName;
     private Locations location;
     private Bands band;
     private Capabilities capability;
-    DateTime closingDate;
+    Date closingDate;
 
     public Role(int jobRoleId, String roleName, Locations location, Bands band,
-                Capabilities capability, DateTime closingDate) {
+                Capabilities capability, Date closingDate) {
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.location = location;
@@ -63,11 +65,11 @@ public class Role {
         this.capability = capability;
     }
 
-    public DateTime getClosingDate() {
+    public Date getClosingDate() {
         return closingDate;
     }
 
-    public void setClosingDate(DateTime closingDate) {
+    public void setClosingDate(Date closingDate) {
         this.closingDate = closingDate;
     }
 }
