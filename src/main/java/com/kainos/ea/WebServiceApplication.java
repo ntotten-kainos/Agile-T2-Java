@@ -1,12 +1,7 @@
 package com.kainos.ea;
 
 import com.kainos.ea.controller.HR;
-import com.kainos.ea.dao.EmployeeDao;
-import com.kainos.ea.dao.SalesEmployeeDao;
-import com.kainos.ea.service.EmployeeService;
-import com.kainos.ea.service.SalesEmployeeService;
 import com.kainos.ea.util.DatabaseConnector;
-import com.kainos.ea.validator.EmployeeValidator;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -38,9 +33,6 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        environment.jersey().register(new HR(
-                        new EmployeeService(new EmployeeDao(), new EmployeeValidator(), databaseConnector),
-                        new SalesEmployeeService(new SalesEmployeeDao(), databaseConnector)));
     }
 
 }

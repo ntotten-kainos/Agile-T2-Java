@@ -1,10 +1,5 @@
 package com.kainos.ea.controller;
 
-import com.kainos.ea.exception.*;
-import com.kainos.ea.model.EmployeeRequest;
-import com.kainos.ea.model.SalesEmployee;
-import com.kainos.ea.service.EmployeeService;
-import com.kainos.ea.service.SalesEmployeeService;
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 
