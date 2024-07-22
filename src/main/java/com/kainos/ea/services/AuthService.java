@@ -31,7 +31,7 @@ public class AuthService {
         return Jwts.builder().issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 28800000))
                 .subject(user.getEmail())
-                .issuer("DropwizardDemo")
+                .issuer("JobPortal_WebService")
                 .signWith(Jwts.SIG.HS256.key().build())
                 .compact();
     }
