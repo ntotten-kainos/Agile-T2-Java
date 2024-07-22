@@ -1,6 +1,5 @@
 package com.kainos.ea;
 
-import com.kainos.ea.controller.HR;
 import com.kainos.ea.util.DatabaseConnector;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
