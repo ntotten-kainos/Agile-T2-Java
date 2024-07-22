@@ -1,29 +1,29 @@
-run-name: Run Linter
+name: Java Linter
 
 on:
   push:
     branches:
-      - 'main'
+      - main
   pull_request:
     branches:
-      - 'main'
+      - main
 
 jobs:
-  run-linter:
-    name: Run linter
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          node-version: 20.14.0
+          distribution: 'adopt'
+          java-version: '11'
 
-      - name: Run npm install
-        run: npm install
+      - name: Build with Maven
+        run: mvn install -DskipTests
 
-      - name: Run linter
-        run: npm run linter
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
