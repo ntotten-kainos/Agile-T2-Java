@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DatabaseConnector {
     private static Connection conn;
 
-    public Connection getConnection() throws DatabaseConnectionException, SQLException {
+    public Connection getConnection() throws SQLException {
         String user;
         String password;
         String host;
@@ -32,7 +32,8 @@ public class DatabaseConnector {
 
             return conn;
         } catch (Exception e) {
-            throw new DatabaseConnectionException(e);
+            System.err.println(e.getMessage());;
         }
+        return null;
     }
 }
