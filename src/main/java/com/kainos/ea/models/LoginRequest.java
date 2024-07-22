@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LoginRequest {
     private final String email;
-    private final CharSequence password;
+    private final String password;
 
     @JsonCreator
     public LoginRequest(
             @JsonProperty String email,
-            @JsonProperty CharSequence password) {
+            @JsonProperty String password) {
         this.email = email;
         this.password = password;
     }
@@ -19,7 +19,7 @@ public class LoginRequest {
         return email;
     }
 
-    public CharSequence getPassword() {
+    public String getPassword() {
         return password;
     }
 }
