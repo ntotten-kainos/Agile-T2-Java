@@ -1,4 +1,5 @@
 package com.kainos.ea.exceptions;
 
-public class FailedToRetrieveException {
+public class FailedToRetrieveException extends Exception{
+
 }
