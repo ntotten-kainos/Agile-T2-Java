@@ -1,5 +1,8 @@
 package com.kainos.ea;
 
+import com.kainos.ea.controllers.RoleController;
+import com.kainos.ea.daos.RoleDao;
+import com.kainos.ea.services.RoleService;
 import com.kainos.ea.util.DatabaseConnector;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -32,6 +35,7 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
         DatabaseConnector databaseConnector = new DatabaseConnector();
-    }
 
+        environment.jersey().register(new RoleController(new RoleService(new RoleDao())));
+    }
 }
