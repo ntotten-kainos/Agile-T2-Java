@@ -2,9 +2,9 @@ package com.kainos.ea.models;
 
 public class User {
     private final String email;
-    private final CharSequence password;
+    private final String password;
 
-    public User(String email, CharSequence password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -13,7 +13,7 @@ public class User {
         return email;
     }
 
-    public CharSequence getPassword() {
+    public String getPassword() {
         return password;
     }
 }
