@@ -34,8 +34,7 @@ public class DatabaseConnector {
 
             return conn;
         } catch (Exception e) {
-            System.err.println(e.getMessage());;
+            throw new DatabaseConnectionException(e);
         }
-        return null;
     }
 }
