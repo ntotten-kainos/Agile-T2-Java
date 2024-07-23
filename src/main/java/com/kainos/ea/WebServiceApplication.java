@@ -3,15 +3,11 @@ package com.kainos.ea;
 import com.kainos.ea.controller.AuthController;
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.services.AuthService;
-import com.kainos.ea.util.DatabaseConnector;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-import io.jsonwebtoken.Jwts;
-
-import java.security.Key;
 
 public class WebServiceApplication extends Application<WebServiceConfiguration> {
 
