@@ -1,7 +1,6 @@
 package com.kainos.ea;
 
 import com.kainos.ea.controller.AuthController;
-import com.kainos.ea.controller.UserController;
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.services.AuthService;
 import io.dropwizard.Application;

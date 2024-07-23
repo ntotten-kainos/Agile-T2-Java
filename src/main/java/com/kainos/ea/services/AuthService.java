@@ -3,12 +3,10 @@ package com.kainos.ea.services;
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
-import com.kainos.ea.exceptions.InvalidException;
 import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import io.jsonwebtoken.Jwts;
-import org.checkerframework.checker.units.qual.K;
 
 import java.security.Key;
 import java.sql.SQLException;

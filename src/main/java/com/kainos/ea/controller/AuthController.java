@@ -1,9 +1,11 @@
 package com.kainos.ea.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
-import com.kainos.ea.exceptions.InvalidException;
 import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
+import com.kainos.ea.models.LoginResponse;
 import com.kainos.ea.services.AuthService;
 import io.swagger.annotations.Api;
 
@@ -20,9 +22,11 @@ import static com.kainos.ea.validators.LoginRequestValidator.validateLoginReques
 @Api("Auth API")
 @Path("/api/auth")
 public class AuthController {
+    private final ObjectMapper objectMapper;
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
+        this.objectMapper = new ObjectMapper();
         this.authService = authService;
     }
 
@@ -32,15 +36,20 @@ public class AuthController {
     public Response login(LoginRequest loginRequest) {
         // Validate the loginRequest object data here before going any further.
         if (!validateLoginRequest(loginRequest)) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Login Details!").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Login Details.").build();
         }
 
         try {
-            return Response.ok().entity(authService.login(loginRequest)).build();
+            String jwtToken = authService.login(loginRequest);
+            LoginResponse loginResponse = new LoginResponse(jwtToken, "Login Success.");
+            String jsonResponse = objectMapper.writeValueAsString(loginResponse);
+            return Response.ok().entity(jsonResponse).build();
         } catch (SQLException | DatabaseConnectionException e) {
             return Response.serverError().build();
         } catch (LoginException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage() + ": Error Processing JSON response.").build();
         }
     }
 }

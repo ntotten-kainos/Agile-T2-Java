@@ -2,7 +2,6 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
-import com.kainos.ea.exceptions.InvalidException;
 import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.services.AuthService;

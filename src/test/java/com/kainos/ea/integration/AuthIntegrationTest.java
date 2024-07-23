@@ -5,9 +5,6 @@ import com.kainos.ea.WebServiceConfiguration;
 import com.kainos.ea.models.LoginRequest;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.JwkThumbprint;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -64,6 +61,8 @@ public class AuthIntegrationTest {
                 .request()
                 .post(Entity.json(VALID_LOGIN_REQUEST));
 
+        // The JWT Token
         String responseBody = response.readEntity(String.class);
+        assertNotNull(responseBody);
     }
 }

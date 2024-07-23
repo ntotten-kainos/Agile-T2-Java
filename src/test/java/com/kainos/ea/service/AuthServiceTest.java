@@ -2,22 +2,18 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
-import com.kainos.ea.exceptions.InvalidException;
 import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import com.kainos.ea.services.AuthService;
-import io.swagger.models.auth.In;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import javax.ws.rs.core.Response;
 import java.security.Key;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class AuthServiceTest {
