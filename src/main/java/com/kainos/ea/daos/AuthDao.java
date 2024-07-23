@@ -16,26 +16,25 @@ public class AuthDao {
         try(Connection connection = DatabaseConnector.getConnection()) {
             String query = "SELECT `email`, `password`"
                             + "FROM `Users`"
-                            + "WHERE `email` = ?"
-                            + "AND `password` = ?;";
+                            + "WHERE `email` = ?;";
 
-            Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
-            String encodedPassword = passwordEncoder.encode(loginRequest.getPassword());
 
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, loginRequest.getEmail());
-            statement.setString(2, encodedPassword);
 
             ResultSet resultSet = statement.executeQuery();
-
+            Argon2PasswordEncoder arg2SpringSecurity = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
             while (resultSet.next()) {
-                return new User(
-                        // The user's email
-                        resultSet.getString("email"),
-                        // The Argon2 encoded user password
-                        resultSet.getString("password")
-                );
+                String encodedPassword = resultSet.getString("password");
+                if (arg2SpringSecurity.matches(loginRequest.getPassword(), encodedPassword)) {
+                    return new User(
+                            // The user's email
+                            resultSet.getString("email"),
+                            // The Argon2 encoded user password
+                            resultSet.getString("password")
+                    );
+                }
             }
         }
         return null;
