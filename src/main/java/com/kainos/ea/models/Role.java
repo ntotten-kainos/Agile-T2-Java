@@ -13,6 +13,7 @@ public class Role {
     private Locations location;
     private Bands band;
     private Capabilities capability;
+
     Date closingDate;
 
     public Role(int jobRoleId, String roleName, Locations location, Bands band,
