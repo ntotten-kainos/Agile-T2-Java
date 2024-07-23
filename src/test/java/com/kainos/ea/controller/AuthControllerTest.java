@@ -21,7 +21,7 @@ public class AuthControllerTest {
     AuthController authController = new AuthController(mockAuthService);
     private final LoginRequest loginRequest = new LoginRequest(
             "admin@email.com",
-            "admin"
+            "Valid!Admin123*$"
     );
 
     @Test
@@ -78,7 +78,7 @@ public class AuthControllerTest {
     public void login_shouldReturnBadRequest_whenPasswordIsInvalidFormat() {
         LoginRequest invalidLogin = new LoginRequest(
                 "validEmail@gmail.com",
-                "thisisnotvalid"
+                "thisisnotvalid*"
         );
         Response response = authController.login(invalidLogin);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());

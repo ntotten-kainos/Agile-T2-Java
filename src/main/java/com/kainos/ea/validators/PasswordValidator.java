@@ -7,7 +7,7 @@ public class PasswordValidator {
     private static final String PASSWORD_REGEX = "^(?=.*[0-9])"         // at least one digit
                                                 + "(?=.*[a-z])"         // at least one lowercase letter
                                                 + "(?=.*[A-Z])"         // at least one uppercase letter
-                                                + "(?=.*[@#$%^&+=])"    // at least one special character
+                                                + "(?=.*[@#$%^&+=!£*])"    // at least one special character
                                                 + "(?=\\S+$)"           // no whitespace allowed
                                                 + ".{8,64}$";           // length between 8 and 20 characters
 
