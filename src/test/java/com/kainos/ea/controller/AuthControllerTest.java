@@ -63,10 +63,25 @@ public class AuthControllerTest {
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
     }
 
+    @Test
     public void login_shouldReturnBadRequest_whenEmailIsInvalidFormat() {
         LoginRequest invalidLogin = new LoginRequest(
-                "testemail",
-                ""
+                "invalidEmail",
+                "Th1si$AValidPass123#"
         );
+        Response response = authController.login(invalidLogin);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+        assertEquals("Invalid Login Details!", response.getEntity().toString());
+    }
+
+    @Test
+    public void login_shouldReturnBadRequest_whenPasswordIsInvalidFormat() {
+        LoginRequest invalidLogin = new LoginRequest(
+                "validEmail@gmail.com",
+                "thisisnotvalid"
+        );
+        Response response = authController.login(invalidLogin);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+        assertEquals("Invalid Login Details!", response.getEntity().toString());
     }
 }
