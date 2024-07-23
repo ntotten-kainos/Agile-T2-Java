@@ -1,5 +1,6 @@
 package com.kainos.ea.controllers;
 
+import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.services.RoleService;
 import io.swagger.annotations.Api;
 
@@ -20,7 +21,13 @@ public class RoleController {
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllJobRoles() throws SQLException {
-        return Response.ok().entity(roleService.getAllJobRoles()).build();
+    public Response getAllJobRoles() throws SQLException{
+        try {
+            return Response.ok().entity(roleService.getAllJobRoles()).build();
+        } catch (FailedToRetrieveException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("An error occurred while retrieving job roles.")
+                    .build();
+        }
     }
 }
