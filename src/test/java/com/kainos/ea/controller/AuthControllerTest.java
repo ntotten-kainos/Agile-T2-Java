@@ -71,7 +71,7 @@ public class AuthControllerTest {
         );
         Response response = authController.login(invalidLogin);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertEquals("Invalid Login Details!", response.getEntity().toString());
+        assertEquals("Invalid Login Details.", response.getEntity().toString());
     }
 
     @Test
@@ -82,6 +82,6 @@ public class AuthControllerTest {
         );
         Response response = authController.login(invalidLogin);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertEquals("Invalid Login Details!", response.getEntity().toString());
+        assertEquals("Invalid Login Details.", response.getEntity().toString());
     }
 }
