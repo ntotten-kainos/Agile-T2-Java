@@ -1,7 +1,6 @@
 package com.kainos.ea.exceptions;
 
 public enum Entity {
-    USER("User"),
     LOGIN_REQUEST("Login Request");
 
     private final String entity;

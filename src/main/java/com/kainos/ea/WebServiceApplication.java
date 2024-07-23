@@ -37,9 +37,15 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
     @Override
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
-        Key jwtKey = Jwts.SIG.HS256.key().build();
 
-        environment.jersey().register(new AuthController(new AuthService(new AuthDao())));
+        environment.jersey()
+                    .register(
+                            new AuthController(
+                                    new AuthService(
+                                            new AuthDao()
+                                    )
+                            )
+                    );
     }
 
 }

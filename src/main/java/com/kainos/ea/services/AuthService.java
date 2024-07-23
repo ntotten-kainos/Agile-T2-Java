@@ -13,8 +13,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class AuthService {
-    private AuthDao authDao;
-    private Key jwtKey;
+    private final AuthDao authDao;
+    private final Key jwtKey;
 
     public AuthService(AuthDao authDao) {
         this.authDao = authDao;

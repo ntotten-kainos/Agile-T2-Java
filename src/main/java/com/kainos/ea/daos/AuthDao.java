@@ -18,13 +18,13 @@ public class AuthDao {
                             + "FROM `Users`"
                             + "WHERE `email` = ?;";
 
-
-
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, loginRequest.getEmail());
 
             ResultSet resultSet = statement.executeQuery();
-            Argon2PasswordEncoder arg2SpringSecurity = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
+            Argon2PasswordEncoder arg2SpringSecurity = new Argon2PasswordEncoder(
+                    16, 32, 1, 60000, 10
+            );
             while (resultSet.next()) {
                 String encodedPassword = resultSet.getString("password");
                 if (arg2SpringSecurity.matches(loginRequest.getPassword(), encodedPassword)) {
