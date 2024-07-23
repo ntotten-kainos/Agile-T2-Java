@@ -4,6 +4,7 @@ import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.InvalidException;
+import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import io.jsonwebtoken.Jwts;
@@ -22,11 +23,11 @@ public class AuthService {
         this.jwtKey = key;
     }
 
-    public String login(LoginRequest loginRequest) throws SQLException, DatabaseConnectionException, InvalidException {
+    public String login(LoginRequest loginRequest) throws SQLException, DatabaseConnectionException, LoginException {
         User user = authDao.getUser(loginRequest);
 
         if (user == null) {
-            throw new InvalidException(Entity.LOGIN_REQUEST);
+            throw new LoginException(Entity.LOGIN_REQUEST);
         }
         return generateJwtToken(user);
     }

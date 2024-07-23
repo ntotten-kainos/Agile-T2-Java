@@ -2,6 +2,7 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.InvalidException;
+import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.services.AuthService;
 import io.swagger.annotations.Api;
@@ -38,7 +39,7 @@ public class AuthController {
             return Response.ok().entity(authService.login(loginRequest)).build();
         } catch (SQLException | DatabaseConnectionException e) {
             return Response.serverError().build();
-        } catch (InvalidException e) {
+        } catch (LoginException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }

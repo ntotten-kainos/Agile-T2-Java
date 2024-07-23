@@ -3,6 +3,7 @@ package com.kainos.ea.controller;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.InvalidException;
+import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.services.AuthService;
 import io.jsonwebtoken.Jwts;
@@ -25,7 +26,7 @@ public class AuthControllerTest {
     );
 
     @Test
-    public void login_shouldReturnOK_whenValidLoginRequest() throws DatabaseConnectionException, SQLException, InvalidException {
+    public void login_shouldReturnOK_whenValidLoginRequest() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(loginRequest)).thenReturn(
                 Jwts.builder().issuedAt(new Date(System.currentTimeMillis()))
                     .expiration(new Date(System.currentTimeMillis() + 28800000))
@@ -40,7 +41,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void login_shouldReturnBadRequest_whenInvalidLogin() throws DatabaseConnectionException, SQLException, InvalidException {
+    public void login_shouldReturnBadRequest_whenInvalidLogin() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(loginRequest)).thenThrow(new InvalidException(Entity.USER));
 
         Response response = authController.login(loginRequest);
@@ -48,7 +49,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void login_shouldReturnServerError_whenSQLErrorOccurs() throws DatabaseConnectionException, SQLException, InvalidException {
+    public void login_shouldReturnServerError_whenSQLErrorOccurs() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(loginRequest)).thenThrow(new SQLException());
 
         Response response = authController.login(loginRequest);
@@ -56,7 +57,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void login_shouldReturnServerError_whenDBConnErrorOccurs() throws DatabaseConnectionException, SQLException, InvalidException {
+    public void login_shouldReturnServerError_whenDBConnErrorOccurs() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(loginRequest)).thenThrow(new DatabaseConnectionException(new Exception()));
 
         Response response = authController.login(loginRequest);
