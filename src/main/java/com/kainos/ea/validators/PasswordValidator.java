@@ -9,7 +9,7 @@ public class PasswordValidator {
                                                 + "(?=.*[A-Z])"         // at least one uppercase letter
                                                 + "(?=.*[@#$%^&+=])"    // at least one special character
                                                 + "(?=\\S+$)"           // no whitespace allowed
-                                                + ".{8,20}$";           // length between 8 and 20 characters
+                                                + ".{8,64}$";           // length between 8 and 20 characters
 
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
     public static boolean isValidPassword(String password) {

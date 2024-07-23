@@ -30,9 +30,9 @@ public class AuthController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginRequest loginRequest) {
         // Validate the loginRequest object data here before going any further.
-//        if (!validateLoginRequest(loginRequest)) {
-//            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Login Details!").build();
-//        }
+        if (!validateLoginRequest(loginRequest)) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Login Details!").build();
+        }
 
         try {
             return Response.ok().entity(authService.login(loginRequest)).build();
