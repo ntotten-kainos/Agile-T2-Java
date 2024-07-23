@@ -1,24 +1,24 @@
-# java-dropwizard-swagger-jdbc
+# Agile - Team 2 - Backend API
 
 Database
 ---
-1. Create an empty database
-1. Run the following command from the base of your cloned directory to create the required database structure:
-```
-mysql --host=<localhost> --user=<your_username> --password=<your_password> <your_database_name> < employeesdb.sql
-```
+1. Using a tool such as MySQLWorkbench or DBeaver:
+2. Create a new test database locally. E.g. `CREATE DATABASE JobPortal_Test_<your username>`.
+3. Make note of your test db name as this will be needed to point your dev environment with `DB_NAME`.
+4. Select this database with `USE JobPortal_Test_<your username>`.
+
 
 Config
 ---
 1. The following environment variables need to be set to enable database connection:
 ```
-DB_USERNAME
-DB_PASSWORD
-DB_HOST
-DB_NAME
+DB_USERNAME=<your username>
+DB_PASSWORD=<your password>
+DB_HOST=academy2020.cpc8rvmbbd9k.eu-west-2.rds.amazonaws.com
+DB_NAME=JobPortal_Test_<your username>
 ```
 
-How to start the java-dropwizard-swagger-jdbc application
+How to start the application
 ---
 
 1. Run `mvn clean install -DskipTests=true` to build your application
