@@ -7,7 +7,8 @@ import java.sql.SQLException;
 public class DatabaseConnector {
     private static Connection conn;
 
-    public Connection getConnection() throws DatabaseConnectionException, SQLException {
+    public Connection getConnection() throws DatabaseConnectionException,
+            SQLException {
         String user;
         String password;
         String host;
@@ -23,12 +24,15 @@ public class DatabaseConnector {
             host            = System.getenv("DB_HOST");
             database        = System.getenv("DB_NAME");
 
-            if (user == null || password == null || host == null)
+            if (user == null || password == null || host == null) {
                 throw new IllegalArgumentException(
                         "Environment variables not set.");
+            }
 
             conn = DriverManager.getConnection("jdbc:mysql://"
-                    + host + "/" + database + "?allowPublicKeyRetrieval=true&useSSL=false", user, password);
+                    + host + "/" + database
+                            + "?allowPublicKeyRetrieval=true&useSSL=false",
+                    user, password);
 
             return conn;
         } catch (Exception e) {

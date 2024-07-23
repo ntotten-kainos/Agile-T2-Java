@@ -19,7 +19,8 @@ public class HR {
     private final EmployeeService employeeService;
     private final SalesEmployeeService salesEmployeeService;
 
-    public HR(EmployeeService employeeService, SalesEmployeeService salesEmployeeService) {
+    public HR(final EmployeeService employeeService,
+              final SalesEmployeeService salesEmployeeService) {
         this.employeeService = employeeService;
         this.salesEmployeeService = salesEmployeeService;
     }
@@ -32,19 +33,23 @@ public class HR {
             return Response.ok(employeeService.getEmployees()).build();
         } catch (SQLException | DatabaseConnectionException e) {
             System.out.println(e);
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
+                    .build();
         }
     }
 
     @GET
     @Path("/employee/{employeeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmployeeById(@PathParam("employeeId") int employeeId) {
+    public Response getEmployeeById(
+            @PathParam("employeeId") final int employeeId) {
         try {
-            return Response.status(HttpStatus.OK_200).entity(employeeService.getEmployee(employeeId)).build();
+            return Response.status(HttpStatus.OK_200)
+                    .entity(employeeService.getEmployee(employeeId)).build();
         } catch (SQLException | DatabaseConnectionException e) {
             System.out.println(e);
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
+                    .build();
         } catch (DoesNotExistException e) {
             System.err.println(e);
             return Response.status(HttpStatus.NOT_FOUND_404).build();
@@ -54,12 +59,17 @@ public class HR {
     @GET
     @Path("/salesEmployee/{salesEmployeeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSalesEmployeeById(@PathParam("salesEmployeeId") int salesEmployeeId){
+    public Response getSalesEmployeeById(
+            @PathParam("salesEmployeeId") final int salesEmployeeId) {
         try {
-            return Response.status(HttpStatus.OK_200).entity(salesEmployeeService.getSalesEmployee(salesEmployeeId)).build();
+            return Response.status(HttpStatus.OK_200)
+                    .entity(salesEmployeeService
+                            .getSalesEmployee(salesEmployeeId))
+                    .build();
         } catch (SQLException | DatabaseConnectionException e) {
             System.out.println(e);
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
+                    .build();
         }
     }
 
@@ -67,7 +77,7 @@ public class HR {
     @Path("/employee")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createEmployee(EmployeeRequest employee) {
+    public Response createEmployee(final EmployeeRequest employee) {
         try {
             int id = employeeService.insertEmployee(employee);
             return Response.status(HttpStatus.CREATED_201).entity(id).build();
@@ -75,7 +85,8 @@ public class HR {
             System.out.println(e);
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
                     .build();
-        } catch ( NinLengthException | SalaryTooLowException | BankNumberLengthException e) {
+        } catch (NinLengthException | SalaryTooLowException
+                  | BankNumberLengthException e) {
             System.out.println(e);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -85,13 +96,14 @@ public class HR {
     @Path("/salesEmployee")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createSalesEmployee(SalesEmployee salesEmployee) {
+    public Response createSalesEmployee(final SalesEmployee salesEmployee) {
         try {
             salesEmployeeService.insertSalesEmployee(salesEmployee);
             return Response.status(HttpStatus.CREATED_201).build();
         } catch (SQLException | DatabaseConnectionException e) {
             System.out.println(e);
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500)
+                    .build();
         }
     }
 }
