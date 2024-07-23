@@ -7,22 +7,26 @@ import com.kainos.ea.exceptions.InvalidException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import io.jsonwebtoken.Jwts;
+import org.checkerframework.checker.units.qual.K;
 
+import java.security.Key;
 import java.sql.SQLException;
 import java.util.Date;
 
 public class AuthService {
     private AuthDao authDao;
+    private Key jwtKey;
 
-    public AuthService(AuthDao authDao) {
+    public AuthService(AuthDao authDao, Key key) {
         this.authDao = authDao;
+        this.jwtKey = key;
     }
 
     public String login(LoginRequest loginRequest) throws SQLException, DatabaseConnectionException, InvalidException {
         User user = authDao.getUser(loginRequest);
 
         if (user == null) {
-            throw new InvalidException(Entity.USER);
+            throw new InvalidException(Entity.LOGIN_REQUEST);
         }
         return generateJwtToken(user);
     }
@@ -32,7 +36,7 @@ public class AuthService {
                 .expiration(new Date(System.currentTimeMillis() + 28800000))
                 .subject(user.getEmail())
                 .issuer("JobPortal_WebService")
-                .signWith(Jwts.SIG.HS256.key().build())
+                .signWith(jwtKey)
                 .compact();
     }
 }
