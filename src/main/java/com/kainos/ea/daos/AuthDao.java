@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static com.kainos.ea.util.PasswordEncoder.getPasswordEncoder;
+
 public class AuthDao {
     public User getUser(LoginRequest loginRequest) throws SQLException, DatabaseConnectionException {
         try(Connection connection = DatabaseConnector.getConnection()) {
@@ -22,9 +24,7 @@ public class AuthDao {
             statement.setString(1, loginRequest.getEmail());
 
             ResultSet resultSet = statement.executeQuery();
-            Argon2PasswordEncoder arg2SpringSecurity = new Argon2PasswordEncoder(
-                    16, 32, 1, 60000, 10
-            );
+            Argon2PasswordEncoder arg2SpringSecurity = getPasswordEncoder();
             while (resultSet.next()) {
                 String encodedPassword = resultSet.getString("password");
                 if (arg2SpringSecurity.matches(loginRequest.getPassword(), encodedPassword)) {
