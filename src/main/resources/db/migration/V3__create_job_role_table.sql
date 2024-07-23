@@ -4,6 +4,6 @@ CREATE TABLE JobRoles (
 	location VARCHAR(50) NOT NULL,
     capability VARCHAR(50) NOT NULL,
     band VARCHAR(50) NOT NULL,
-    closingDate DateTime NOT NULL,
+    closingDate Date NOT NULL,
     status BOOLEAN NOT NULL,
     PRIMARY KEY (jobRoleId));
