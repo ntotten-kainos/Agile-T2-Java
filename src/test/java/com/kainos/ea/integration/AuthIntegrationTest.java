@@ -20,18 +20,34 @@ public class AuthIntegrationTest {
             new DropwizardAppExtension<>(WebServiceApplication.class);
 
     private static final LoginRequest VALID_LOGIN_REQUEST = new LoginRequest(
-            "valid@email.com",
-            "V4lid!Pa$$word123"
+            "valid.admin@email.com",
+            "admin!Pa$$word123"
+    );
+
+    private static final LoginRequest INVALID_LOGIN_REQUEST = new LoginRequest(
+            "valid.admin@email.com",
+            "admin!Pa$$"
     );
 
     @Test
-    public void login_shouldReturnValidJwtToken() {
+    public void login_shouldReturnOK_whenValidLoginRequest() {
         Client client = APP.client();
 
         Response response = client.target("http://localhost:8080/api/auth/login")
                                 .request()
                                 .post(Entity.json(VALID_LOGIN_REQUEST));
 
-        assertEquals("", response.getStatus());
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void login_shouldReturnBadRequest_whenInvalidLoginRequest() {
+        Client client = APP.client();
+
+        Response response = client.target("http://localhost:8080/api/auth/login")
+                                .request()
+                                .post(Entity.json(INVALID_LOGIN_REQUEST));
+
+        assertEquals(400, response.getStatus());
     }
 }

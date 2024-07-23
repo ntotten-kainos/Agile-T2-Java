@@ -3,6 +3,7 @@ package com.kainos.ea.service;
 import com.kainos.ea.daos.AuthDao;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.InvalidException;
+import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import com.kainos.ea.services.AuthService;
@@ -27,14 +28,14 @@ public class AuthServiceTest {
     AuthService authService = new AuthService(mockDao, mockKey);
 
     @Test
-    public void login_shouldThrowInvalidException_whenNoValidUserFound() throws DatabaseConnectionException, SQLException, InvalidException {
+    public void login_shouldThrowInvalidException_whenNoValidUserFound() throws DatabaseConnectionException, SQLException {
         when(mockDao.getUser(LOGIN_REQUEST)).thenReturn(null);
 
-        InvalidException exception = assertThrows(InvalidException.class, () -> {
+        LoginException exception = assertThrows(LoginException.class, () -> {
             authService.login(LOGIN_REQUEST);
         });
 
-        String expectedExceptionMessage = "Login Request: Invalid Request!";
+        String expectedExceptionMessage = "Login Request: Invalid Login Credentials!";
         String actualExceptionMessage = exception.getMessage();
         assertEquals(expectedExceptionMessage, actualExceptionMessage);
     }

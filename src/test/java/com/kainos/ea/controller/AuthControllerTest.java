@@ -42,7 +42,7 @@ public class AuthControllerTest {
 
     @Test
     public void login_shouldReturnBadRequest_whenInvalidLogin() throws DatabaseConnectionException, SQLException, LoginException {
-        when(mockAuthService.login(loginRequest)).thenThrow(new InvalidException(Entity.USER));
+        when(mockAuthService.login(loginRequest)).thenThrow(new LoginException(Entity.USER));
 
         Response response = authController.login(loginRequest);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
