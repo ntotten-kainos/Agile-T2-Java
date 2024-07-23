@@ -1,6 +1,5 @@
 package com.kainos.ea;
 
-//import com.kainos.ea.controller.HR;
 import com.kainos.ea.util.DatabaseConnector;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -8,8 +7,7 @@ import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
-public class WebServiceApplication
-        extends Application<WebServiceConfiguration> {
+public class WebServiceApplication extends Application<WebServiceConfiguration> {
 
     public static void main(final String[] args) throws Exception {
         new WebServiceApplication().run(args);
@@ -24,8 +22,7 @@ public class WebServiceApplication
     public void initialize(final Bootstrap<WebServiceConfiguration> bootstrap) {
         bootstrap.addBundle(new SwaggerBundle<WebServiceConfiguration>() {
             @Override
-            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(
-                    final WebServiceConfiguration configuration) {
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(WebServiceConfiguration configuration) {
                 return configuration.getSwagger();
             }
         });
