@@ -16,9 +16,9 @@ public class AuthService {
     private AuthDao authDao;
     private Key jwtKey;
 
-    public AuthService(AuthDao authDao, Key key) {
+    public AuthService(AuthDao authDao) {
         this.authDao = authDao;
-        this.jwtKey = key;
+        this.jwtKey = Jwts.SIG.HS256.key().build();
     }
 
     public String login(LoginRequest loginRequest) throws SQLException, DatabaseConnectionException, LoginException {

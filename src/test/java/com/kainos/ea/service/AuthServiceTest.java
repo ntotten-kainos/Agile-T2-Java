@@ -9,23 +9,20 @@ import com.kainos.ea.services.AuthService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.security.Key;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class AuthServiceTest {
-    private static final User USER = new User("user1@email.com", "validP4$Sword!123");
-    private static final LoginRequest LOGIN_REQUEST = new LoginRequest("user1@email.com", "validP4$Sword!123");
-    AuthDao mockDao = Mockito.mock(AuthDao.class);
-    Key mockKey = Mockito.mock(Key.class);
-    AuthService authService = new AuthService(mockDao, mockKey);
+    private static final User USER = new User("user2@email.com", "validP4$Sword!123");
+    private static final LoginRequest LOGIN_REQUEST = new LoginRequest("user2@email.com", "validP4$Sword!123");
+    AuthDao mockAuthDao = Mockito.mock(AuthDao.class);
+    AuthService authService = new AuthService(mockAuthDao);
 
     @Test
     public void login_shouldThrowInvalidException_whenNoValidUserFound() throws DatabaseConnectionException, SQLException {
-        when(mockDao.getUser(LOGIN_REQUEST)).thenReturn(null);
+        when(mockAuthDao.getUser(LOGIN_REQUEST)).thenReturn(null);
 
         LoginException exception = assertThrows(LoginException.class, () -> {
             authService.login(LOGIN_REQUEST);
@@ -34,12 +31,27 @@ public class AuthServiceTest {
         String expectedExceptionMessage = "Login Request: Invalid Login Credentials!";
         String actualExceptionMessage = exception.getMessage();
         assertEquals(expectedExceptionMessage, actualExceptionMessage);
+        verify(mockAuthDao, times(1)).getUser(LOGIN_REQUEST);
     }
 
     @Test
-    public void login_shouldReturnJwtToken_whenValidUserFound() throws DatabaseConnectionException, SQLException {
-        when(mockDao.getUser(LOGIN_REQUEST)).thenReturn(USER);
+    public void login_shouldReturnJwtToken_whenValidUserFound() throws DatabaseConnectionException, SQLException, LoginException {
+        when(mockAuthDao.getUser(LOGIN_REQUEST)).thenReturn(USER);
+        assertNotNull(authService.login(LOGIN_REQUEST));
+        verify(mockAuthDao, times(1)).getUser(LOGIN_REQUEST);
+    }
 
+    @Test
+    public void login_shouldThrowDBConnException_whenDaoThrowsDBConnException() throws DatabaseConnectionException, SQLException {
+        when(mockAuthDao.getUser(LOGIN_REQUEST)).thenThrow(new DatabaseConnectionException(new Exception("Connection Error")));
+        assertThrows(DatabaseConnectionException.class, () -> authService.login(LOGIN_REQUEST));
+        verify(mockAuthDao, times(1)).getUser(LOGIN_REQUEST);
+    }
 
+    @Test
+    public void login_shouldThrowSqlException_whenDaoThrowsSqlException() throws DatabaseConnectionException, SQLException {
+        when(mockAuthDao.getUser(LOGIN_REQUEST)).thenThrow(new SQLException());
+        assertThrows(SQLException.class, () -> authService.login(LOGIN_REQUEST));
+        verify(mockAuthDao, times(1)).getUser(LOGIN_REQUEST);
     }
 }

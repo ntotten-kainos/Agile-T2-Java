@@ -1,5 +1,8 @@
 package com.kainos.ea.integration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kainos.ea.WebServiceApplication;
 import com.kainos.ea.WebServiceConfiguration;
 import com.kainos.ea.models.LoginRequest;
@@ -54,7 +57,7 @@ public class AuthIntegrationTest {
 
     // TODO - Figure out how to check that a valid JWT token is returned when the login succeeds.
     @Test
-    public void login_shouldReturnValidJwtToken_whenValidLoginRequest() {
+    public void login_shouldReturnValidJwtToken_whenValidLoginRequest() throws JsonProcessingException {
         Client client = APP.client();
 
         Response response = client.target("http://localhost:8080/api/auth/login")
@@ -63,6 +66,14 @@ public class AuthIntegrationTest {
 
         // The JWT Token
         String responseBody = response.readEntity(String.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(responseBody);
+        String jwtTokenString = rootNode.get("jwtToken").asText();
+        String loginResponseMessage = rootNode.get("message").asText();
+
         assertNotNull(responseBody);
+        assertNotNull(jwtTokenString);
+        assertEquals(loginResponseMessage, "Login Success.");
     }
 }
