@@ -50,4 +50,8 @@ public class AuthIntegrationTest {
 
         assertEquals(400, response.getStatus());
     }
+
+    // TODO - Figure out how to check that a valid JWT token is returned when the login succeeds.
+    @Test
+    public void login_shouldReturnValidJwtToken_whenValidLoginRequest() {}
 }
