@@ -4,8 +4,9 @@ import com.kainos.ea.enums.Bands;
 import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.enums.RoleStatus;
+import org.joda.time.DateTime;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Role {
     int jobRoleId;
@@ -14,7 +15,6 @@ public class Role {
     private Bands band;
     private Capabilities capability;
     private RoleStatus status;  // Add this line
-
     Date closingDate;
 
     public Role(int jobRoleId, String roleName, Locations location, Bands band,
