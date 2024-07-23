@@ -40,7 +40,6 @@ public class WebServiceApplication extends Application<WebServiceConfiguration> 
         Key jwtKey = Jwts.SIG.HS256.key().build();
 
         environment.jersey().register(new AuthController(new AuthService(new AuthDao(), jwtKey)));
-        environment.jersey().register(new UserController());
     }
 
 }

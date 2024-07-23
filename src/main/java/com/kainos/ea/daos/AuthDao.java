@@ -22,6 +22,7 @@ public class AuthDao {
             Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
             String encodedPassword = passwordEncoder.encode(loginRequest.getPassword());
 
+
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, loginRequest.getEmail());
             statement.setString(2, encodedPassword);
@@ -38,29 +39,6 @@ public class AuthDao {
             }
         }
         return null;
-    }
-
-    public boolean authenticateUser(LoginRequest loginRequest) throws DatabaseConnectionException, SQLException {
-        try(Connection connection = DatabaseConnector.getConnection()) {
-            String query = "SELECT `email`, `password`"
-                    + "FROM `Users`"
-                    + "WHERE `email` = ?"
-                    + "AND `password` = ?;";
-
-            Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
-            String encodedPassword = passwordEncoder.encode(loginRequest.getPassword());
-
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, loginRequest.getEmail());
-            statement.setString(2, encodedPassword);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
