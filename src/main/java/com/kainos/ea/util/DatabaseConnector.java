@@ -23,16 +23,19 @@ public class DatabaseConnector {
             host            = System.getenv("DB_HOST");
             database        = System.getenv("DB_NAME");
 
-            if (user == null || password == null || host == null)
+            if (user == null || password == null || host == null) {
                 throw new IllegalArgumentException(
                         "Environment variables not set.");
+            }
 
             conn = DriverManager.getConnection("jdbc:mysql://"
-                    + host + "/" + database + "?allowPublicKeyRetrieval=true&useSSL=false", user, password);
+                    + host + "/" + database
+                    + "?allowPublicKeyRetrieval=true&useSSL=false",
+                    user, password);
 
             return conn;
         } catch (Exception e) {
-            System.err.println(e.getMessage());;
+            System.err.println(e.getMessage());
         }
         return null;
     }
