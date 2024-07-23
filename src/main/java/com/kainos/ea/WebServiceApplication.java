@@ -39,6 +39,6 @@ public class WebServiceApplication
         DatabaseConnector databaseConnector = new DatabaseConnector();
 
         environment.jersey()
-                .register(new RoleController(new RoleService(new RoleDao())));
+                .register(new RoleController(new RoleService(new RoleDao(), databaseConnector)));
     }
 }

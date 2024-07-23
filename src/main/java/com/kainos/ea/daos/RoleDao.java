@@ -3,7 +3,7 @@ package com.kainos.ea.daos;
 import com.kainos.ea.enums.Bands;
 import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.enums.Locations;
-import com.kainos.ea.enums.RoleStatus;
+import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.models.Role;
 import com.kainos.ea.util.DatabaseConnector;
@@ -17,7 +17,8 @@ import java.util.List;
 
 public class RoleDao {
 
-    public List<Role> getAllJobRoles() throws SQLException, FailedToRetrieveException {
+    public List<Role> getAllJobRoles() throws SQLException,
+            FailedToRetrieveException {
         List<Role> roles = new ArrayList<>();
 
         try (Connection connection = DatabaseConnector.getConnection()) {
@@ -28,19 +29,21 @@ public class RoleDao {
                     "SELECT jobRoleId, roleName, location, band, capability, closingDate, status FROM JobRoles where status = true;");
 
             while (resultSet.next()) {
-                Role role = new Role(
-                        resultSet.getInt("jobRoleId"),
+                Role role = new Role(resultSet.getInt("jobRoleId"),
                         resultSet.getString("roleName"),
                         Locations.fromString(resultSet.getString("location")),
                         Bands.fromString(resultSet.getString("band")),
-                        Capabilities.fromString(resultSet.getString("capability")),
-                        resultSet.getDate("closingDate"),
-                        resultSet.getBoolean("status")  // Retrieve boolean status handled by Role constructor
+                        Capabilities.fromString(
+                                resultSet.getString("capability")),
+                        resultSet.getLong("closingDate"),
+                        resultSet.getBoolean("status")
+                        // Retrieve boolean status handled by Role constructor
                 );
                 roles.add(role);
             }
+            return roles;
+        } catch (DatabaseConnectionException e) {
+            throw new RuntimeException(e);
         }
-
-        return roles;
     }
 }

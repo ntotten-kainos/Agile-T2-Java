@@ -15,17 +15,19 @@ public class Role {
     private Bands band;
     private Capabilities capability;
     private RoleStatus status;  // Add this line
-    Date closingDate;
+    long closingDate;
 
     public Role(int jobRoleId, String roleName, Locations location, Bands band,
-                Capabilities capability, Date closingDate, boolean isOpen) {  // Modify constructor
+                Capabilities capability, long closingDate,
+                boolean isOpen) {  // Modify constructor
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.location = location;
         this.band = band;
         this.capability = capability;
         this.closingDate = closingDate;
-        this.status = RoleStatus.fromBoolean(isOpen);  // Initialize status from boolean
+        this.status = RoleStatus.fromBoolean(
+                isOpen);  // Initialize status from boolean
     }
 
     public int getJobRoleId() {
@@ -76,11 +78,11 @@ public class Role {
         this.status = status;
     }
 
-    public Date getClosingDate() {
+    public long getClosingDate() {
         return closingDate;
     }
 
-    public void setClosingDate(Date closingDate) {
+    public void setClosingDate(long closingDate) {
         this.closingDate = closingDate;
     }
 
