@@ -1,4 +1,4 @@
-CREATE TABLE `Users` (
+CREATE TABLE IF NOT EXISTS `Users` (
 	`email` VARCHAR(64) PRIMARY KEY NOT NULL,
     `password` VARCHAR(256) NOT NULL
 );
