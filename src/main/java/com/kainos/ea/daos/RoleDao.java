@@ -16,8 +16,8 @@ import java.util.List;
 
 public class RoleDao {
 
-    public List<Role> getAllJobRoles() throws SQLException,
-            FailedToRetrieveException {
+    public List<Role> getAllJobRoles()
+            throws SQLException, FailedToRetrieveException {
         List<Role> roles = new ArrayList<>();
 
         try (Connection connection = DatabaseConnector.getConnection()) {
@@ -28,15 +28,13 @@ public class RoleDao {
                     "SELECT jobRoleId, roleName, location, band, capability, closingDate FROM JobRoles;");
 
             while (resultSet.next()) {
-                Role role = new Role(
-                        resultSet.getInt("jobRoleId"),
+                Role role = new Role(resultSet.getInt("jobRoleId"),
                         resultSet.getString("roleName"),
                         Locations.fromString(resultSet.getString("location")),
                         Bands.fromString(resultSet.getString("band")),
                         Capabilities.fromString(
                                 resultSet.getString("capability")),
-                        resultSet.getDate("closingDate")
-                );
+                        resultSet.getDate("closingDate"));
                 roles.add(role);
             }
 

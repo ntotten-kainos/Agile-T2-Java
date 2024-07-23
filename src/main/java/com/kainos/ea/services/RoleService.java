@@ -15,7 +15,8 @@ public class RoleService {
         this.roleDao = roleDao;
     }
 
-    public List<Role> getAllJobRoles() throws SQLException, FailedToRetrieveException {
+    public List<Role> getAllJobRoles()
+            throws SQLException, FailedToRetrieveException {
         return roleDao.getAllJobRoles();
     }
 }

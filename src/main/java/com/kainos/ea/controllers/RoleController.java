@@ -19,9 +19,10 @@ public class RoleController {
     public RoleController(final RoleService roleService) {
         this.roleService = roleService;
     }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllJobRoles() throws SQLException{
+    public Response getAllJobRoles() throws SQLException {
         try {
             return Response.ok().entity(roleService.getAllJobRoles()).build();
         } catch (FailedToRetrieveException e) {

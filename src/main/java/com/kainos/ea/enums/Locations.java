@@ -1,9 +1,7 @@
 package com.kainos.ea.enums;
 
 public enum Locations {
-    BELFAST("Belfast"),
-    DERRY("Derry"),
-    TORONTO("Toronto");
+    BELFAST("Belfast"), DERRY("Derry"), TORONTO("Toronto");
 
     private String value;
 
