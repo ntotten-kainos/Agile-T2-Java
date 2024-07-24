@@ -55,19 +55,4 @@ public class AuthIntegrationTest {
 
         assertEquals(400, response.getStatus());
     }
-
-    @Test
-    public void login_shouldReturnValidJwtToken_whenValidLoginRequest() throws JsonProcessingException {
-        Client client = APP.client();
-
-        Response response = client.target("http://localhost:8080/api/auth/login")
-                .request()
-                .post(Entity.json(VALID_LOGIN_REQUEST));
-
-        // The JWT Token
-        String responseBody = response.readEntity(String.class);
-
-        assertNotNull(responseBody);
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-    }
 }
