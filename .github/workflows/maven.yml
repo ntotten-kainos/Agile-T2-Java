@@ -3,6 +3,8 @@ name: Java CI with Maven
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -17,6 +19,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
+    - name: Test Migration
+      env:
+        FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        FLYWAY_USER: ${{ secrets.DB_USERNAME }}
+        FLYWAY_URL: jdbc:mysql://${{ secrets.DB_HOST }}/${{ secrets.TEST_DB_NAME }}
+        FLYWAY_BASELINE_ON_MIGRATE: true
+      run: mvn flyway:migrate
+
     - name: Build with Maven
       env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
