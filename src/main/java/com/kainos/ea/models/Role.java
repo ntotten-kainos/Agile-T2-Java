@@ -4,9 +4,7 @@ import com.kainos.ea.enums.Bands;
 import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.enums.RoleStatus;
-import org.joda.time.DateTime;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
