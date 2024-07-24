@@ -25,6 +25,12 @@ public class AuthService {
     private final Key jwtKey;
 
     /**
+     * The lifespan of the JWT Token.
+     * 8 hours in milliseconds.
+     */
+    private static final int TOKEN_LIFE = 28800000;
+
+    /**
      * Constructor for Authentication Service.
      * @param authDaoParam
      */
@@ -58,7 +64,7 @@ public class AuthService {
 
     private String generateJwtToken(final User user) {
         return Jwts.builder().issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 28800000))
+                .expiration(new Date(System.currentTimeMillis() + TOKEN_LIFE))
                 .subject(user.getEmail())
                 .claim("Role", user.getUserRoleId())
                 .issuer("JobPortal_WebService")

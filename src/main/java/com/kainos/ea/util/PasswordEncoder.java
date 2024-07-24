@@ -2,10 +2,14 @@ package com.kainos.ea.util;
 
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
-public class PasswordEncoder {
-    private static final Argon2PasswordEncoder ARGON_2_PASSWORD_ENCODER = new Argon2PasswordEncoder(
-            16, 32, 1, 60000, 10
-    );
+public final class PasswordEncoder {
+    private PasswordEncoder() { }
+
+    /**
+     * Constant for configuring the Argon2 Password encoder.
+     */
+    private static final Argon2PasswordEncoder ARGON_2_PASSWORD_ENCODER
+            = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
 
     /**
      * Get the pre-configured password encoder instance.

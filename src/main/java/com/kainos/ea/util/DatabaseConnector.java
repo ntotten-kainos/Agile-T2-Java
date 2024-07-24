@@ -5,9 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public final class DatabaseConnector {
+    /**
+     * The connection to the database.
+     */
     private static Connection conn;
     private DatabaseConnector() { }
-    public static Connection getConnection() throws SQLException {
+
+    /**
+     * Attempts to establish a connection with a database
+     * defined by DB_HOST, DB_USERNAME, DB_NAME
+     * and DB_PASSWORD environment variables.
+     * @return the database Connection object.
+     * @throws SQLException
+     */
+    public static Connection getConnection()
+            throws SQLException {
 
         if (conn != null && !conn.isClosed()) {
             return conn;
@@ -23,7 +35,8 @@ public final class DatabaseConnector {
                     || name == null) {
                 throw new IllegalArgumentException(
                         "Add the following properties to env vars: "
-                                + "DB_USERNAME, DB_PASSWORD, DB_HOST and DB_NAME");
+                                + "DB_USERNAME, DB_PASSWORD, DB_HOST"
+                                + " and DB_NAME");
             }
             conn = DriverManager.getConnection(
                     "jdbc:mysql://" + host + "/" + name, username, password);

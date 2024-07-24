@@ -12,15 +12,28 @@ import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 public class WebServiceApplication extends
         Application<WebServiceConfiguration> {
 
+    /**
+     * Main Method.
+     * @param args
+     * @throws Exception
+     */
     public static void main(final String[] args) throws Exception {
         new WebServiceApplication().run(args);
     }
 
+    /**
+     * Get app name.
+     * @return the name of the App.
+     */
     @Override
     public String getName() {
         return "WebService";
     }
 
+    /**
+     * Initialize the web app.
+     * @param bootstrap the application bootstrap
+     */
     @Override
     public void initialize(final Bootstrap<WebServiceConfiguration> bootstrap) {
         bootstrap.addBundle(new SwaggerBundle<WebServiceConfiguration>() {
@@ -32,6 +45,11 @@ public class WebServiceApplication extends
         });
     }
 
+    /**
+     * Run the web app.
+     * @param configuration the parsed {@link WebServiceConfiguration} object
+     * @param environment   the application's {@link Environment}
+     */
     @Override
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
@@ -45,5 +63,4 @@ public class WebServiceApplication extends
                             )
                     );
     }
-
 }
