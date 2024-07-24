@@ -41,7 +41,8 @@ public class AuthIntegrationTest {
                                 .request()
                                 .post(Entity.json(VALID_LOGIN_REQUEST));
 
-        assertEquals(200, response.getStatus());
+        assertNotNull(response.readEntity(String.class));
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
