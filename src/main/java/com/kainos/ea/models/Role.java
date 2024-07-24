@@ -7,6 +7,8 @@ import com.kainos.ea.enums.RoleStatus;
 import org.joda.time.DateTime;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Role {
     int jobRoleId;
@@ -15,10 +17,10 @@ public class Role {
     private Bands band;
     private Capabilities capability;
     private RoleStatus status;  // Add this line
-    long closingDate;
+    Timestamp closingDate;
 
     public Role(int jobRoleId, String roleName, Locations location, Bands band,
-                Capabilities capability, long closingDate,
+                Capabilities capability, Timestamp closingDate,
                 boolean isOpen) {  // Modify constructor
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
@@ -28,6 +30,11 @@ public class Role {
         this.closingDate = closingDate;
         this.status = RoleStatus.fromBoolean(
                 isOpen);  // Initialize status from boolean
+    }
+
+    public String getFormattedClosingDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(closingDate);
     }
 
     public int getJobRoleId() {
@@ -78,11 +85,11 @@ public class Role {
         this.status = status;
     }
 
-    public long getClosingDate() {
+    public Timestamp getClosingDate() {
         return closingDate;
     }
 
-    public void setClosingDate(long closingDate) {
+    public void setClosingDate(Timestamp closingDate) {
         this.closingDate = closingDate;
     }
 

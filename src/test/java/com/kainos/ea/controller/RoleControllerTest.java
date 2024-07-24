@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,9 +26,11 @@ public class RoleControllerTest {
 
     private final RoleController roleController = new RoleController(roleService);
 
+    Timestamp closingDate = Timestamp.valueOf("2024-12-31 23:59:59");
+
     private final Role role = new Role(1, "Software Engineer", Locations.BELFAST,
             Bands.BAND1, Capabilities.ENGINEERING,
-            1735689599000L, true);
+            closingDate, true);
 
     @Test
     void getAllJobRoles_shouldReturnOpenJobRoles() throws SQLException,

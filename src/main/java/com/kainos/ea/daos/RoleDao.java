@@ -35,7 +35,7 @@ public class RoleDao {
                         Bands.fromString(resultSet.getString("band")),
                         Capabilities.fromString(
                                 resultSet.getString("capability")),
-                        resultSet.getLong("closingDate"),
+                        resultSet.getTimestamp("closingDate"),
                         resultSet.getBoolean("status")
                         // Retrieve boolean status handled by Role constructor
                 );
