@@ -28,10 +28,18 @@ jobs:
         FLYWAY_BASELINE_ON_MIGRATE: true
       run: mvn flyway:migrate
 
+    - name: Maven Integration Tests
+      env:
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_NAME: ${{ secrets.TEST_DB_NAME }}
+      run: mvn clean integration-test
+
     - name: Build with Maven
       env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_NAME: ${{ secrets.DB_NAME }}
-      run: mvn clean integration-test
+      run: mvn clean install
