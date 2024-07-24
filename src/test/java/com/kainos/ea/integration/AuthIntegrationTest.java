@@ -24,13 +24,13 @@ public class AuthIntegrationTest {
             new DropwizardAppExtension<>(WebServiceApplication.class);
 
     private static final LoginRequest VALID_LOGIN_REQUEST = new LoginRequest(
-            "valid.admin@email.com",
-            "admin!Pa$$word123"
+            System.getenv().get("VALID_TEST_EMAIL"),
+            System.getenv().get("VALID_TEST_PASSWORD")
     );
 
     private static final LoginRequest INVALID_LOGIN_REQUEST = new LoginRequest(
-            "valid.admin@email.com",
-            "admin!Pa$$"
+            "invalid.admin@email.com",
+            "invalid"
     );
 
     @Test
