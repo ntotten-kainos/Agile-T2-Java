@@ -1,28 +1,42 @@
-- uses: actions/checkout@v3
-- name: Set up JDK 17
-  uses: actions/setup-java@v3
-  with:
-    java-version: '17'
-    distribution: 'temurin'
-    cache: maven
+name: Java CI with Maven
 
-- name: Test Migration
-  env:
-    FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
-    FLYWAY_USER: ${{ secrets.DB_USERNAME }}
-    FLYWAY_URL: jdbc:mysql://${{ secrets.DB_HOST }}/${{ secrets.TEST_DB_NAME }}
-    FLYWAY_BASELINE_ON_MIGRATE: true
-  run: mvn flyway:migrate
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-- name: Maven Build w/ Integration Tests
-  env:
-    DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-    DB_USERNAME: ${{ secrets.DB_USERNAME }}
-    DB_HOST: ${{ secrets.DB_HOST }}
-    DB_NAME: ${{ secrets.TEST_DB_NAME }}
-    VALID_TEST_EMAIL: ${{ secrets.VALID_TEST_EMAIL }}
-    VALID_TEST_PASSWORD: ${{ secrets.VALID_TEST_PASSWORD }}
-  run: mvn clean integration-test
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Test Migration
+        env:
+          FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          FLYWAY_USER: ${{ secrets.DB_USERNAME }}
+          FLYWAY_URL: jdbc:mysql://${{ secrets.DB_HOST }}/${{ secrets.TEST_DB_NAME }}
+          FLYWAY_BASELINE_ON_MIGRATE: true
+        run: mvn flyway:migrate
+
+      - name: Maven Build w/ Integration Tests
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.TEST_DB_NAME }}
+          VALID_TEST_EMAIL: ${{ secrets.VALID_TEST_EMAIL }}
+          VALID_TEST_PASSWORD: ${{ secrets.VALID_TEST_PASSWORD }}
+        run: mvn clean integration-test
 
 #    - name: Build with Maven
 #      env:
