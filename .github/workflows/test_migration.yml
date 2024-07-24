@@ -27,8 +27,8 @@ jobs:
           cache: maven
       - name: Run migrations
         env:
-          FLYWAY_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-          FLYWAY_USER: ${{ secrets.TEST_DB_USERNAME }}
-          FLYWAY_URL: jdbc:mysql://${{ secrets.TEST_DB_HOST }}/${{ secrets.TEST_DB_NAME }}
+          FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          FLYWAY_USER: ${{ secrets.DB_USERNAME }}
+          FLYWAY_URL: jdbc:mysql://${{ secrets.DB_HOST }}/${{ secrets.TEST_DB_NAME }}
           FLYWAY_BASELINE_ON_MIGRATE: true
         run: mvn flyway:migrate
