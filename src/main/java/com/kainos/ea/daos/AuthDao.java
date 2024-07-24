@@ -1,5 +1,6 @@
 package com.kainos.ea.daos;
 
+import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import com.kainos.ea.util.DatabaseConnector;
@@ -19,7 +20,8 @@ public class AuthDao {
      * @return a User object if authentication succeeds. Null otherwise.
      * @throws SQLException
      */
-    public User getUser(final LoginRequest loginRequest) throws SQLException {
+    public User getUser(final LoginRequest loginRequest)
+            throws SQLException, DatabaseConnectionException {
         try (Connection connection = DatabaseConnector.getConnection()) {
             String query = "SELECT `email`, `password`, `userRoleId`"
                             + "FROM `Users`"

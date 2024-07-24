@@ -1,5 +1,7 @@
 package com.kainos.ea.util;
 
+import com.kainos.ea.exceptions.DatabaseConnectionException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,9 +19,10 @@ public final class DatabaseConnector {
      * and DB_PASSWORD environment variables.
      * @return the database Connection object.
      * @throws SQLException
+     * @throws DatabaseConnectionException
      */
     public static Connection getConnection()
-            throws SQLException {
+            throws SQLException, DatabaseConnectionException {
 
         if (conn != null && !conn.isClosed()) {
             return conn;
@@ -45,8 +48,7 @@ public final class DatabaseConnector {
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw new DatabaseConnectionException(e);
         }
-
-        return null;
     }
 }
