@@ -13,7 +13,7 @@ public enum Capabilities {
 
     private String value;
 
-    Capabilities(String value) {
+    Capabilities(final String value) {
         this.value = value;
     }
 
@@ -22,7 +22,7 @@ public enum Capabilities {
         return value;
     }
 
-    public static Capabilities fromString(String text) {
+    public static Capabilities fromString(final String text) {
         for (Capabilities c : Capabilities.values()) {
             if (c.value.equalsIgnoreCase(text)) {
                 return c;

@@ -13,7 +13,8 @@ public class RoleService {
     DatabaseConnector databaseConnector;
     RoleDao roleDao;
 
-    public RoleService(RoleDao roleDao, DatabaseConnector databaseConnector) {
+    public RoleService(final RoleDao roleDao,
+                       final DatabaseConnector databaseConnector) {
         this.roleDao = roleDao;
         this.databaseConnector = databaseConnector;
     }

@@ -27,7 +27,7 @@ public class WebServiceApplication
         bootstrap.addBundle(new SwaggerBundle<WebServiceConfiguration>() {
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(
-                    WebServiceConfiguration configuration) {
+                    final WebServiceConfiguration configuration) {
                 return configuration.getSwagger();
             }
         });
@@ -39,6 +39,9 @@ public class WebServiceApplication
         DatabaseConnector databaseConnector = new DatabaseConnector();
 
         environment.jersey()
-                .register(new RoleController(new RoleService(new RoleDao(), databaseConnector)));
+                .register(new RoleController(
+                                new RoleService(
+                                        new RoleDao(),
+                                        databaseConnector)));
     }
 }

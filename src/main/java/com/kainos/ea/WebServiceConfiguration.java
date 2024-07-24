@@ -10,7 +10,8 @@ import javax.validation.constraints.*;
 public class WebServiceConfiguration extends Configuration {
     @Valid
     @NotNull
-    private final SwaggerBundleConfiguration swagger = new SwaggerBundleConfiguration();
+    private final SwaggerBundleConfiguration swagger
+            = new SwaggerBundleConfiguration();
 
     @JsonProperty("swagger")
     public SwaggerBundleConfiguration getSwagger() {

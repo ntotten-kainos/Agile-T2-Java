@@ -17,9 +17,10 @@ public class Role {
     private RoleStatus status;  // Add this line
     Timestamp closingDate;
 
-    public Role(int jobRoleId, String roleName, Locations location, Bands band,
-                Capabilities capability, Timestamp closingDate,
-                boolean isOpen) {  // Modify constructor
+    public Role(final int jobRoleId, final String roleName,
+                final Locations location, final Bands band,
+                final Capabilities capability, final Timestamp closingDate,
+                final boolean isOpen) {  // Modify constructor
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.location = location;
@@ -39,7 +40,7 @@ public class Role {
         return jobRoleId;
     }
 
-    public void setJobRoleId(int jobRoleId) {
+    public void setJobRoleId(final int jobRoleId) {
         this.jobRoleId = jobRoleId;
     }
 
@@ -47,7 +48,7 @@ public class Role {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setRoleName(final String roleName) {
         this.roleName = roleName;
     }
 
@@ -55,7 +56,7 @@ public class Role {
         return location;
     }
 
-    public void setLocation(Locations location) {
+    public void setLocation(final Locations location) {
         this.location = location;
     }
 
@@ -63,7 +64,7 @@ public class Role {
         return band;
     }
 
-    public void setBand(Bands band) {
+    public void setBand(final Bands band) {
         this.band = band;
     }
 
@@ -71,7 +72,7 @@ public class Role {
         return capability;
     }
 
-    public void setCapability(Capabilities capability) {
+    public void setCapability(final Capabilities capability) {
         this.capability = capability;
     }
 
@@ -79,7 +80,7 @@ public class Role {
         return status;
     }
 
-    public void setStatus(RoleStatus status) {  // Add setter for status
+    public void setStatus(final RoleStatus status) {  // Add setter for status
         this.status = status;
     }
 
@@ -87,7 +88,7 @@ public class Role {
         return closingDate;
     }
 
-    public void setClosingDate(Timestamp closingDate) {
+    public void setClosingDate(final Timestamp closingDate) {
         this.closingDate = closingDate;
     }
 
@@ -95,7 +96,7 @@ public class Role {
         return status.toBoolean();
     }
 
-    public void setOpen(boolean isOpen) {
+    public void setOpen(final boolean isOpen) {
         this.status = RoleStatus.fromBoolean(isOpen);
     }
 }

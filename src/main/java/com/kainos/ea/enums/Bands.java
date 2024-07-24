@@ -5,7 +5,7 @@ public enum Bands {
 
     private String value;
 
-    Bands(String value) {
+    Bands(final String value) {
         this.value = value;
     }
 
@@ -14,7 +14,7 @@ public enum Bands {
         return value;
     }
 
-    public static Bands fromString(String text) {
+    public static Bands fromString(final String text) {
         for (Bands b : Bands.values()) {
             if (b.value.equalsIgnoreCase(text)) {
                 return b;

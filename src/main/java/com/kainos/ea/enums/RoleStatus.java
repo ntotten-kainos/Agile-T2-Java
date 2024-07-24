@@ -5,7 +5,7 @@ public enum RoleStatus {
 
     private String value;
 
-    RoleStatus(String value) {
+    RoleStatus(final String value) {
         this.value = value;
     }
 
@@ -14,7 +14,7 @@ public enum RoleStatus {
         return value;
     }
 
-    public static RoleStatus fromString(String text) {
+    public static RoleStatus fromString(final String text) {
         for (RoleStatus status : RoleStatus.values()) {
             if (status.value.equalsIgnoreCase(text)) {
                 return status;
@@ -23,7 +23,7 @@ public enum RoleStatus {
         throw new IllegalArgumentException("No enum constant " + text);
     }
 
-    public static RoleStatus fromBoolean(boolean isOpen) {
+    public static RoleStatus fromBoolean(final boolean isOpen) {
         return isOpen ? OPEN : CLOSED;
     }
 
