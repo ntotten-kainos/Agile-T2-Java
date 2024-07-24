@@ -34,11 +34,6 @@ public class AuthController {
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginRequest loginRequest) {
-        // Validate the loginRequest object data here before going any further.
-        if (!validateLoginRequest(loginRequest)) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Login Details.").build();
-        }
-
         try {
             String jwtToken = authService.login(loginRequest);
             return Response.ok().entity(jwtToken).build();
