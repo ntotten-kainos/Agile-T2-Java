@@ -17,22 +17,39 @@ import java.sql.SQLException;
 @Api("Auth API")
 @Path("/api/auth")
 public class AuthController {
+    /**
+     * The Authentication Service.
+     */
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+
+    /**
+     * Authentication Controller Constructor.
+     * @param authServiceParam
+     */
+    public AuthController(final AuthService authServiceParam) {
+        this.authService = authServiceParam;
     }
 
+    /**
+     * POST Request to authenticate a user using a LoginRequest object.
+     * @param loginRequest contains the user credentials.
+     * @return a response body with either a JWT Token or appropriate error.
+     */
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(LoginRequest loginRequest) {
+    public Response login(final LoginRequest loginRequest) {
         try {
-            return Response.ok().entity(authService.login(loginRequest)).build();
+            return Response.ok()
+                    .entity(authService.login(loginRequest))
+                    .build();
         } catch (SQLException | DatabaseConnectionException e) {
             return Response.serverError().build();
         } catch (LoginException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 }
