@@ -41,6 +41,7 @@ public class AuthService {
         return Jwts.builder().issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 28800000))
                 .subject(user.getEmail())
+                .claim("Role", user.getUserRoleId())
                 .issuer("JobPortal_WebService")
                 .signWith(jwtKey)
                 .compact();

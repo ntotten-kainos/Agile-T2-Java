@@ -16,7 +16,7 @@ import static com.kainos.ea.util.PasswordEncoder.getPasswordEncoder;
 public class AuthDao {
     public User getUser(LoginRequest loginRequest) throws SQLException, DatabaseConnectionException {
         try(Connection connection = DatabaseConnector.getConnection()) {
-            String query = "SELECT `email`, `password`"
+            String query = "SELECT `email`, `password`, `userRoleId`"
                             + "FROM `Users`"
                             + "WHERE `email` = ?;";
 
@@ -32,7 +32,8 @@ public class AuthDao {
                             // The user's email
                             resultSet.getString("email"),
                             // The Argon2 encoded user password
-                            resultSet.getString("password")
+                            resultSet.getString("password"),
+                            resultSet.getInt("userRoleId")
                     );
                 }
             }

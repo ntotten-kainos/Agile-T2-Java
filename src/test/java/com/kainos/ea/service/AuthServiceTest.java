@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class AuthServiceTest {
-    private static final User USER = new User("user2@email.com", "validP4$Sword!123");
+    private static final User USER = new User("user2@email.com", "validP4$Sword!123", 1);
     private static final LoginRequest LOGIN_REQUEST = new LoginRequest("user2@email.com", "validP4$Sword!123");
     AuthDao mockAuthDao = Mockito.mock(AuthDao.class);
     AuthService authService = new AuthService(mockAuthDao);
