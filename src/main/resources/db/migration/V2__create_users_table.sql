@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `Users` (
-	`email` VARCHAR(64) PRIMARY KEY NOT NULL,
-    `password` VARCHAR(256) NOT NULL
+	    `email` VARCHAR(64) PRIMARY KEY NOT NULL,
+        `password` VARCHAR(256) NOT NULL
 );
 
 -- When inserting data into `Users` table, it must first be run through an Argon2 Password encoder with params matching the encoder
