@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
+//import org.hibernate.validator.constraints.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 
 public class WebServiceConfiguration extends Configuration {
     @Valid
     @NotNull
-    private final SwaggerBundleConfiguration swagger = new SwaggerBundleConfiguration();
+    private final SwaggerBundleConfiguration swagger =
+            new SwaggerBundleConfiguration();
 
     @JsonProperty("swagger")
     public SwaggerBundleConfiguration getSwagger() {
