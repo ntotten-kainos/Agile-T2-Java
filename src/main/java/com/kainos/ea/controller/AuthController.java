@@ -41,15 +41,11 @@ public class AuthController {
 
         try {
             String jwtToken = authService.login(loginRequest);
-            LoginResponse loginResponse = new LoginResponse(jwtToken, "Login Success.");
-            String jsonResponse = objectMapper.writeValueAsString(loginResponse);
-            return Response.ok().entity(jsonResponse).build();
+            return Response.ok().entity(jwtToken).build();
         } catch (SQLException | DatabaseConnectionException e) {
             return Response.serverError().build();
         } catch (LoginException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (JsonProcessingException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage() + ": Error Processing JSON response.").build();
         }
     }
 }
