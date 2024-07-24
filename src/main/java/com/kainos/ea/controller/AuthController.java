@@ -1,11 +1,8 @@
 package com.kainos.ea.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
-import com.kainos.ea.models.LoginResponse;
 import com.kainos.ea.services.AuthService;
 import io.swagger.annotations.Api;
 
@@ -15,8 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-
-import static com.kainos.ea.validators.LoginRequestValidator.validateLoginRequest;
 
 
 @Api("Auth API")
