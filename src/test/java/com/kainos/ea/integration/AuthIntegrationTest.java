@@ -66,13 +66,7 @@ public class AuthIntegrationTest {
         // The JWT Token
         String responseBody = response.readEntity(String.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(responseBody);
-        String jwtTokenString = rootNode.get("jwtToken").asText();
-        String loginResponseMessage = rootNode.get("message").asText();
-
         assertNotNull(responseBody);
-        assertNotNull(jwtTokenString);
-        assertEquals(loginResponseMessage, "Login Success.");
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 }

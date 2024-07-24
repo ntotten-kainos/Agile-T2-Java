@@ -22,11 +22,9 @@ import static com.kainos.ea.validators.LoginRequestValidator.validateLoginReques
 @Api("Auth API")
 @Path("/api/auth")
 public class AuthController {
-    private final ObjectMapper objectMapper;
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
-        this.objectMapper = new ObjectMapper();
         this.authService = authService;
     }
 
@@ -35,8 +33,7 @@ public class AuthController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginRequest loginRequest) {
         try {
-            String jwtToken = authService.login(loginRequest);
-            return Response.ok().entity(jwtToken).build();
+            return Response.ok().entity(authService.login(loginRequest)).build();
         } catch (SQLException | DatabaseConnectionException e) {
             return Response.serverError().build();
         } catch (LoginException e) {
