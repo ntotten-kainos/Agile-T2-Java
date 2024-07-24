@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class AuthControllerTest {
@@ -37,6 +37,7 @@ public class AuthControllerTest {
 
         Response response = authController.login(loginRequest);
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        assertNotNull(response.getEntity().toString());
     }
 
     @Test
