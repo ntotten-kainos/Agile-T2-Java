@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Capabilities (
-    capabilityId INT AUTO_INCREMENT PRIMARY KEY,
+    capabilityId TINYINT AUTO_INCREMENT PRIMARY KEY,
     capabilityName VARCHAR(64) NOT NULL
     );
 
