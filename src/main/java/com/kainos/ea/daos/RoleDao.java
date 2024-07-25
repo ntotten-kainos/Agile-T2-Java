@@ -33,7 +33,9 @@ public class RoleDao {
             while (resultSet.next()) {
                 Role role = new Role(resultSet.getInt("jobRoleId"),
                                         resultSet.getString("roleName"),
-                                        Locations.fromString(resultSet.getString("location")),
+                                        Locations.fromString(
+                                                resultSet.getString(
+                                                "location")),
                                         resultSet.getInt("bandId"),
                                         resultSet.getInt("capabilityId"),
                         resultSet.getBoolean("status"),
