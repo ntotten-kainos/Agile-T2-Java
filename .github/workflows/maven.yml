@@ -26,7 +26,7 @@ jobs:
         FLYWAY_USER: ${{ secrets.DB_USERNAME }}
         FLYWAY_URL: jdbc:mysql://${{ secrets.DB_HOST }}/${{ secrets.TEST_DB_NAME }}
         FLYWAY_BASELINE_ON_MIGRATE: true
-      run: mvn flyway:migrate
+      run: mvn flyway:repair, mvn flyway:migrate
 
     - name: Maven Build w/ Integration Tests
       env:
