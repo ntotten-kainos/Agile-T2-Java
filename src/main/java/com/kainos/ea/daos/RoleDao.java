@@ -15,7 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoleDao {
-
+    /**
+     * Gets.
+     * @return Returns list of open job roles
+     * @throws SQLException
+     * @throws FailedToRetrieveException
+     */
     public List<Role> getAllJobRoles()
             throws SQLException, FailedToRetrieveException {
         List<Role> roles = new ArrayList<>();
@@ -25,11 +30,14 @@ public class RoleDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT jr.jobRoleId, jr.roleName, jr.location, b.bandValue AS band,"
-                            + "c.capabilityName AS capability, jr.closingDate, jr.status "
-                            +"FROM JobRoles jr "
+                    "SELECT jr.jobRoleId, jr.roleName, jr.location,"
+                            + "b.bandValue AS band,"
+                            + "c.capabilityName AS capability, "
+                            + "jr.closingDate, jr.status "
+                            + "FROM JobRoles jr "
                             + "JOIN Bands b ON jr.bandId = b.bandId "
-                            + "JOIN Capabilities c ON jr.capabilityId = c.capabilityId "
+                            + "JOIN Capabilities c ON jr.capabilityId = "
+                            + "c.capabilityId "
                             + "WHERE jr.status = true");
 
 
