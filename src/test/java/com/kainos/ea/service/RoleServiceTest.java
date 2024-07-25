@@ -4,7 +4,6 @@ import com.kainos.ea.daos.RoleDao;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.models.Role;
 import com.kainos.ea.services.RoleService;
-import com.kainos.ea.util.DatabaseConnector;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -18,9 +17,8 @@ import static org.mockito.Mockito.when;
 
 public class RoleServiceTest {
     RoleDao roleDao = mock(RoleDao.class);
-    DatabaseConnector databaseConnector = new DatabaseConnector(); // Not mocked
 
-    RoleService roleService = new RoleService(roleDao, databaseConnector);
+    RoleService roleService = new RoleService(roleDao);
 
     @Test
     void getAllJobRoles_shouldReturnsListOfOpenRoles_whenDaoReturnsListOfOpenRoles()

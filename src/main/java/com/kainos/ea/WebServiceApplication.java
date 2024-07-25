@@ -1,12 +1,11 @@
 package com.kainos.ea;
 
+import com.kainos.ea.controllers.AuthController;
 import com.kainos.ea.controllers.RoleController;
-import com.kainos.ea.daos.RoleDao;
-import com.kainos.ea.services.RoleService;
-import com.kainos.ea.util.DatabaseConnector;
-import com.kainos.ea.controller.AuthController;
 import com.kainos.ea.daos.AuthDao;
+import com.kainos.ea.daos.RoleDao;
 import com.kainos.ea.services.AuthService;
+import com.kainos.ea.services.RoleService;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -58,13 +57,13 @@ public class WebServiceApplication extends
     @Override
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
-        DatabaseConnector databaseConnector = new DatabaseConnector();
 
         environment.jersey()
                 .register(new RoleController(
                                 new RoleService(
-                                        new RoleDao(),
-                                        databaseConnector)));
+                                        new RoleDao()
+                                )
+                                        ));
         environment.jersey()
                 .register(new AuthController(
                         new AuthService(

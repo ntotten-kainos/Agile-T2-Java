@@ -11,7 +11,7 @@ public final class DatabaseConnector {
      * The connection to the database.
      */
     private static Connection conn;
-    public DatabaseConnector() { }
+    private DatabaseConnector() { }
 
     /**
      * Attempts to establish a connection with a database

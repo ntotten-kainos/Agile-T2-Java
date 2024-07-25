@@ -4,6 +4,7 @@ import com.kainos.ea.enums.Bands;
 import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
+import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.models.Role;
 import com.kainos.ea.util.DatabaseConnector;
@@ -17,8 +18,8 @@ import java.util.List;
 
 public class RoleDao {
 
-    public List<Role> getAllJobRoles() throws SQLException,
-            FailedToRetrieveException {
+    public List<Role> getAllJobRoles()
+            throws SQLException, FailedToRetrieveException {
         List<Role> roles = new ArrayList<>();
 
         try (Connection connection = DatabaseConnector.getConnection()) {
@@ -45,7 +46,7 @@ public class RoleDao {
             }
             return roles;
         } catch (DatabaseConnectionException e) {
-            throw new RuntimeException(e);
+            throw new FailedToRetrieveException(Entity.JOB_ROLE);
         }
     }
 }
