@@ -25,10 +25,13 @@ public class RoleDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT jobRoleId, roleName, location,"
-                            + "bandId, capabilityId, "
-                            + "closingDate, status "
-                            + "FROM JobRoles where status = true;");
+                    "SELECT jr.jobRoleId, jr.roleName, jr.location, b.bandValue AS band,"
+                            + "c.capabilityName AS capability, jr.closingDate, jr.status "
+                            +"FROM JobRoles jr "
+                            + "JOIN Bands b ON jr.bandId = b.bandId "
+                            + "JOIN Capabilities c ON jr.capabilityId = c.capabilityId "
+                            + "WHERE jr.status = true");
+
 
             while (resultSet.next()) {
                 Role role = new Role(resultSet.getInt("jobRoleId"),
@@ -36,8 +39,8 @@ public class RoleDao {
                                         Locations.fromString(
                                                 resultSet.getString(
                                                 "location")),
-                                        resultSet.getInt("bandId"),
-                                        resultSet.getInt("capabilityId"),
+                                        resultSet.getString("band"),
+                                        resultSet.getString("capability"),
                         resultSet.getBoolean("status"),
                         resultSet.getTimestamp("closingDate")
                                 );

@@ -10,21 +10,21 @@ public class Role {
     private int jobRoleId;
     private String roleName;
     private Locations location;
-    private int bandId;
-    private int capabilityId;
+    private String bandValue;
+    private String capabilityName;
     private RoleStatus status;  // Add this line
     private Timestamp closingDate;
 
     public Role(final int jobRoleId, final String roleName,
-                final Locations location, final int bandId,
-                final int capabilityId,
+                final Locations location, final String bandValue,
+                final String capabilityName,
                 final boolean isOpen,
                 final Timestamp closingDate) {
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.location = location;
-        this.bandId = bandId;
-        this.capabilityId = capabilityId;
+        this.bandValue = bandValue;
+        this.capabilityName = capabilityName;
         this.status = RoleStatus.fromBoolean(
                 isOpen);
         this.closingDate = closingDate;
@@ -59,20 +59,20 @@ public class Role {
         this.location = location;
     }
 
-    public int getBandId() {
-        return bandId;
+    public String getBandValue() {
+        return bandValue;
     }
 
-    public void setBandId(final int bandId) {
-        this.bandId = bandId;
+    public void setBandValue(String bandValue) {
+        this.bandValue = bandValue;
     }
 
-    public int getCapabilityId() {
-        return capabilityId;
+    public String getCapabilityName() {
+        return capabilityName;
     }
 
-    public void setCapabilityId(final int capabilityId) {
-        this.capabilityId = capabilityId;
+    public void setCapabilityName(String capabilityName) {
+        this.capabilityName = capabilityName;
     }
 
     public RoleStatus getStatus() {  // Add getter for status

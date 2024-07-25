@@ -27,7 +27,7 @@ public class RoleControllerTest {
     Timestamp closingDate = Timestamp.valueOf("2024-12-31 23:59:59");
 
     private final Role role = new Role(1, "Software Engineer", Locations.BELFAST,
-                1, 1,
+                "", "",
             true, closingDate);
 
     @Test
