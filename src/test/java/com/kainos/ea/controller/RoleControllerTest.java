@@ -2,8 +2,6 @@ package com.kainos.ea.controller;
 
 import com.kainos.ea.controllers.RoleController;
 import com.kainos.ea.enums.Locations;
-import com.kainos.ea.enums.Bands;
-import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.models.Role;
 import com.kainos.ea.services.RoleService;
@@ -29,8 +27,8 @@ public class RoleControllerTest {
     Timestamp closingDate = Timestamp.valueOf("2024-12-31 23:59:59");
 
     private final Role role = new Role(1, "Software Engineer", Locations.BELFAST,
-            Bands.BAND1, Capabilities.ENGINEERING,
-            closingDate, true);
+                1, 1,
+            true, closingDate);
 
     @Test
     void getAllJobRoles_shouldReturnOpenJobRoles() throws SQLException,
@@ -57,7 +55,7 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getAllJobRoles_shouldThrowSQLException() throws SQLException, FailedToRetrieveException {
+    void getAllJobRoles_shouldThrowSQLException_whenSqlExceptionThrown() throws SQLException, FailedToRetrieveException {
         when(roleService.getAllJobRoles()).thenThrow(SQLException.class);
 
         assertThrows(SQLException.class, () -> {

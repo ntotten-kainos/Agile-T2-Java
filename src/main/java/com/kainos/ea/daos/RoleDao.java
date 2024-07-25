@@ -1,7 +1,5 @@
 package com.kainos.ea.daos;
 
-import com.kainos.ea.enums.Bands;
-import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
@@ -27,21 +25,20 @@ public class RoleDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT jobRoleId, roleName, location, band, capability, "
+                    "SELECT jobRoleId, roleName, location,"
+                            + "bandId, capabilityId, "
                             + "closingDate, status "
                             + "FROM JobRoles where status = true;");
 
             while (resultSet.next()) {
                 Role role = new Role(resultSet.getInt("jobRoleId"),
-                        resultSet.getString("roleName"),
-                        Locations.fromString(resultSet.getString("location")),
-                        Bands.fromString(resultSet.getString("band")),
-                        Capabilities.fromString(
-                                resultSet.getString("capability")),
-                        resultSet.getTimestamp("closingDate"),
-                        resultSet.getBoolean("status")
-                        // Retrieve boolean status handled by Role constructor
-                );
+                                        resultSet.getString("roleName"),
+                                        Locations.fromString(resultSet.getString("location")),
+                                        resultSet.getInt("bandId"),
+                                        resultSet.getInt("capabilityId"),
+                        resultSet.getBoolean("status"),
+                        resultSet.getTimestamp("closingDate")
+                                );
                 roles.add(role);
             }
             return roles;

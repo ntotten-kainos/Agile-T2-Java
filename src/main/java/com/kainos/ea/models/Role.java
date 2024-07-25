@@ -1,7 +1,5 @@
 package com.kainos.ea.models;
 
-import com.kainos.ea.enums.Bands;
-import com.kainos.ea.enums.Capabilities;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.enums.RoleStatus;
 
@@ -9,26 +7,27 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 public class Role {
-    int jobRoleId;
-    String roleName;
+    private int jobRoleId;
+    private String roleName;
     private Locations location;
-    private Bands band;
-    private Capabilities capability;
+    private int bandId;
+    private int capabilityId;
     private RoleStatus status;  // Add this line
-    Timestamp closingDate;
+    private Timestamp closingDate;
 
     public Role(final int jobRoleId, final String roleName,
-                final Locations location, final Bands band,
-                final Capabilities capability, final Timestamp closingDate,
-                final boolean isOpen) {  // Modify constructor
+                final Locations location, final int bandId,
+                final int capabilityId,
+                final boolean isOpen,
+                final Timestamp closingDate) {
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.location = location;
-        this.band = band;
-        this.capability = capability;
-        this.closingDate = closingDate;
+        this.bandId = bandId;
+        this.capabilityId = capabilityId;
         this.status = RoleStatus.fromBoolean(
-                isOpen);  // Initialize status from boolean
+                isOpen);
+        this.closingDate = closingDate;
     }
 
     public String getFormattedClosingDate() {
@@ -60,20 +59,20 @@ public class Role {
         this.location = location;
     }
 
-    public Bands getBand() {
-        return band;
+    public int getBandId() {
+        return bandId;
     }
 
-    public void setBand(final Bands band) {
-        this.band = band;
+    public void setBandId(final int bandId) {
+        this.bandId = bandId;
     }
 
-    public Capabilities getCapability() {
-        return capability;
+    public int getCapabilityId() {
+        return capabilityId;
     }
 
-    public void setCapability(final Capabilities capability) {
-        this.capability = capability;
+    public void setCapabilityId(final int capabilityId) {
+        this.capabilityId = capabilityId;
     }
 
     public RoleStatus getStatus() {  // Add getter for status
@@ -100,4 +99,3 @@ public class Role {
         this.status = RoleStatus.fromBoolean(isOpen);
     }
 }
-

@@ -18,6 +18,7 @@ public class WebServiceApplication extends
 
     /**
      * Main Method.
+     *
      * @param args
      * @throws Exception
      */
@@ -27,6 +28,7 @@ public class WebServiceApplication extends
 
     /**
      * Get app name.
+     *
      * @return the name of the App.
      */
     @Override
@@ -36,6 +38,7 @@ public class WebServiceApplication extends
 
     /**
      * Initialize the web app.
+     *
      * @param bootstrap the application bootstrap
      */
     @Override
@@ -51,6 +54,7 @@ public class WebServiceApplication extends
 
     /**
      * Run the web app.
+     *
      * @param configuration the parsed {@link WebServiceConfiguration} object
      * @param environment   the application's {@link Environment}
      */
@@ -60,10 +64,10 @@ public class WebServiceApplication extends
 
         environment.jersey()
                 .register(new RoleController(
-                                new RoleService(
-                                        new RoleDao()
-                                )
-                                        ));
+                        new RoleService(
+                                new RoleDao()
+                        )
+                ));
         environment.jersey()
                 .register(new AuthController(
                         new AuthService(

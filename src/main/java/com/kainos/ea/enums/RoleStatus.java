@@ -1,7 +1,8 @@
 package com.kainos.ea.enums;
 
 public enum RoleStatus {
-    OPEN("Open"), CLOSED("Closed");
+    OPEN("Open"),
+    CLOSED("Closed");
 
     private String value;
 

@@ -18,12 +18,14 @@ public class RoleIntegrationTest {
             new DropwizardAppExtension<>(WebServiceApplication.class);
 
     @Test
-    void getAllJobRoles_shouldReturnListOfJobRoles(){
+    void getAllJobRoles_shouldReturnListOfJobRoles() {
         Client client = APP.client();
 
         List<Role> response =
                 client.target("http://localhost:8080/api/job-roles").request()
                         .get(List.class);
+
         Assertions.assertFalse(response.isEmpty());
     }
 }
+
