@@ -4,7 +4,11 @@ public enum Entity {
     /**
      * LOGIN_REQUEST entity.
      */
-    LOGIN_REQUEST("Login Request");
+    LOGIN_REQUEST("Login Request"),
+    /**
+     * JOB_ROLE entity.
+     */
+    JOB_ROLE("Job Role");
 
     /**
      * Value for a custom Entity.

@@ -1,4 +1,4 @@
-package com.kainos.ea.controller;
+package com.kainos.ea.controllers;
 
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.LoginException;

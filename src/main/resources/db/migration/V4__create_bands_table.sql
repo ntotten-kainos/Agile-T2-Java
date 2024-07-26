@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS Bands (
+    bandId TINYINT AUTO_INCREMENT PRIMARY KEY,
+    bandValue VARCHAR(64) NOT NULL
+);
+
+INSERT INTO Bands (bandValue) VALUES
+('BAND1'),
+('BAND2'),
+('BAND3');

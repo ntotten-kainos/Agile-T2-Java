@@ -33,7 +33,8 @@ public class AuthDao {
             ResultSet resultSet = statement.executeQuery();
             Argon2PasswordEncoder arg2SpringSecurity = getPasswordEncoder();
             while (resultSet.next()) {
-                String encodedPassword = resultSet.getString("password");
+                String encodedPassword =
+                        resultSet.getString("password");
                 if (
                         arg2SpringSecurity.matches(
                                 loginRequest.getPassword(),

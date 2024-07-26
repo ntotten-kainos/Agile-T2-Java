@@ -1,19 +1,24 @@
 package com.kainos.ea;
 
-import com.kainos.ea.controller.AuthController;
+import com.kainos.ea.controllers.AuthController;
+import com.kainos.ea.controllers.RoleController;
 import com.kainos.ea.daos.AuthDao;
+import com.kainos.ea.daos.RoleDao;
 import com.kainos.ea.services.AuthService;
+import com.kainos.ea.services.RoleService;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
+
 public class WebServiceApplication extends
         Application<WebServiceConfiguration> {
 
     /**
      * Main Method.
+     *
      * @param args
      * @throws Exception
      */
@@ -23,6 +28,7 @@ public class WebServiceApplication extends
 
     /**
      * Get app name.
+     *
      * @return the name of the App.
      */
     @Override
@@ -32,6 +38,7 @@ public class WebServiceApplication extends
 
     /**
      * Initialize the web app.
+     *
      * @param bootstrap the application bootstrap
      */
     @Override
@@ -47,6 +54,7 @@ public class WebServiceApplication extends
 
     /**
      * Run the web app.
+     *
      * @param configuration the parsed {@link WebServiceConfiguration} object
      * @param environment   the application's {@link Environment}
      */
@@ -55,12 +63,16 @@ public class WebServiceApplication extends
                     final Environment environment) {
 
         environment.jersey()
-                    .register(
-                            new AuthController(
-                                    new AuthService(
-                                            new AuthDao()
-                                    )
-                            )
-                    );
+                .register(new RoleController(
+                        new RoleService(
+                                new RoleDao()
+                        )
+                ));
+        environment.jersey()
+                .register(new AuthController(
+                        new AuthService(
+                                new AuthDao()
+                        )
+                ));
     }
 }

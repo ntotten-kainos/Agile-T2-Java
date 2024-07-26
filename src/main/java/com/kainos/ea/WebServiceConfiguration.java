@@ -13,8 +13,8 @@ public class WebServiceConfiguration extends Configuration {
      */
     @Valid
     @NotNull
-    private final SwaggerBundleConfiguration swagger =
-            new SwaggerBundleConfiguration();
+    private final SwaggerBundleConfiguration swagger
+            = new SwaggerBundleConfiguration();
 
     /**
      * Get Swagger.
@@ -22,7 +22,7 @@ public class WebServiceConfiguration extends Configuration {
      */
     @JsonProperty("swagger")
     public SwaggerBundleConfiguration getSwagger() {
-        swagger.setResourcePackage("com.kainos.ea.controller");
+        swagger.setResourcePackage("com.kainos.ea.controllers");
         String[] schemes = {"http", "https"};
         swagger.setSchemes(schemes);
         return swagger;

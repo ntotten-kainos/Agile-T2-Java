@@ -1,5 +1,6 @@
 package com.kainos.ea.controller;
 
+import com.kainos.ea.controllers.AuthController;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.LoginException;
