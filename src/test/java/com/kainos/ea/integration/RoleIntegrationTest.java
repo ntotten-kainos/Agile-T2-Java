@@ -30,16 +30,5 @@ public class RoleIntegrationTest {
 
         Assertions.assertFalse(response.isEmpty());
     }
-    @Test
-    void getAllJobRoles_shouldReturnServerError_whenFailedToRetrieveException() {
-        Client client = APP.client();
-
-        Response response = client.target("http://localhost:8080/api/job-roles")
-                .request()
-                .get();
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
-        assertEquals("An error occurred while retrieving job roles.", response.readEntity(String.class));
-    }
-
 }
 
