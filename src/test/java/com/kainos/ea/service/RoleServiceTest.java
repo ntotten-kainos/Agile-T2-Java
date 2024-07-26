@@ -2,7 +2,7 @@ package com.kainos.ea.service;
 
 import com.kainos.ea.daos.RoleDao;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
-import com.kainos.ea.models.Role;
+import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.services.RoleService;
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +23,11 @@ public class RoleServiceTest {
     @Test
     void getAllJobRoles_shouldReturnsListOfOpenRoles_whenDaoReturnsListOfOpenRoles()
             throws SQLException, FailedToRetrieveException {
-        List<Role> roles = Arrays.asList();
+        List<RoleResponse> roles = Arrays.asList();
 
         when(roleDao.getAllJobRoles()).thenReturn(roles);
 
-        List<Role> actualRoles = roleService.getAllJobRoles();
+        List<RoleResponse> actualRoles = roleService.getAllJobRoles();
 
         assertEquals(roles, actualRoles);
     }

@@ -3,7 +3,7 @@ package com.kainos.ea.controller;
 import com.kainos.ea.controllers.RoleController;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
-import com.kainos.ea.models.Role;
+import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.services.RoleService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,21 +26,21 @@ public class RoleControllerTest {
 
     Timestamp closingDate = Timestamp.valueOf("2024-12-31 23:59:59");
 
-    private final Role role = new Role(1, "Software Engineer", Locations.BELFAST,
+    private final RoleResponse role = new RoleResponse(1, "Software Engineer", Locations.BELFAST,
                 "", "",
             true, closingDate);
 
     @Test
     void getAllJobRoles_shouldReturnOpenJobRoles() throws SQLException,
             FailedToRetrieveException {
-        List<Role> roles = Arrays.asList(role);
+        List<RoleResponse> roles = Arrays.asList(role);
 
         when(roleService.getAllJobRoles()).thenReturn(roles);
 
         Response response = roleController.getAllJobRoles();
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-        assertFalse(((List<Role>) response.getEntity()).isEmpty());
+        assertFalse(((List<RoleResponse>) response.getEntity()).isEmpty());
         assertEquals(roles, response.getEntity());
     }
 
@@ -55,11 +55,12 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getAllJobRoles_shouldThrowSQLException_whenSqlExceptionThrown() throws SQLException, FailedToRetrieveException {
+    void getAllJobRoles_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
         when(roleService.getAllJobRoles()).thenThrow(SQLException.class);
 
-        assertThrows(SQLException.class, () -> {
-            roleController.getAllJobRoles();
-        });
+        Response response = roleController.getAllJobRoles();
+
+        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
+        assertEquals("An error occurred while retrieving job roles.", response.getEntity());
     }
 }

@@ -6,7 +6,7 @@ import com.kainos.ea.enums.RoleStatus;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-public class Role {
+public class RoleResponse {
     private int jobRoleId;
     private String roleName;
     private Locations location;
@@ -15,7 +15,7 @@ public class Role {
     private RoleStatus status;  // Add this line
     private Timestamp closingDate;
 
-    public Role(final int jobRoleId, final String roleName,
+    public RoleResponse(final int jobRoleId, final String roleName,
                 final Locations location, final String bandValue,
                 final String capabilityName,
                 final boolean isOpen,

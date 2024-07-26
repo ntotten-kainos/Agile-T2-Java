@@ -25,7 +25,7 @@ public class RoleController {
     public Response getAllJobRoles() throws SQLException {
         try {
             return Response.ok().entity(roleService.getAllJobRoles()).build();
-        } catch (FailedToRetrieveException e) {
+        } catch (FailedToRetrieveException | SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving job roles.")
                     .build();

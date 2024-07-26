@@ -2,7 +2,7 @@ package com.kainos.ea.integration;
 
 import com.kainos.ea.WebServiceApplication;
 import com.kainos.ea.WebServiceConfiguration;
-import com.kainos.ea.models.Role;
+import com.kainos.ea.models.RoleResponse;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +24,7 @@ public class RoleIntegrationTest {
     void getAllJobRoles_shouldReturnListOfJobRoles() {
         Client client = APP.client();
 
-        List<Role> response =
+        List<RoleResponse> response =
                 client.target("http://localhost:8080/api/job-roles").request()
                         .get(List.class);
 

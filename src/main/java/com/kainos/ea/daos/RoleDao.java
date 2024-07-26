@@ -4,7 +4,7 @@ import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
-import com.kainos.ea.models.Role;
+import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.util.DatabaseConnector;
 
 import java.sql.Connection;
@@ -21,9 +21,9 @@ public class RoleDao {
      * @throws SQLException
      * @throws FailedToRetrieveException
      */
-    public List<Role> getAllJobRoles()
+    public List<RoleResponse> getAllJobRoles()
             throws SQLException, FailedToRetrieveException {
-        List<Role> roles = new ArrayList<>();
+        List<RoleResponse> roles = new ArrayList<>();
 
         try (Connection connection = DatabaseConnector.getConnection()) {
             assert connection != null;
@@ -42,7 +42,7 @@ public class RoleDao {
 
 
             while (resultSet.next()) {
-                Role role = new Role(resultSet.getInt("jobRoleId"),
+                RoleResponse roleResponse = new RoleResponse(resultSet.getInt("jobRoleId"),
                                         resultSet.getString("roleName"),
                                         Locations.fromString(
                                                 resultSet.getString(
@@ -52,7 +52,7 @@ public class RoleDao {
                         resultSet.getBoolean("status"),
                         resultSet.getTimestamp("closingDate")
                                 );
-                roles.add(role);
+                roles.add(roleResponse);
             }
             return roles;
         } catch (DatabaseConnectionException e) {
