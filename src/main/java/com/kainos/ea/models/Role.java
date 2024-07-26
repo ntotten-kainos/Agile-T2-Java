@@ -59,19 +59,19 @@ public class Role {
         this.location = location;
     }
 
-    public String getBandValue() {
+    public final String getBandValue() {
         return bandValue;
     }
 
-    public void setBandValue(String bandValue) {
+    public void setBandValue(final String bandValue) {
         this.bandValue = bandValue;
     }
 
-    public String getCapabilityName() {
+    public final String getCapabilityName() {
         return capabilityName;
     }
 
-    public void setCapabilityName(String capabilityName) {
+    public void setCapabilityName(final String capabilityName) {
         this.capabilityName = capabilityName;
     }
 
