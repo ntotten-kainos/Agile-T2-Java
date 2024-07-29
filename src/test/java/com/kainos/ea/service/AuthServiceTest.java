@@ -18,7 +18,7 @@ public class AuthServiceTest {
     private static final User USER = new User("user2@email.com", "validP4$Sword!123", 1);
     private static final LoginRequest LOGIN_REQUEST = new LoginRequest("user2@email.com", "validP4$Sword!123");
     AuthDao mockAuthDao = Mockito.mock(AuthDao.class);
-    AuthService authService = new AuthService(mockAuthDao);
+    AuthService authService = new AuthService(mockAuthDao, jwtKey);
 
     @Test
     public void login_shouldThrowInvalidException_whenNoValidUserFound() throws DatabaseConnectionException, SQLException {
