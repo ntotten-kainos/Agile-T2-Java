@@ -12,12 +12,13 @@ import java.util.Optional;
 public class JwtAuthenticator implements Authenticator<String, JwtToken> {
     Key key;
 
-    public JwtAuthenticator(Key key) {
+    public JwtAuthenticator(final Key key) {
         this.key = key;
     }
 
     @Override
-    public Optional<JwtToken> authenticate(String token) throws AuthenticationException {
+    public Optional<JwtToken> authenticate(final String token)
+            throws AuthenticationException {
         try {
             Integer userRoleId = Jwts.parser()
                     .setSigningKey(key)

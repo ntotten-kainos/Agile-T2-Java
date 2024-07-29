@@ -3,14 +3,12 @@ package com.kainos.ea.controllers;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
-import com.kainos.ea.models.UserRole;
 import com.kainos.ea.services.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiKeyAuthDefinition;
 import io.swagger.annotations.SecurityDefinition;
 import io.swagger.annotations.SwaggerDefinition;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;

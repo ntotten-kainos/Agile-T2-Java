@@ -36,7 +36,7 @@ public class AuthService {
      * @param authDaoParam
      * @param jwtKey
      */
-    public AuthService(final AuthDao authDaoParam, Key jwtKey) {
+    public AuthService(final AuthDao authDaoParam, final Key jwtKey) {
         this.authDao = authDaoParam;
         this.jwtKey = Jwts.SIG.HS256.key().build();
     }

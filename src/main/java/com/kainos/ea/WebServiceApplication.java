@@ -81,7 +81,8 @@ public class WebServiceApplication extends
                         .setPrefix("Bearer")
                         .buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
-        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(JwtToken.class));
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(
+                JwtToken.class));
 
 
         environment.jersey()
@@ -90,13 +91,8 @@ public class WebServiceApplication extends
                                 new RoleDao()
                         )
                 ));
-        environment.jersey()
-                .register(new AuthController(
-                        new AuthService(
-                                new AuthDao()
-                                , jwtKey
-                        )
-                ));
-
+        environment.jersey().register(new AuthController(
+                new AuthService(new AuthDao(),
+                jwtKey)));
     }
 }
