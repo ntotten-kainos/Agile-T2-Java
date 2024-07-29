@@ -1,7 +1,6 @@
 package com.kainos.ea.controllers;
 
 import com.kainos.ea.exceptions.FailedToRetrieveException;
-import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.models.UserRole;
 import com.kainos.ea.services.RoleService;
 import io.swagger.annotations.Api;
@@ -16,6 +15,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.List;
 
 @Api("Job Role API")
 @Path("/api/job-roles")
@@ -32,9 +32,7 @@ public class RoleController {
     @ApiOperation(
             value = "Returns all Job Roles",
             authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
-            response = RoleResponse.class,
-            responseContainer = "List"
-    )
+            response = List.class)
 
     public Response getAllJobRoles() throws SQLException {
         try {

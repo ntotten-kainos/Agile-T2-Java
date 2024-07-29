@@ -38,7 +38,7 @@ public class AuthService {
      */
     public AuthService(final AuthDao authDaoParam, final Key jwtKey) {
         this.authDao = authDaoParam;
-        this.jwtKey = Jwts.SIG.HS256.key().build();
+        this.jwtKey = jwtKey;
     }
 
     /**
@@ -65,10 +65,11 @@ public class AuthService {
     }
 
     private String generateJwtToken(final User user) {
-        return Jwts.builder().issuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder()
+                .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + TOKEN_LIFE))
-                .subject(user.getEmail())
                 .claim("Role", user.getUserRoleId())
+                .subject((user.getEmail()))
                 .issuer("JobPortal_WebService")
                 .signWith(jwtKey)
                 .compact();
