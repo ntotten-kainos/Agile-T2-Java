@@ -1,7 +1,9 @@
 package com.kainos.ea.services;
 
 import com.kainos.ea.daos.RoleDao;
+import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
+import com.kainos.ea.models.RoleById;
 import com.kainos.ea.models.RoleResponse;
 
 import java.sql.SQLException;
@@ -18,5 +20,13 @@ public class RoleService {
     public List<RoleResponse> getAllJobRoles()
             throws SQLException, FailedToRetrieveException {
         return roleDao.getAllJobRoles();
+    }
+
+
+    public RoleById getRoleById(final int id)
+            throws SQLException, DatabaseConnectionException {
+         RoleById roleById = roleDao.getRoleById(id);
+
+         return roleById;
     }
 }
