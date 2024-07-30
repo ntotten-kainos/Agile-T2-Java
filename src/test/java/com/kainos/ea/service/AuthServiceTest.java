@@ -6,9 +6,12 @@ import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import com.kainos.ea.services.AuthService;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.security.Key;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +21,8 @@ public class AuthServiceTest {
     private static final User USER = new User("user2@email.com", "validP4$Sword!123", 1);
     private static final LoginRequest LOGIN_REQUEST = new LoginRequest("user2@email.com", "validP4$Sword!123");
     AuthDao mockAuthDao = Mockito.mock(AuthDao.class);
+    private static final Key jwtKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // new line?
+
     AuthService authService = new AuthService(mockAuthDao, jwtKey);
 
     @Test

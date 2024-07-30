@@ -1,4 +1,4 @@
-package com.kainos.ea.auth;
+package com.kainos.ea.authenticator;
 
 import com.kainos.ea.models.JwtToken;
 import com.kainos.ea.models.UserRole;
