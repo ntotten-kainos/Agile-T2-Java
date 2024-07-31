@@ -25,7 +25,8 @@ public class JobRoleResponse {
                            final Locations location, final String bandValue,
                            final String capabilityName,
                            final boolean isOpen,
-                           final Timestamp closingDate, final String specification) {
+                           final Timestamp closingDate,
+                           final String specification) {
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.description = description;
