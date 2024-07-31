@@ -19,6 +19,7 @@ public class RoleById {
     private Timestamp closingDate;
     private String specification;
 
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public RoleById(final int jobRoleId, final String roleName,
                     final String description,
                     final String responsibilities,
