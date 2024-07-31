@@ -6,7 +6,7 @@ import com.kainos.ea.enums.RoleStatus;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-public class RoleById {
+public class JobRoleResponse {
 
     private int jobRoleId;
     private String roleName;
@@ -19,14 +19,13 @@ public class RoleById {
     private Timestamp closingDate;
     private String specification;
 
-    @SuppressWarnings("checkstyle:ParameterNumber")
-    public RoleById(final int jobRoleId, final String roleName,
-                    final String description,
-                    final String responsibilities,
-                    final Locations location, final String bandValue,
-                    final String capabilityName,
-                    final boolean isOpen,
-                    final Timestamp closingDate, final String specification) {
+    public JobRoleResponse(final int jobRoleId, final String roleName,
+                           final String description,
+                           final String responsibilities,
+                           final Locations location, final String bandValue,
+                           final String capabilityName,
+                           final boolean isOpen,
+                           final Timestamp closingDate, final String specification) {
         this.jobRoleId = jobRoleId;
         this.roleName = roleName;
         this.description = description;

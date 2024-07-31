@@ -4,7 +4,7 @@ import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
-import com.kainos.ea.models.RoleById;
+import com.kainos.ea.models.JobRoleResponse;
 import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.util.DatabaseConnector;
 
@@ -64,7 +64,7 @@ public class RoleDao {
         }
     }
 
-    public RoleById getRoleById(final int id)
+    public JobRoleResponse getRoleById(final int id)
             throws SQLException, DatabaseConnectionException {
         String query =
                 "SELECT jr.jobRoleId, jr.roleName, jr.description, "
@@ -82,7 +82,7 @@ public class RoleDao {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new RoleById(
+                return new JobRoleResponse(
                         resultSet.getInt("jobRoleId"),
                         resultSet.getString("roleName"),
                         resultSet.getString("description"),
