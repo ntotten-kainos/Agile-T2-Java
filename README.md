@@ -28,6 +28,7 @@ export FLYWAY_URL="jdbc:mysql://YOUR_DB_HOST/YOUR_DB_NAME"
 export FLYWAY_USER="YOUR_DB_USERNAME"
 export FLYWAY_PASSWORD="YOUR_DB_PASSWORD"
 export FLYWAY_BASELINE_ON_MIGRATE=true
+export SESSION_SECRET="SUPER_SECRET"
 ```
 
 3. Reload your terminal session if required:
