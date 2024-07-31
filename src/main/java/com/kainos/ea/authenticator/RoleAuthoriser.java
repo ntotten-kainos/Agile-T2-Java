@@ -1,4 +1,4 @@
-package com.kainos.ea.auth;
+package com.kainos.ea.authenticator;
 
 import com.kainos.ea.models.JwtToken;
 import io.dropwizard.auth.Authorizer;
