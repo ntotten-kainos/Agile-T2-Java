@@ -1,3 +1,4 @@
+
 package com.kainos.ea.integration;
 
 import com.kainos.ea.WebServiceApplication;
@@ -6,15 +7,12 @@ import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.RoleResponse;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,11 +29,17 @@ public class RoleIntegrationTest {
 
         Response response = client.target("http://localhost:8080/api/auth/login")
                 .request()
-                .post(Entity.json(new LoginRequest(System.getenv().get("VALID_TEST_EMAIL"), System.getenv().get("VALID_TEST_PASSWORD"))));
+                .post(Entity.json(new LoginRequest(
+                        System.getenv().get("VALID_TEST_EMAIL"),
+                        System.getenv().get("VALID_TEST_PASSWORD")
+                )));
 
-        return response.readEntity(String.class);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+        String token = response.readEntity(String.class);
+        assertNotNull(token);
+        return token;
     }
-
 
     @Test
     public void getAllJobRoles_shouldReturnListOfJobRoles() {
@@ -54,4 +58,5 @@ public class RoleIntegrationTest {
         assertFalse(roles.isEmpty());
     }
 }
+
 
