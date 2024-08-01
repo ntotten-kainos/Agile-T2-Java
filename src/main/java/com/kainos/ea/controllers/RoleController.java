@@ -43,7 +43,7 @@ public class RoleController {
 
         try {
             return Response.ok().entity(roleService.getRoleById(id)).build();
-        } catch (SQLException e) {
+        } catch (FailedToRetrieveException | SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving "
                             + "job role by ID.")

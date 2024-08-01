@@ -63,4 +63,5 @@ public class RoleControllerTest {
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
     }
+
 }

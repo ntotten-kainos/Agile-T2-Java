@@ -24,7 +24,8 @@ public class RoleService {
 
 
     public JobRoleResponse getRoleById(final int id)
-            throws SQLException, DatabaseConnectionException {
+            throws SQLException, DatabaseConnectionException,
+            FailedToRetrieveException {
         JobRoleResponse roleById = roleDao.getRoleById(id);
 
          return roleById;
