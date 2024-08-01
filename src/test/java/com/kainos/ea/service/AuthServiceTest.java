@@ -6,9 +6,13 @@ import com.kainos.ea.exceptions.LoginException;
 import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.User;
 import com.kainos.ea.services.AuthService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.security.Key;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +22,17 @@ public class AuthServiceTest {
     private static final User USER = new User("user2@email.com", "validP4$Sword!123", 1);
     private static final LoginRequest LOGIN_REQUEST = new LoginRequest("user2@email.com", "validP4$Sword!123");
     AuthDao mockAuthDao = Mockito.mock(AuthDao.class);
-    AuthService authService = new AuthService(mockAuthDao);
+    private Key jwtKey;
+    AuthService authService;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+        keyGen.init(256); // for example
+        SecretKey secretKey = keyGen.generateKey();
+        this.jwtKey = secretKey;
+        authService = new AuthService(mockAuthDao, jwtKey);
+    }
 
     @Test
     public void login_shouldThrowInvalidException_whenNoValidUserFound() throws DatabaseConnectionException, SQLException {
