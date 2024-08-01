@@ -22,13 +22,15 @@ import static org.mockito.Mockito.when;
 public class RoleControllerTest {
     RoleService roleService = Mockito.mock(RoleService.class);
 
-    private final RoleController roleController = new RoleController(roleService);
+    private final RoleController roleController =
+            new RoleController(roleService);
 
     Timestamp closingDate = Timestamp.valueOf("2024-12-31 23:59:59");
 
-    private final RoleResponse role = new RoleResponse(1, "Software Engineer", Locations.BELFAST,
-                "", "",
-            true, closingDate);
+    private final RoleResponse role =
+            new RoleResponse(1, "Software Engineer", Locations.BELFAST,
+                    "", "",
+                    true, closingDate);
 
     @Test
     void getAllJobRoles_shouldReturnOpenJobRoles() throws SQLException,
@@ -45,23 +47,29 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getAllJobRoles_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles()).thenThrow(FailedToRetrieveException.class);
+    void getAllJobRoles_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown()
+            throws SQLException, FailedToRetrieveException {
+        when(roleService.getAllJobRoles()).thenThrow(
+                FailedToRetrieveException.class);
 
         Response response = roleController.getAllJobRoles();
 
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
-        assertEquals("An error occurred while retrieving job roles.", response.getEntity());
+        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                response.getStatus());
+        assertEquals("An error occurred while retrieving job roles.",
+                response.getEntity());
     }
 
     @Test
-    void getAllJobRoles_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
+    void getAllJobRoles_shouldReturnInternalServerError_whenSQLExceptionThrown()
+            throws SQLException, FailedToRetrieveException {
         when(roleService.getAllJobRoles()).thenThrow(SQLException.class);
 
         Response response = roleController.getAllJobRoles();
 
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
-        assertEquals("An error occurred while retrieving job roles.", response.getEntity());
+        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                response.getStatus());
+        assertEquals("An error occurred while retrieving job roles.",
+                response.getEntity());
     }
-
 }
