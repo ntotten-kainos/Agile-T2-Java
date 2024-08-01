@@ -27,28 +27,28 @@ public class RoleAuthoriserTest {
 
     @Test
     public void testAuthorize_WithMatchingRole() {
-        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.ADMIN);
-        assertTrue(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN));
+        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.ADMIN_USER);
+        assertTrue(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN_USER));
     }
 
     @Test
     public void testAuthorize_WithNonMatchingRole() {
-        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.USER);
-        assertFalse(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN));
+        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.APPLICANT_USER);
+        assertFalse(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN_USER));
     }
 
     @Test
     public void testAuthorize_WithContainerRequestContext_WithMatchingRole() {
-        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.ADMIN);
+        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.ADMIN_USER);
         ContainerRequestContext requestContext = Mockito.mock(ContainerRequestContext.class);
-        assertTrue(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN, requestContext));
+        assertTrue(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN_USER, requestContext));
     }
 
     @Test
     public void testAuthorize_WithContainerRequestContext_WithNonMatchingRole() {
-        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.USER);
+        Mockito.when(userRole.getRoleName()).thenReturn(UserRole.APPLICANT_USER);
         ContainerRequestContext requestContext = Mockito.mock(ContainerRequestContext.class);
-        assertFalse(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN, requestContext));
+        assertFalse(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN_USER, requestContext));
     }
 }
 

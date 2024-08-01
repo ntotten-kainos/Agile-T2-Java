@@ -40,7 +40,7 @@ public class JwtAuthenticatorTest {
 
         assertTrue(result.isPresent());
         assertEquals(1, result.get().getUserRole().getUserRoleId());
-        assertEquals(UserRole.ADMIN, result.get().getUserRole().getRoleName());
+        assertEquals(UserRole.ADMIN_USER, result.get().getUserRole().getRoleName());
     }
 
     @Test
