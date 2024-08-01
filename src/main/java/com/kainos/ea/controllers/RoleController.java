@@ -28,7 +28,7 @@ public class RoleController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({UserRole.ADMIN, UserRole.USER})
+    @RolesAllowed({UserRole.ADMIN_USER, UserRole.APPLICANT_USER})
     @ApiOperation(
             value = "Returns all Job Roles",
             authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
