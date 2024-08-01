@@ -4,15 +4,15 @@ import java.util.Map;
 
 public class UserRole {
 
-    public static final String ADMIN = "admin";
+    public static final String ADMIN_USER = "admin";
 
-    public static final String USER = "user";
+    public static final String APPLICANT_USER = "user";
 
     int userRoleId;
 
-    private static final Map<Integer, String> ROLESMAP = Map.of(
-            1, ADMIN,
-            2, USER
+    private static final Map<Integer, String> USERMAP = Map.of(
+            1, ADMIN_USER,
+            2, APPLICANT_USER
 
     );
     public UserRole(final int userRoleId) {
@@ -27,6 +27,6 @@ public class UserRole {
         this.userRoleId = userRoleId;
     }
     public String getRoleName() {
-        return ROLESMAP.get(getUserRoleId());
+        return USERMAP.get(getUserRoleId());
     }
 }

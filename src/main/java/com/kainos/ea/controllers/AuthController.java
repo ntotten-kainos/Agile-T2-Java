@@ -55,7 +55,6 @@ public class AuthController {
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    //@RolesAllowed({UserRole.ADMIN, UserRole.USER}) unsure about this part
     public Response login(final LoginRequest loginRequest) {
         try {
             return Response.ok()
