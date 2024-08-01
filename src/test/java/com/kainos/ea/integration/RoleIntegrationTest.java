@@ -57,6 +57,16 @@ public class RoleIntegrationTest {
         assertNotNull(roles);
         assertFalse(roles.isEmpty());
     }
+    @Test
+    public void getAllJobRoles_shouldReturn401WhenNoTokenProvided() {
+        Client client = APP.client();
+
+        Response response = client.target("http://localhost:8080/api/job-roles")
+                .request()
+                .get();
+
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
+    }
 }
 
 
