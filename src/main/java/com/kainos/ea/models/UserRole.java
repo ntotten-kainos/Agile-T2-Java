@@ -6,13 +6,18 @@ public class UserRole {
 
     public static final String ADMIN_USER = "admin";
 
-    public static final String APPLICANT_USER = "user";
+    public static final String APPLICANT_USER = "applicant";
+
+    public static final String HR_USER = "HR";
 
     int userRoleId;
 
     private static final Map<Integer, String> USERMAP = Map.of(
             1, ADMIN_USER,
-            2, APPLICANT_USER
+
+            2, HR_USER,
+
+            3, APPLICANT_USER
 
     );
     public UserRole(final int userRoleId) {
