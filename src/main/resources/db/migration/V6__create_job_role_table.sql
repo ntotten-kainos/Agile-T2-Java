@@ -10,7 +10,3 @@ CREATE TABLE IF NOT EXISTS JobRoles (
     FOREIGN KEY (bandId) REFERENCES Bands(bandId),
     FOREIGN KEY (capabilityId) REFERENCES Capabilities(capabilityId)
 );
-
-
-
-
