@@ -50,6 +50,12 @@ public class RoleController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({UserRole.ADMIN_USER, UserRole.APPLICANT_USER})
+    @ApiOperation(
+            value = "Returns a Job Role by ID",
+            authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
+            response = List.class)
+
     public Response getRoleById(@PathParam("id") final int id)
             throws SQLException, DatabaseConnectionException {
 

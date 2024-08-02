@@ -1,5 +1,6 @@
 package com.kainos.ea.integration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kainos.ea.WebServiceApplication;
 import com.kainos.ea.WebServiceConfiguration;
 import com.kainos.ea.models.JobRoleResponse;
@@ -15,7 +16,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,12 +28,13 @@ public class RoleIntegrationTest {
     private String loginAndGetToken() {
         Client client = APP.client();
 
-        Response response = client.target("http://localhost:8080/api/auth/login")
-                .request()
-                .post(Entity.json(new LoginRequest(
-                        System.getenv().get("VALID_TEST_EMAIL"),
-                        System.getenv().get("VALID_TEST_PASSWORD")
-                )));
+        Response response =
+                client.target("http://localhost:8080/api/auth/login")
+                        .request()
+                        .post(Entity.json(new LoginRequest(
+                                System.getenv().get("VALID_TEST_EMAIL"),
+                                System.getenv().get("VALID_TEST_PASSWORD")
+                        )));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -58,6 +59,7 @@ public class RoleIntegrationTest {
         assertNotNull(roles);
         assertFalse(roles.isEmpty());
     }
+
     @Test
     public void getAllJobRoles_shouldReturn401WhenNoTokenProvided() {
         Client client = APP.client();
@@ -66,22 +68,30 @@ public class RoleIntegrationTest {
                 .request()
                 .get();
 
-        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(),
+                response.getStatus());
     }
 
     @Test
-    void getRoleById_shouldReturnJobRole() {
+    void getRoleById_shouldReturnJobRole() throws JsonProcessingException {
         Client client = APP.client();
+        String token = loginAndGetToken();
         int id = 1;
 
         Response response =
                 client.target("http://localhost:8080/api/job-roles/" + id)
                         .request()
+                        .header("Authorization", "Bearer " + token)
                         .get();
+
+        // Log response body for debugging
+        String responseBody = response.readEntity(String.class);
+        System.out.println("Response body: " + responseBody);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-        JobRoleResponse role = response.readEntity(JobRoleResponse.class);
+        // Deserialize the response body
+        JobRoleResponse role = APP.getObjectMapper().readValue(responseBody, JobRoleResponse.class);
         assertNotNull(role);
         assertEquals(id, role.getJobRoleId());
     }
@@ -89,14 +99,17 @@ public class RoleIntegrationTest {
     @Test
     void getRoleById_shouldReturnNotFoundForNonExistentRole() {
         Client client = APP.client();
+        String token = loginAndGetToken();
         int nonExistentId = 9999; // Assuming this ID does not exist
 
         Response response =
-                client.target("http://localhost:8080/api/job-roles/" + nonExistentId)
+                client.target(
+                                "http://localhost:8080/api/job-roles/" + nonExistentId)
                         .request()
+                        .header("Authorization", "Bearer " + token)
                         .get();
 
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
+        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                response.getStatus());
     }
 }
-
