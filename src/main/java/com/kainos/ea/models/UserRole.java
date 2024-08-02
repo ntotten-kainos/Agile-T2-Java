@@ -12,7 +12,7 @@ public class UserRole {
 
     private static final Map<Integer, String> USERMAP = Map.of(
             1, ADMIN_USER,
-            2, APPLICANT_USER
+            3, APPLICANT_USER
 
     );
     public UserRole(final int userRoleId) {
