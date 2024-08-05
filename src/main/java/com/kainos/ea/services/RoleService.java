@@ -19,4 +19,11 @@ public class RoleService {
             throws SQLException, FailedToRetrieveException {
         return roleDao.getAllJobRoles();
     }
+
+    public List<RoleResponse> getOrderedJobRoles(
+            final String orderBy, final String direction)
+            throws SQLException, FailedToRetrieveException {
+        return roleDao.getOrderedJobRoles(orderBy, direction);
+    }
 }
+
