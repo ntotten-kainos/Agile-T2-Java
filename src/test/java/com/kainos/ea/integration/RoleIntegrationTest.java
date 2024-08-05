@@ -43,6 +43,7 @@ public class RoleIntegrationTest {
         return token;
     }
 
+
     @Test
     public void getAllJobRoles_shouldReturnListOfJobRoles() {
         Client client = APP.client();
