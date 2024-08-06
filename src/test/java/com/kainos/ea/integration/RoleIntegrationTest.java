@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class RoleIntegrationTest {
     private static final DropwizardAppExtension<WebServiceConfiguration> APP =
             new DropwizardAppExtension<>(WebServiceApplication.class);
+
     private String loginAndGetToken() {
         Client client = APP.client();
         Response response =
@@ -38,6 +39,7 @@ public class RoleIntegrationTest {
         assertNotNull(token);
         return token;
     }
+
     @Test
     public void getAllJobRoles_shouldReturnListOfJobRoles() {
         Client client = APP.client();
@@ -51,6 +53,7 @@ public class RoleIntegrationTest {
         assertNotNull(roles);
         assertFalse(roles.isEmpty());
     }
+
     @Test
     public void getAllJobRoles_shouldReturn401WhenNoTokenProvided() {
         Client client = APP.client();
@@ -62,6 +65,7 @@ public class RoleIntegrationTest {
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(),
                 response.getStatus());
     }
+
     @Test
     void getJobRoleById_shouldReturnJobRoleResponse(){
         Client client = APP.client();

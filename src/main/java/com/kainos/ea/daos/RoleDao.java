@@ -60,7 +60,7 @@ public class RoleDao {
         }
     }
     public JobRoleResponse getRoleById(final int id)
-            throws SQLException, DatabaseConnectionException {
+            throws SQLException, FailedToRetrieveException {
         String query =
                 "SELECT jr.jobRoleId, jr.roleName, jr.description, "
                         + "jr.responsibilities, jr.location, jr.specification, "
@@ -87,6 +87,8 @@ public class RoleDao {
                         resultSet.getString("specification"));
             }
             return null;
+        } catch (DatabaseConnectionException e) {
+            throw new FailedToRetrieveException(Entity.JOB_ROLE);
         }
     }
     }

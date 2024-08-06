@@ -1,5 +1,4 @@
 package com.kainos.ea;
-
 import com.kainos.ea.authenticator.JwtAuthenticator;
 import com.kainos.ea.authenticator.RoleAuthoriser;
 import com.kainos.ea.controllers.AuthController;

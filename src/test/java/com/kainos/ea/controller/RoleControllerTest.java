@@ -4,6 +4,7 @@ import com.kainos.ea.controllers.RoleController;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
+import com.kainos.ea.exceptions.JobRoleNotFoundException;
 import com.kainos.ea.models.JobRoleResponse;
 import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.services.RoleService;
@@ -53,7 +54,8 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getRoleById_shouldReturnJobRole_whenIdIsValid() throws SQLException, FailedToRetrieveException, DatabaseConnectionException {
+    void getRoleById_shouldReturnJobRole_whenIdIsValid() throws SQLException, FailedToRetrieveException, DatabaseConnectionException,
+            JobRoleNotFoundException {
         when(roleService.getRoleById(1)).thenReturn(jobRoleResponse);
         Response response = roleController.getRoleById(1);
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -61,7 +63,7 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getRoleById_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException {
+    void getRoleById_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException, JobRoleNotFoundException {
         when(roleService.getRoleById(1)).thenThrow(FailedToRetrieveException.class);
         Response response = roleController.getRoleById(1);
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
@@ -69,7 +71,7 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getRoleById_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException {
+    void getRoleById_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException, JobRoleNotFoundException {
         when(roleService.getRoleById(1)).thenThrow(SQLException.class);
         Response response = roleController.getRoleById(1);
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
@@ -77,7 +79,7 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getRoleById_shouldReturnInternalServerError_whenDatabaseConnectionExceptionThrown() throws SQLException, FailedToRetrieveException, DatabaseConnectionException {
+    void getRoleById_shouldReturnInternalServerError_whenDatabaseConnectionExceptionThrown() throws SQLException, FailedToRetrieveException, DatabaseConnectionException, JobRoleNotFoundException {
         when(roleService.getRoleById(1)).thenThrow(DatabaseConnectionException.class);
         Response response = roleController.getRoleById(1);
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
@@ -85,16 +87,10 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getRoleById_shouldReturnNull_whenRoleNotFound() throws SQLException, DatabaseConnectionException, FailedToRetrieveException {
+    void getRoleById_shouldReturnNull_whenRoleNotFound() throws SQLException, DatabaseConnectionException, FailedToRetrieveException, JobRoleNotFoundException{
         when(roleService.getRoleById(1)).thenReturn(null);
         Response response = roleController.getRoleById(1);
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
     }
 }
-
-
-
-
-
-

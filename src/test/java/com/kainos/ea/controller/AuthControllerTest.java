@@ -22,10 +22,12 @@ public class AuthControllerTest {
             System.getenv().get("VALID_TEST_EMAIL"),
             System.getenv().get("VALID_TEST_PASSWORD")
     );
+
     private static final LoginRequest INVALID_LOGIN_REQUEST = new LoginRequest(
             "invalid.admin@email.com",
             "invalid"
     );
+
     @Test
     public void login_shouldReturnOK_whenValidLoginRequest() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(VALID_LOGIN_REQUEST)).thenReturn(
@@ -40,6 +42,7 @@ public class AuthControllerTest {
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity().toString());
     }
+
     @Test
     public void login_shouldReturnBadRequest_whenInvalidLogin() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(INVALID_LOGIN_REQUEST)).thenThrow(new LoginException(Entity.LOGIN_REQUEST));
@@ -47,6 +50,7 @@ public class AuthControllerTest {
         Response response = authController.login(INVALID_LOGIN_REQUEST);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
     }
+
     @Test
     public void login_shouldReturnServerError_whenSQLErrorOccurs() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(INVALID_LOGIN_REQUEST)).thenThrow(new SQLException());
@@ -54,6 +58,7 @@ public class AuthControllerTest {
         Response response = authController.login(INVALID_LOGIN_REQUEST);
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
     }
+
     @Test
     public void login_shouldReturnServerError_whenDBConnErrorOccurs() throws DatabaseConnectionException, SQLException, LoginException {
         when(mockAuthService.login(INVALID_LOGIN_REQUEST)).thenThrow(new DatabaseConnectionException(new Exception()));
@@ -61,6 +66,7 @@ public class AuthControllerTest {
         Response response = authController.login(INVALID_LOGIN_REQUEST);
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
     }
+
     @Test
     public void login_shouldReturnBadRequest_whenEmailIsInvalidFormat() throws DatabaseConnectionException, SQLException, LoginException {
         LoginRequest invalidEmailFormat = new LoginRequest(
@@ -72,6 +78,7 @@ public class AuthControllerTest {
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
         assertEquals("Login Request: Invalid Login Credentials!", response.getEntity().toString());
     }
+
     @Test
     public void login_shouldReturnBadRequest_whenPasswordIsInvalidFormat() throws DatabaseConnectionException, SQLException, LoginException {
         LoginRequest invalidPasswordFormat = new LoginRequest(

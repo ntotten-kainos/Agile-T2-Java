@@ -2,6 +2,7 @@ package com.kainos.ea.controllers;
 
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
+import com.kainos.ea.exceptions.JobRoleNotFoundException;
 import com.kainos.ea.models.UserRole;
 import com.kainos.ea.services.RoleService;
 import io.swagger.annotations.Api;
@@ -49,12 +50,15 @@ public class RoleController {
             value = "Returns a Job Role by ID",
             authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
             response = List.class)
-    public Response getRoleById(@PathParam("id") final int id)
-            throws SQLException, DatabaseConnectionException {
+    public Response getRoleById(@PathParam("id") final int id) {
         try {
             return Response.ok().entity(roleService.getRoleById(id)).build();
+        } catch (FailedToRetrieveException | JobRoleNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(e.getMessage())
+                    .build();
         } catch
-        (FailedToRetrieveException | SQLException | DatabaseConnectionException
+        (SQLException | DatabaseConnectionException
                         e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving "

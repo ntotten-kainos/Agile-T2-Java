@@ -4,6 +4,7 @@ import com.kainos.ea.daos.RoleDao;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
+import com.kainos.ea.exceptions.JobRoleNotFoundException;
 import com.kainos.ea.models.JobRoleResponse;
 import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.services.RoleService;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.when;
 public class RoleServiceTest {
     RoleDao roleDao = mock(RoleDao.class);
     RoleService roleService = new RoleService(roleDao);
+
     @Test
     void getAllJobRoles_shouldReturnsListOfOpenRoles_whenDaoReturnsListOfOpenRoles()
             throws SQLException, FailedToRetrieveException {
@@ -32,6 +34,7 @@ public class RoleServiceTest {
         List<RoleResponse> actualRoles = roleService.getAllJobRoles();
         assertEquals(roles, actualRoles);
     }
+
     @Test
     void getAllJobRoles_shouldThrowSQLException_whenDaoThrowsSQLException()
             throws SQLException, FailedToRetrieveException {
@@ -40,6 +43,7 @@ public class RoleServiceTest {
             roleService.getAllJobRoles();
         });
     }
+
     @Test
     void getAllJobRoles_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveException()
             throws SQLException, FailedToRetrieveException {
@@ -49,10 +53,11 @@ public class RoleServiceTest {
             roleService.getAllJobRoles();
         });
     }
+
     @Test
     void getRoleById_shouldReturnRole_whenDaoReturnsRole()
             throws SQLException, DatabaseConnectionException,
-            FailedToRetrieveException {
+            FailedToRetrieveException, JobRoleNotFoundException {
         int id = 1;
         JobRoleResponse jobRoleResponse = new JobRoleResponse(
                 id,
@@ -85,9 +90,11 @@ public class RoleServiceTest {
         JobRoleResponse result = roleService.getRoleById(id);
         assertEquals(jobRoleResponse, result);
     }
+
     @Test
     void getRoleById_shouldThrowSQLException_whenDaoThrowsSQLException()
-            throws SQLException, DatabaseConnectionException {
+            throws SQLException, DatabaseConnectionException,
+            FailedToRetrieveException {
         int id = 1;
 
         when(roleDao.getRoleById(id)).thenThrow(SQLException.class);
@@ -96,24 +103,25 @@ public class RoleServiceTest {
             roleService.getRoleById(id);
         });
     }
+
     @Test
     void getRoleById_shouldThrowDatabaseConnectionException_whenDaoThrowsDatabaseConnectionException()
-            throws SQLException, DatabaseConnectionException {
+            throws SQLException,
+            FailedToRetrieveException {
         int id = 1;
         when(roleDao.getRoleById(id)).thenThrow(DatabaseConnectionException.class);
         assertThrows(DatabaseConnectionException.class, () -> {
             roleService.getRoleById(id);
         });
     }
+
     @Test
     void getRoleById_shouldReturnNull_whenDaoReturnsNull()
             throws SQLException, DatabaseConnectionException,
-            FailedToRetrieveException {
+            FailedToRetrieveException, JobRoleNotFoundException {
         int id = 1;
         when(roleDao.getRoleById(id)).thenReturn(null);
         JobRoleResponse actualJobRoleResponse = roleService.getRoleById(id);
         assertEquals(null, actualJobRoleResponse);
     }
 }
-
-
