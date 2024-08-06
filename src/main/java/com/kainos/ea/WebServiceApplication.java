@@ -19,13 +19,11 @@ import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import io.jsonwebtoken.Jwts;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
-
 import java.security.Key;
 
 
 public class WebServiceApplication extends
         Application<WebServiceConfiguration> {
-
     /**
      * Main Method.
      *
@@ -35,7 +33,6 @@ public class WebServiceApplication extends
     public static void main(final String[] args) throws Exception {
         new WebServiceApplication().run(args);
     }
-
     /**
      * Get app name.
      *
@@ -45,7 +42,6 @@ public class WebServiceApplication extends
     public String getName() {
         return "WebService";
     }
-
     /**
      * Initialize the web app.
      *
@@ -61,7 +57,6 @@ public class WebServiceApplication extends
             }
         });
     }
-
     /**
      * Run the web app.
      *
@@ -72,8 +67,6 @@ public class WebServiceApplication extends
     public void run(final WebServiceConfiguration configuration,
                     final Environment environment) {
         Key jwtKey = Jwts.SIG.HS256.key().build();
-
-
         environment.jersey().register(new AuthDynamicFeature(
                 new OAuthCredentialAuthFilter.Builder<JwtToken>()
                         .setAuthenticator(new JwtAuthenticator(jwtKey))
@@ -83,8 +76,6 @@ public class WebServiceApplication extends
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(
                 JwtToken.class));
-
-
         environment.jersey()
                 .register(new RoleController(
                         new RoleService(
@@ -95,8 +86,4 @@ public class WebServiceApplication extends
                 new AuthService(new AuthDao(),
                 jwtKey)));
     }
-
 }
-
-
-

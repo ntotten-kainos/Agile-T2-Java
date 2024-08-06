@@ -3,10 +3,8 @@ package com.kainos.ea;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 public class WebServiceConfiguration extends Configuration {
     /**
      * Swagger Bundle Config.
@@ -15,7 +13,6 @@ public class WebServiceConfiguration extends Configuration {
     @NotNull
     private final SwaggerBundleConfiguration swagger
             = new SwaggerBundleConfiguration();
-
     /**
      * Get Swagger.
      * @return a Swagger Config.
