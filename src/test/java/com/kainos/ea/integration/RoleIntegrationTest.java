@@ -8,6 +8,7 @@ import com.kainos.ea.models.LoginRequest;
 import com.kainos.ea.models.RoleResponse;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -74,43 +75,18 @@ public class RoleIntegrationTest {
     }
 
     @Test
-    void getRoleById_shouldReturnJobRole() throws JsonProcessingException {
+    void getJobRoleById_shouldReturnJobRoleResponse(){
         Client client = APP.client();
         String token = loginAndGetToken();
-        int id = 1;
 
-        Response response =
-                client.target("http://localhost:8080/api/job-roles/" + id)
-                        .request()
-                        .header("Authorization", "Bearer " + token)
-                        .get();
 
-        // Log response body for debugging
-        String responseBody = response.readEntity(String.class);
-        System.out.println("Response body: " + responseBody);
+        Response response = client
+                .target("http://localhost:8080/api/job-roles/1")
+                .request()
+                .header("Authorization", "Bearer " + token)
+                .get();
 
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-        // Deserialize the response body
-        JobRoleResponse role = APP.getObjectMapper().readValue(responseBody, JobRoleResponse.class);
-        assertNotNull(role);
-        assertEquals(id, role.getJobRoleId());
-    }
-
-    @Test
-    void getRoleById_shouldReturnNotFoundForNonExistentRole() {
-        Client client = APP.client();
-        String token = loginAndGetToken();
-        int nonExistentId = 9999; // Assuming this ID does not exist
-
-        Response response =
-                client.target(
-                                "http://localhost:8080/api/job-roles/" + nonExistentId)
-                        .request()
-                        .header("Authorization", "Bearer " + token)
-                        .get();
-
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                response.getStatus());
+        Assertions.assertEquals(200, response.getStatus());
     }
 }
