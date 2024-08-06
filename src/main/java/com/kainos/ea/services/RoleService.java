@@ -9,21 +9,16 @@ import java.util.List;
 
 public class RoleService {
 
-    RoleDao roleDao;
+    private final RoleDao roleDao;
 
     public RoleService(final RoleDao roleDao) {
         this.roleDao = roleDao;
     }
 
-    public List<RoleResponse> getAllJobRoles()
-            throws SQLException, FailedToRetrieveException {
-        return roleDao.getAllJobRoles();
-    }
-
-    public List<RoleResponse> getOrderedJobRoles(
+    public List<RoleResponse> getAllJobRoles(
             final String orderBy, final String direction)
             throws SQLException, FailedToRetrieveException {
-        return roleDao.getOrderedJobRoles(orderBy, direction);
+        return roleDao.getAllJobRoles(orderBy, direction);
     }
 }
 

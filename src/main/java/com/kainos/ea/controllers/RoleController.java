@@ -35,33 +35,15 @@ public class RoleController {
             value = "Returns all Job Roles",
             authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
             response = List.class)
-    public Response getAllJobRoles(final @QueryParam(
-            "orderBy") String orderBy, final @QueryParam(
-            "direction") String direction) {
+    public Response getAllJobRoles(final @QueryParam("orderBy") String orderBy,
+                                   final @QueryParam("direction") String direction) {
         try {
-            if (orderBy != null && direction != null) {
-                if (!isValidOrderDirection(direction)) {
-                    return Response.status(Response.Status.BAD_REQUEST).entity(
-                            "Invalid order direction: " + direction).build();
-                }
-                List<RoleResponse> roles = roleService.getOrderedJobRoles(
-                        orderBy, direction);
-                return Response.ok().entity(roles).build();
-            } else {
-                List<RoleResponse> roles = roleService.getAllJobRoles();
-                return Response.ok().entity(roles).build();
-            }
+            List<RoleResponse> roles = roleService.getAllJobRoles(orderBy, direction);
+            return Response.ok().entity(roles).build();
         } catch (FailedToRetrieveException | SQLException e) {
-            return Response.status(
-                            Response.Status.INTERNAL_SERVER_ERROR)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving job roles.")
                     .build();
         }
-    }
-
-    private boolean isValidOrderDirection(final String direction) {
-        return "ASC".equalsIgnoreCase(
-                direction) || "DESC".equalsIgnoreCase(direction)
-                || "default".equalsIgnoreCase(direction);
     }
 }

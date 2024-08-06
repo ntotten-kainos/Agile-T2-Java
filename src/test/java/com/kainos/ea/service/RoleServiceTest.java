@@ -25,9 +25,9 @@ public class RoleServiceTest {
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList();
 
-        when(roleDao.getAllJobRoles()).thenReturn(roles);
+        when(roleDao.getAllJobRoles(null, null)).thenReturn(roles);
 
-        List<RoleResponse> actualRoles = roleService.getAllJobRoles();
+        List<RoleResponse> actualRoles = roleService.getAllJobRoles(null, null);
 
         assertEquals(roles, actualRoles);
     }
@@ -35,52 +35,52 @@ public class RoleServiceTest {
     @Test
     void getAllJobRoles_shouldThrowSQLException_whenDaoThrowsSQLException()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getAllJobRoles()).thenThrow(SQLException.class);
+        when(roleDao.getAllJobRoles(null, null)).thenThrow(SQLException.class);
 
         assertThrows(SQLException.class, () -> {
-            roleService.getAllJobRoles();
+            roleService.getAllJobRoles(null, null);
         });
     }
 
     @Test
     void getAllJobRoles_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveException()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getAllJobRoles()).thenThrow(FailedToRetrieveException.class);
+        when(roleDao.getAllJobRoles(null, null)).thenThrow(FailedToRetrieveException.class);
 
         assertThrows(FailedToRetrieveException.class, () -> {
-            roleService.getAllJobRoles();
+            roleService.getAllJobRoles(null, null);
         });
     }
 
     @Test
-    void getOrderedJobRoles_shouldReturnListOfRoles_whenDaoReturnsListOfRoles()
+    void getAllJobRoles_withOrdering_shouldReturnListOfRoles_whenDaoReturnsListOfRoles()
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList();
 
-        when(roleDao.getOrderedJobRoles("roleName", "ASC")).thenReturn(roles);
+        when(roleDao.getAllJobRoles("roleName", "ASC")).thenReturn(roles);
 
-        List<RoleResponse> actualRoles = roleService.getOrderedJobRoles("roleName", "ASC");
+        List<RoleResponse> actualRoles = roleService.getAllJobRoles("roleName", "ASC");
 
         assertEquals(roles, actualRoles);
     }
 
     @Test
-    void getOrderedJobRoles_shouldThrowSQLException_whenDaoThrowsSQLException()
+    void getAllJobRoles_withOrdering_shouldThrowSQLException_whenDaoThrowsSQLException()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getOrderedJobRoles("roleName", "ASC")).thenThrow(SQLException.class);
+        when(roleDao.getAllJobRoles("roleName", "ASC")).thenThrow(SQLException.class);
 
         assertThrows(SQLException.class, () -> {
-            roleService.getOrderedJobRoles("roleName", "ASC");
+            roleService.getAllJobRoles("roleName", "ASC");
         });
     }
 
     @Test
-    void getOrderedJobRoles_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveException()
+    void getAllJobRoles_withOrdering_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveException()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getOrderedJobRoles("roleName", "ASC")).thenThrow(FailedToRetrieveException.class);
+        when(roleDao.getAllJobRoles("roleName", "ASC")).thenThrow(FailedToRetrieveException.class);
 
         assertThrows(FailedToRetrieveException.class, () -> {
-            roleService.getOrderedJobRoles("roleName", "ASC");
+            roleService.getAllJobRoles("roleName", "ASC");
         });
     }
 }

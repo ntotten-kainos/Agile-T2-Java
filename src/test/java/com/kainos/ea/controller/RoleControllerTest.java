@@ -33,7 +33,7 @@ public class RoleControllerTest {
     void getAllJobRoles_shouldReturnOpenJobRoles() throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList(role1);
 
-        when(roleService.getAllJobRoles()).thenReturn(roles);
+        when(roleService.getAllJobRoles(null, null)).thenReturn(roles);
 
         Response response = roleController.getAllJobRoles(null, null);
 
@@ -46,7 +46,7 @@ public class RoleControllerTest {
     void getAllJobRoles_shouldReturnEmptyListWhenNoRolesAvailable() throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Collections.emptyList();
 
-        when(roleService.getAllJobRoles()).thenReturn(roles);
+        when(roleService.getAllJobRoles(null, null)).thenReturn(roles);
 
         Response response = roleController.getAllJobRoles(null, null);
 
@@ -56,10 +56,10 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getOrderedJobRoles_shouldReturnOrderedJobRoles() throws SQLException, FailedToRetrieveException {
+    void getAllJobRoles_withOrdering_shouldReturnOrderedJobRoles() throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList(role1, role2);
 
-        when(roleService.getOrderedJobRoles("roleName", "ASC")).thenReturn(roles);
+        when(roleService.getAllJobRoles("roleName", "ASC")).thenReturn(roles);
 
         Response response = roleController.getAllJobRoles("roleName", "ASC");
 
@@ -70,7 +70,7 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles()).thenThrow(FailedToRetrieveException.class);
+        when(roleService.getAllJobRoles(null, null)).thenThrow(FailedToRetrieveException.class);
 
         Response response = roleController.getAllJobRoles(null, null);
 
@@ -79,8 +79,8 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getOrderedJobRoles_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getOrderedJobRoles("roleName", "ASC")).thenThrow(FailedToRetrieveException.class);
+    void getAllJobRoles_withOrdering_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
+        when(roleService.getAllJobRoles("roleName", "ASC")).thenThrow(FailedToRetrieveException.class);
 
         Response response = roleController.getAllJobRoles("roleName", "ASC");
 
@@ -90,7 +90,7 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles()).thenThrow(SQLException.class);
+        when(roleService.getAllJobRoles(null, null)).thenThrow(SQLException.class);
 
         Response response = roleController.getAllJobRoles(null, null);
 
@@ -99,8 +99,8 @@ public class RoleControllerTest {
     }
 
     @Test
-    void getOrderedJobRoles_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getOrderedJobRoles("roleName", "ASC")).thenThrow(SQLException.class);
+    void getAllJobRoles_withOrdering_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
+        when(roleService.getAllJobRoles("roleName", "ASC")).thenThrow(SQLException.class);
 
         Response response = roleController.getAllJobRoles("roleName", "ASC");
 
@@ -108,17 +108,10 @@ public class RoleControllerTest {
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
     }
 
-    @Test
-    void getAllJobRoles_shouldHandleInvalidOrderDirection() throws SQLException, FailedToRetrieveException {
-        Response response = roleController.getAllJobRoles("roleName", "INVALID");
-
-        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertEquals("Invalid order direction: INVALID", response.getEntity());
-    }
 
     @Test
     void getAllJobRoles_shouldHandleInvalidColumnName() throws SQLException, FailedToRetrieveException {
-        when(roleService.getOrderedJobRoles("invalidColumn", "ASC")).thenThrow(FailedToRetrieveException.class);
+        when(roleService.getAllJobRoles("invalidColumn", "ASC")).thenThrow(FailedToRetrieveException.class);
 
         Response response = roleController.getAllJobRoles("invalidColumn", "ASC");
 
@@ -126,4 +119,3 @@ public class RoleControllerTest {
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
     }
 }
-

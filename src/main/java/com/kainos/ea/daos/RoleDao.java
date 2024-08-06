@@ -1,5 +1,6 @@
 package com.kainos.ea.daos;
 
+import com.kainos.ea.enums.JobRoleColumn;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
@@ -16,26 +17,27 @@ import java.util.List;
 
 public class RoleDao {
 
-    public List<RoleResponse> getAllJobRoles()
-            throws SQLException, FailedToRetrieveException {
-        return getOrderedJobRoles(null, null);
-    }
-
-    public List<RoleResponse> getOrderedJobRoles(
+    public List<RoleResponse> getAllJobRoles(
             final String orderBy, final String direction)
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = new ArrayList<>();
 
         // Validate orderBy and direction to prevent SQL injection
-        List<String> validColumns = List.of(
-                "roleName", "location", "band",
-                "capability", "closingDate", "status");
-        if (orderBy != null && direction != null
-                && (!validColumns.contains(orderBy)
-                || (!"ASC".equalsIgnoreCase(direction)
-                && !"DESC".equalsIgnoreCase(direction)
-                && !"DEFAULT".equalsIgnoreCase(direction)))) {
-            throw new IllegalArgumentException("Invalid order by or direction");
+        if (orderBy != null && direction != null) {
+            boolean isValidColumn = false;
+            for (JobRoleColumn column : JobRoleColumn.values()) {
+                if (column.getColumnName().equals(orderBy)) {
+                    isValidColumn = true;
+                    break;
+                }
+            }
+
+            if (!isValidColumn
+                    || (!"ASC".equalsIgnoreCase(direction)
+                    && !"DESC".equalsIgnoreCase(direction))) {
+                throw new IllegalArgumentException(
+                        "Invalid order by or direction");
+            }
         }
 
         try (Connection connection = DatabaseConnector.getConnection()) {
@@ -52,8 +54,7 @@ public class RoleDao {
                     + "WHERE jr.status = true ";
 
             // Apply ordering if orderBy and direction are provided
-            if (orderBy != null && direction != null
-                    && !"DEFAULT".equalsIgnoreCase(direction)) {
+            if (orderBy != null && direction != null) {
                 query += String.format("ORDER BY %s %s", orderBy, direction);
             }
 
