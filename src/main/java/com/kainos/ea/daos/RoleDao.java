@@ -21,9 +21,7 @@ public class RoleDao {
         return getOrderedJobRoles(null, null);
     }
 
-    @SuppressWarnings("checkstyle:FinalParameters")
-    public List<RoleResponse> getOrderedJobRoles(String orderBy,
-                                                 String direction)
+    public List<RoleResponse> getOrderedJobRoles(String orderBy, String direction)
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = new ArrayList<>();
 
@@ -78,3 +76,4 @@ public class RoleDao {
         }
     }
 }
+

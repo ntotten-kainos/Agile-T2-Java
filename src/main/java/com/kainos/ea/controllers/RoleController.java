@@ -37,7 +37,7 @@ public class RoleController {
             response = List.class)
     public Response getAllJobRoles(final @QueryParam(
             "orderBy") String orderBy, final @QueryParam(
-                    "direction") String direction) {
+            "direction") String direction) {
         try {
             if (orderBy != null && direction != null) {
                 if (!isValidOrderDirection(direction)) {
@@ -53,7 +53,7 @@ public class RoleController {
             }
         } catch (FailedToRetrieveException | SQLException e) {
             return Response.status(
-                    Response.Status.INTERNAL_SERVER_ERROR)
+                            Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving job roles.")
                     .build();
         }
