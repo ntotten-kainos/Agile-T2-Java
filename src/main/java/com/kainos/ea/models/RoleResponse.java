@@ -42,7 +42,6 @@ public class RoleResponse {
     public void setJobRoleId(final int jobRoleId) {
         this.jobRoleId = jobRoleId;
     }
-
     public String getRoleName() {
         return roleName;
     }

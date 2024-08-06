@@ -27,11 +27,9 @@ public class RoleDao {
     public List<RoleResponse> getAllJobRoles()
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = new ArrayList<>();
-
         try (Connection connection = DatabaseConnector.getConnection()) {
             assert connection != null;
             Statement statement = connection.createStatement();
-
             ResultSet resultSet = statement.executeQuery(
                     "SELECT jr.jobRoleId, jr.roleName, jr.location,"
                             + "b.bandValue AS band,"
@@ -42,8 +40,6 @@ public class RoleDao {
                             + "JOIN Capabilities c ON jr.capabilityId = "
                             + "c.capabilityId "
                             + "WHERE jr.status = true");
-
-
             while (resultSet.next()) {
                 RoleResponse roleResponse = new RoleResponse(
                         resultSet.getInt("jobRoleId"),
@@ -63,7 +59,6 @@ public class RoleDao {
             throw new FailedToRetrieveException(Entity.JOB_ROLE);
         }
     }
-
     public JobRoleResponse getRoleById(final int id)
             throws SQLException, DatabaseConnectionException {
         String query =
@@ -74,13 +69,10 @@ public class RoleDao {
                         + "JOIN Bands b ON jr.bandId = b.bandId "
                         + "JOIN Capabilities c ON jr.capabilityId ="
                         + " c.capabilityId WHERE jr.jobRoleId = ?";
-
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-
             if (resultSet.next()) {
                 return new JobRoleResponse(
                         resultSet.getInt("jobRoleId"),
@@ -94,9 +86,7 @@ public class RoleDao {
                         resultSet.getTimestamp("closingDate"),
                         resultSet.getString("specification"));
             }
-
             return null;
-
         }
     }
     }

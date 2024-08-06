@@ -29,11 +29,8 @@ public class RoleControllerTest {
     @Test
     void getAllJobRoles_shouldReturnOpenJobRoles() throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList(roleResponse);
-
         when(roleService.getAllJobRoles()).thenReturn(roles);
-
         Response response = roleController.getAllJobRoles();
-
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertFalse(((List<RoleResponse>) response.getEntity()).isEmpty());
         assertEquals(roles, response.getEntity());
@@ -42,9 +39,7 @@ public class RoleControllerTest {
     @Test
     void getAllJobRoles_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
         when(roleService.getAllJobRoles()).thenThrow(FailedToRetrieveException.class);
-
         Response response = roleController.getAllJobRoles();
-
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
     }
@@ -52,9 +47,7 @@ public class RoleControllerTest {
     @Test
     void getAllJobRoles_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
         when(roleService.getAllJobRoles()).thenThrow(SQLException.class);
-
         Response response = roleController.getAllJobRoles();
-
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
     }
@@ -62,9 +55,7 @@ public class RoleControllerTest {
     @Test
     void getRoleById_shouldReturnJobRole_whenIdIsValid() throws SQLException, FailedToRetrieveException, DatabaseConnectionException {
         when(roleService.getRoleById(1)).thenReturn(jobRoleResponse);
-
         Response response = roleController.getRoleById(1);
-
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(jobRoleResponse, response.getEntity());
     }
@@ -72,9 +63,7 @@ public class RoleControllerTest {
     @Test
     void getRoleById_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException {
         when(roleService.getRoleById(1)).thenThrow(FailedToRetrieveException.class);
-
         Response response = roleController.getRoleById(1);
-
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job role by ID.", response.getEntity());
     }
@@ -82,9 +71,7 @@ public class RoleControllerTest {
     @Test
     void getRoleById_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException {
         when(roleService.getRoleById(1)).thenThrow(SQLException.class);
-
         Response response = roleController.getRoleById(1);
-
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job role by ID.", response.getEntity());
     }
@@ -92,9 +79,7 @@ public class RoleControllerTest {
     @Test
     void getRoleById_shouldReturnInternalServerError_whenDatabaseConnectionExceptionThrown() throws SQLException, FailedToRetrieveException, DatabaseConnectionException {
         when(roleService.getRoleById(1)).thenThrow(DatabaseConnectionException.class);
-
         Response response = roleController.getRoleById(1);
-
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job role by ID.", response.getEntity());
     }
@@ -102,9 +87,7 @@ public class RoleControllerTest {
     @Test
     void getRoleById_shouldReturnNull_whenRoleNotFound() throws SQLException, DatabaseConnectionException, FailedToRetrieveException {
         when(roleService.getRoleById(1)).thenReturn(null);
-
         Response response = roleController.getRoleById(1);
-
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
     }

@@ -23,46 +23,32 @@ import static org.mockito.Mockito.when;
 
 public class RoleServiceTest {
     RoleDao roleDao = mock(RoleDao.class);
-
     RoleService roleService = new RoleService(roleDao);
-
-
     @Test
     void getAllJobRoles_shouldReturnsListOfOpenRoles_whenDaoReturnsListOfOpenRoles()
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList();
-
         when(roleDao.getAllJobRoles()).thenReturn(roles);
-
         List<RoleResponse> actualRoles = roleService.getAllJobRoles();
-
         assertEquals(roles, actualRoles);
     }
-
     @Test
     void getAllJobRoles_shouldThrowSQLException_whenDaoThrowsSQLException()
             throws SQLException, FailedToRetrieveException {
         when(roleDao.getAllJobRoles()).thenThrow(SQLException.class);
-
         assertThrows(SQLException.class, () -> {
             roleService.getAllJobRoles();
         });
     }
-
     @Test
     void getAllJobRoles_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveException()
             throws SQLException, FailedToRetrieveException {
         when(roleDao.getAllJobRoles()).thenThrow(
                 FailedToRetrieveException.class);
-
         assertThrows(FailedToRetrieveException.class, () -> {
             roleService.getAllJobRoles();
         });
     }
-
-
-    //the roles by id
-
     @Test
     void getRoleById_shouldReturnRole_whenDaoReturnsRole()
             throws SQLException, DatabaseConnectionException,
@@ -95,14 +81,10 @@ public class RoleServiceTest {
                         "Doc.aspx?sourcedoc=%7B852A54E6-DC33-4C68-9615-" +
                         "4B3654D44048%7D&file=B2%20Manager.docx&action=" +
                         "default&mobileredirect=true");
-
         when(roleDao.getRoleById(id)).thenReturn(jobRoleResponse);
-
         JobRoleResponse result = roleService.getRoleById(id);
-
         assertEquals(jobRoleResponse, result);
     }
-
     @Test
     void getRoleById_shouldThrowSQLException_whenDaoThrowsSQLException()
             throws SQLException, DatabaseConnectionException {
@@ -114,29 +96,22 @@ public class RoleServiceTest {
             roleService.getRoleById(id);
         });
     }
-
     @Test
     void getRoleById_shouldThrowDatabaseConnectionException_whenDaoThrowsDatabaseConnectionException()
             throws SQLException, DatabaseConnectionException {
         int id = 1;
-
         when(roleDao.getRoleById(id)).thenThrow(DatabaseConnectionException.class);
-
         assertThrows(DatabaseConnectionException.class, () -> {
             roleService.getRoleById(id);
         });
     }
-
     @Test
     void getRoleById_shouldReturnNull_whenDaoReturnsNull()
             throws SQLException, DatabaseConnectionException,
             FailedToRetrieveException {
         int id = 1;
-
         when(roleDao.getRoleById(id)).thenReturn(null);
-
         JobRoleResponse actualJobRoleResponse = roleService.getRoleById(id);
-
         assertEquals(null, actualJobRoleResponse);
     }
 }

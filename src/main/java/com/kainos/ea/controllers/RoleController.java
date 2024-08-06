@@ -7,7 +7,6 @@ import com.kainos.ea.services.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,16 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
-
 @Api("Job Role API")
 @Path("/api/job-roles")
 public class RoleController {
     RoleService roleService;
-
     public RoleController(final RoleService roleService) {
         this.roleService = roleService;
     }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({UserRole.ADMIN_USER, UserRole.APPLICANT_USER})
@@ -45,8 +41,6 @@ public class RoleController {
                     .build();
         }
     }
-
-
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,10 +49,8 @@ public class RoleController {
             value = "Returns a Job Role by ID",
             authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
             response = List.class)
-
     public Response getRoleById(@PathParam("id") final int id)
             throws SQLException, DatabaseConnectionException {
-
         try {
             return Response.ok().entity(roleService.getRoleById(id)).build();
         } catch
@@ -69,6 +61,5 @@ public class RoleController {
                             + "job role by ID.")
                     .build();
         }
-
     }
 }
