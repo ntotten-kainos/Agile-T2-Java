@@ -36,9 +36,11 @@ public class RoleController {
             authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
             response = List.class)
     public Response getAllJobRoles(final @QueryParam("orderBy") String orderBy,
-                                   final @QueryParam("direction") String direction) {
+                                   final @QueryParam(
+                                           "direction") String direction) {
         try {
-            List<RoleResponse> roles = roleService.getAllJobRoles(orderBy, direction);
+            List<RoleResponse> roles =
+                    roleService.getAllJobRoles(orderBy, direction);
             return Response.ok().entity(roles).build();
         } catch (FailedToRetrieveException | SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
