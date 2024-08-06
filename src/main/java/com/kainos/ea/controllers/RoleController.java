@@ -55,7 +55,8 @@ public class RoleController {
             return Response.ok().entity(roleService.getRoleById(id)).build();
         } catch (FailedToRetrieveException | JobRoleNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(e.getMessage())
+                    .entity("An error occurred while retrieving "
+                            + "job role by ID.")
                     .build();
         } catch
         (SQLException | DatabaseConnectionException
