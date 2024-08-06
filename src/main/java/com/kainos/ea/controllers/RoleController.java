@@ -61,7 +61,9 @@ public class RoleController {
 
         try {
             return Response.ok().entity(roleService.getRoleById(id)).build();
-        } catch (FailedToRetrieveException | SQLException | DatabaseConnectionException e) {
+        } catch
+        (FailedToRetrieveException | SQLException | DatabaseConnectionException
+                        e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving "
                             + "job role by ID.")
