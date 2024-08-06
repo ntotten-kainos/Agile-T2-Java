@@ -21,27 +21,20 @@ public class RoleDao {
         return getOrderedJobRoles(null, null);
     }
 
-    @SuppressWarnings("checkstyle:FinalParameters")
     public List<RoleResponse> getOrderedJobRoles(
-            String orderBy, String direction)
+            final String orderBy, final String direction)
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = new ArrayList<>();
-
-        // Set default order if orderBy and direction are null or "default"
-        if (orderBy == null
-                || "default".equalsIgnoreCase(orderBy)
-                || direction == null || "default".equalsIgnoreCase(direction)) {
-            orderBy = "roleName"; // Default column to sort by
-            direction = "ASC"; // Default direction
-        }
 
         // Validate orderBy and direction to prevent SQL injection
         List<String> validColumns = List.of(
                 "roleName", "location", "band",
                 "capability", "closingDate", "status");
-        if (!validColumns.contains(orderBy) || (
-                !"ASC".equalsIgnoreCase(direction)
-                        && !"DESC".equalsIgnoreCase(direction))) {
+        if (orderBy != null && direction != null
+                && (!validColumns.contains(orderBy)
+                || (!"ASC".equalsIgnoreCase(direction)
+                && !"DESC".equalsIgnoreCase(direction)
+                && !"DEFAULT".equalsIgnoreCase(direction)))) {
             throw new IllegalArgumentException("Invalid order by or direction");
         }
 
@@ -49,17 +42,20 @@ public class RoleDao {
             assert connection != null;
             Statement statement = connection.createStatement();
 
-            String query = String.format(
-                    "SELECT jr.jobRoleId, jr.roleName, jr.location, "
-                            + "b.bandValue AS band, "
-                            + "c.capabilityName AS capability, "
-                            + "jr.closingDate, jr.status "
-                            + "FROM JobRoles jr "
-                            + "JOIN Bands b ON jr.bandId = b.bandId "
-                            + "JOIN Capabilities c "
-                            + "ON jr.capabilityId = c.capabilityId "
-                            + "WHERE jr.status = true "
-                            + "ORDER BY %s %s", orderBy, direction);
+            String query = "SELECT jr.jobRoleId, jr.roleName, jr.location, "
+                    + "b.bandValue AS band, "
+                    + "c.capabilityName AS capability, "
+                    + "jr.closingDate, jr.status "
+                    + "FROM JobRoles jr "
+                    + "JOIN Bands b ON jr.bandId = b.bandId "
+                    + "JOIN Capabilities c ON jr.capabilityId = c.capabilityId "
+                    + "WHERE jr.status = true ";
+
+            // Apply ordering if orderBy and direction are provided
+            if (orderBy != null && direction != null
+                    && !"DEFAULT".equalsIgnoreCase(direction)) {
+                query += String.format("ORDER BY %s %s", orderBy, direction);
+            }
 
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -81,4 +77,3 @@ public class RoleDao {
         }
     }
 }
-
