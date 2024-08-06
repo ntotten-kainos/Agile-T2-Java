@@ -21,11 +21,16 @@ public class RoleDao {
         return getOrderedJobRoles(null, null);
     }
 
-    public List<RoleResponse> getOrderedJobRoles(String orderBy, String direction)
+    @SuppressWarnings("checkstyle:FinalParameters")
+    public List<RoleResponse> getOrderedJobRoles(
+            String orderBy, String direction)
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = new ArrayList<>();
 
-        if (orderBy == null || direction == null) {
+        // Set default order if orderBy and direction are null or "default"
+        if (orderBy == null
+                || "default".equalsIgnoreCase(orderBy)
+                || direction == null || "default".equalsIgnoreCase(direction)) {
             orderBy = "roleName"; // Default column to sort by
             direction = "ASC"; // Default direction
         }

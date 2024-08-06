@@ -61,6 +61,7 @@ public class RoleController {
 
     private boolean isValidOrderDirection(final String direction) {
         return "ASC".equalsIgnoreCase(
-                direction) || "DESC".equalsIgnoreCase(direction);
+                direction) || "DESC".equalsIgnoreCase(direction)
+                || "default".equalsIgnoreCase(direction);
     }
 }
