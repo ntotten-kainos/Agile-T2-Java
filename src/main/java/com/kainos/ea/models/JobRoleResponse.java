@@ -15,7 +15,7 @@ public class JobRoleResponse {
     private Locations location;
     private String bandValue;
     private String capabilityName;
-    private RoleStatus status;  // Add this line
+    private RoleStatus status;
     private Timestamp closingDate;
     private String specification;
 
