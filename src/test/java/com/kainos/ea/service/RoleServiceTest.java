@@ -119,7 +119,7 @@ public class RoleServiceTest {
     void getRoleById_shouldReturnNull_whenDaoReturnsNull()
             throws SQLException, DatabaseConnectionException,
             FailedToRetrieveException, JobRoleNotFoundException {
-        int id = 1;
+        int id = 999;
         when(roleDao.getRoleById(id)).thenReturn(null);
         JobRoleResponse actualJobRoleResponse = roleService.getRoleById(id);
         assertEquals(null, actualJobRoleResponse);

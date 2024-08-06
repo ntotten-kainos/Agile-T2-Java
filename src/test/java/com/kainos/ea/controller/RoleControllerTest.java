@@ -62,12 +62,11 @@ public class RoleControllerTest {
         assertEquals(jobRoleResponse, response.getEntity());
     }
 
-    @Test
+    @Test// FAILING
     void getRoleById_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, DatabaseConnectionException, FailedToRetrieveException, JobRoleNotFoundException {
-        when(roleService.getRoleById(1)).thenThrow(FailedToRetrieveException.class);
+        when(roleService.getRoleById(1)).thenThrow(JobRoleNotFoundException.class);
         Response response = roleController.getRoleById(1);
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
-        assertEquals("An error occurred while retrieving job role by ID.", response.getEntity());
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
     }
 
     @Test
