@@ -51,4 +51,3 @@ public class RoleAuthoriserTest {
         assertFalse(roleAuthoriser.authorize(jwtToken, UserRole.ADMIN_USER, requestContext));
     }
 }
-
