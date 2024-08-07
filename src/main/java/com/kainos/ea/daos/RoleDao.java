@@ -1,6 +1,7 @@
 package com.kainos.ea.daos;
 
 import com.kainos.ea.enums.JobRoleColumn;
+import com.kainos.ea.enums.Direction;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
@@ -24,14 +25,10 @@ public class RoleDao {
 
         // Validate orderBy and direction to prevent SQL injection
         if (orderBy != null && direction != null) {
-            boolean isValidColumn = isValidEnumValue(
-                    JobRoleColumn.class, orderBy);
+            boolean isValidColumn = isValidEnumValue(JobRoleColumn.class, orderBy);
 
-            if (!isValidColumn
-                    || (!"ASC".equalsIgnoreCase(direction)
-                    && !"DESC".equalsIgnoreCase(direction))) {
-                throw new IllegalArgumentException(
-                        "Invalid order by or direction");
+            if (!isValidColumn || !Direction.isValid(direction)) {
+                throw new IllegalArgumentException("Invalid order by or direction");
             }
         }
 
