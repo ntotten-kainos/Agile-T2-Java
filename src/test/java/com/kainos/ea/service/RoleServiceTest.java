@@ -58,9 +58,9 @@ public class RoleServiceTest {
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList();
 
-        when(roleDao.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC")).thenReturn(roles);
+        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC")).thenReturn(roles);
 
-        List<RoleResponse> actualRoles = roleService.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC");
+        List<RoleResponse> actualRoles = roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC");
 
         assertEquals(roles, actualRoles);
     }
@@ -68,20 +68,35 @@ public class RoleServiceTest {
     @Test
     void getAllJobRoles_shouldThrowSQLException_whenDaoThrowsSQLExceptionWithOrdering()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC")).thenThrow(SQLException.class);
+        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC")).thenThrow(SQLException.class);
 
         assertThrows(SQLException.class, () -> {
-            roleService.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC");
+            roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC");
         });
     }
 
     @Test
     void getAllJobRoles_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveExceptionWithOrdering()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC")).thenThrow(FailedToRetrieveException.class);
+        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC")).thenThrow(FailedToRetrieveException.class);
 
         assertThrows(FailedToRetrieveException.class, () -> {
-            roleService.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC");
+            roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC");
         });
+    }
+
+    @Test
+    void getAllJobRoles_shouldHandleMultipleJobRoleColumns_withDifferentDirections() throws SQLException, FailedToRetrieveException {
+        List<RoleResponse> roles = Arrays.asList();
+
+        for (JobRoleColumn column : JobRoleColumn.values()) {
+            when(roleDao.getAllJobRoles(column.getColumnName(), "ASC")).thenReturn(roles);
+            List<RoleResponse> actualRolesAsc = roleService.getAllJobRoles(column.getColumnName(), "ASC");
+            assertEquals(roles, actualRolesAsc);
+
+            when(roleDao.getAllJobRoles(column.getColumnName(), "DESC")).thenReturn(roles);
+            List<RoleResponse> actualRolesDesc = roleService.getAllJobRoles(column.getColumnName(), "DESC");
+            assertEquals(roles, actualRolesDesc);
+        }
     }
 }

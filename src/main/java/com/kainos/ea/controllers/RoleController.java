@@ -42,6 +42,10 @@ public class RoleController {
             List<RoleResponse> roles =
                     roleService.getAllJobRoles(orderBy, direction);
             return Response.ok().entity(roles).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
         } catch (FailedToRetrieveException | SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving job roles.")

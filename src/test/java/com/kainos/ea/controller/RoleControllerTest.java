@@ -60,9 +60,9 @@ public class RoleControllerTest {
     void getAllJobRoles_withOrdering_shouldReturnOrderedJobRoles() throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList(role1, role2);
 
-        when(roleService.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC")).thenReturn(roles);
+        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC")).thenReturn(roles);
 
-        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC");
+        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC");
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertFalse(((List<RoleResponse>) response.getEntity()).isEmpty());
@@ -81,9 +81,9 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_withOrdering_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC")).thenThrow(FailedToRetrieveException.class);
+        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC")).thenThrow(FailedToRetrieveException.class);
 
-        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC");
+        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC");
 
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
@@ -101,9 +101,9 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_withOrdering_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC")).thenThrow(SQLException.class);
+        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC")).thenThrow(SQLException.class);
 
-        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLE_NAME.getColumnName(), "ASC");
+        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), "ASC");
 
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());

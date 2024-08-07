@@ -1,11 +1,11 @@
 package com.kainos.ea.enums;
 
 public enum JobRoleColumn {
-    ROLE_NAME("roleName"),
+    ROLENAME("roleName"),
     LOCATION("location"),
     BAND("band"),
     CAPABILITY("capability"),
-    CLOSING_DATE("closingDate"),
+    CLOSINGDATE("closingDate"),
     STATUS("status");
 
     private final String columnName;

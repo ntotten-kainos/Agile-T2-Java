@@ -24,13 +24,8 @@ public class RoleDao {
 
         // Validate orderBy and direction to prevent SQL injection
         if (orderBy != null && direction != null) {
-            boolean isValidColumn = false;
-            for (JobRoleColumn column : JobRoleColumn.values()) {
-                if (column.getColumnName().equals(orderBy)) {
-                    isValidColumn = true;
-                    break;
-                }
-            }
+            boolean isValidColumn = isValidEnumValue(
+                    JobRoleColumn.class, orderBy);
 
             if (!isValidColumn
                     || (!"ASC".equalsIgnoreCase(direction)
@@ -75,6 +70,20 @@ public class RoleDao {
             return roles;
         } catch (DatabaseConnectionException e) {
             throw new FailedToRetrieveException(Entity.JOB_ROLE);
+        } catch (SQLException e) {
+            System.err.println("SQLException occurred: " + e.getMessage());
+            throw e;
         }
     }
+
+    private static <T extends Enum<T>> boolean isValidEnumValue(
+            final Class<T> enumClass, final String value) {
+        for (T enumValue : enumClass.getEnumConstants()) {
+            if (enumValue.name().equalsIgnoreCase(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
