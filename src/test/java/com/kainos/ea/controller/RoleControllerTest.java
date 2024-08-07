@@ -67,7 +67,7 @@ public class RoleControllerTest {
         when(roleService.getRoleById(1)).thenThrow(FailedToRetrieveException.class);
         Response response = roleController.getRoleById(1);
         assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
-        assertEquals("An error occurred while retrieving job role by ID.", response.getEntity());
+        assertEquals("Job role by ID has not been found.", response.getEntity());
     }
 
     @Test
