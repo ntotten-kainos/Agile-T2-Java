@@ -25,10 +25,12 @@ public class RoleDao {
 
         // Validate orderBy and direction to prevent SQL injection
         if (orderBy != null && direction != null) {
-            boolean isValidColumn = isValidEnumValue(JobRoleColumn.class, orderBy);
+            boolean isValidColumn = isValidEnumValue(
+                    JobRoleColumn.class, orderBy);
 
             if (!isValidColumn || !Direction.isValid(direction)) {
-                throw new IllegalArgumentException("Invalid order by or direction");
+                throw new IllegalArgumentException(
+                        "Invalid order by or direction");
             }
         }
 
