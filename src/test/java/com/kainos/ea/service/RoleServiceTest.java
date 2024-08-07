@@ -104,22 +104,25 @@ public class RoleServiceTest {
         });
     }
 
-
+    @Test
+    void getJobRoleById_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveException()
+            throws SQLException, DatabaseConnectionException,
+            FailedToRetrieveException {
+        int id = 1;
+        when(roleDao.getRoleById(id)).thenThrow(FailedToRetrieveException.class);
+        assertThrows(FailedToRetrieveException.class, () -> {
+            roleService.getRoleById(id);
+        });
+    }
 
     @Test
     void getRoleById_shouldThrowJobRoleNotFoundException_whenDaoReturnsNull()
             throws SQLException, DatabaseConnectionException,
             FailedToRetrieveException {
-        int id = 1;
+        int id = 99;
         when(roleDao.getRoleById(id)).thenReturn(null);
         assertThrows(JobRoleNotFoundException.class, () -> {
             roleService.getRoleById(id);
         });
-
     }
-
 }
-
-
-
-
