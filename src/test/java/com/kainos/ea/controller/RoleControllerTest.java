@@ -1,8 +1,8 @@
 package com.kainos.ea.controller;
 
 import com.kainos.ea.controllers.RoleController;
-import com.kainos.ea.enums.JobRoleColumn;
 import com.kainos.ea.enums.Direction;
+import com.kainos.ea.enums.JobRoleColumn;
 import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.models.RoleResponse;
@@ -61,9 +61,9 @@ public class RoleControllerTest {
     void getAllJobRoles_withOrdering_shouldReturnOrderedJobRoles() throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList(role1, role2);
 
-        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name())).thenReturn(roles);
+        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName())).thenReturn(roles);
 
-        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name());
+        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName());
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertFalse(((List<RoleResponse>) response.getEntity()).isEmpty());
@@ -82,9 +82,9 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_withOrdering_shouldReturnInternalServerError_whenFailedToRetrieveExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name())).thenThrow(FailedToRetrieveException.class);
+        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName())).thenThrow(FailedToRetrieveException.class);
 
-        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name());
+        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName());
 
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
@@ -102,9 +102,9 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_withOrdering_shouldReturnInternalServerError_whenSQLExceptionThrown() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name())).thenThrow(SQLException.class);
+        when(roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName())).thenThrow(SQLException.class);
 
-        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name());
+        Response response = roleController.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName());
 
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());
@@ -112,9 +112,9 @@ public class RoleControllerTest {
 
     @Test
     void getAllJobRoles_shouldHandleInvalidColumnName() throws SQLException, FailedToRetrieveException {
-        when(roleService.getAllJobRoles("invalidColumn", Direction.ASC.name())).thenThrow(FailedToRetrieveException.class);
+        when(roleService.getAllJobRoles("invalidColumn", Direction.ASC.getDirectionName())).thenThrow(FailedToRetrieveException.class);
 
-        Response response = roleController.getAllJobRoles("invalidColumn", Direction.ASC.name());
+        Response response = roleController.getAllJobRoles("invalidColumn", Direction.ASC.getDirectionName());
 
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertEquals("An error occurred while retrieving job roles.", response.getEntity());

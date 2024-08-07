@@ -1,15 +1,16 @@
 package com.kainos.ea.enums;
 
 public enum Direction {
-    ASC,
-    DESC;
+    ASC("ASC"),
+    DESC("DESC");
 
-    public static boolean isValid(final String value) {
-        for (Direction direction : Direction.values()) {
-            if (direction.name().equalsIgnoreCase(value)) {
-                return true;
-            }
-        }
-        return false;
+    private final String directionName;
+
+    Direction(final String directionName) {
+        this.directionName = directionName;
+    }
+
+    public String getDirectionName() {
+        return directionName;
     }
 }

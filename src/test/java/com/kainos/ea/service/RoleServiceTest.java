@@ -1,8 +1,8 @@
 package com.kainos.ea.service;
 
 import com.kainos.ea.daos.RoleDao;
-import com.kainos.ea.enums.JobRoleColumn;
 import com.kainos.ea.enums.Direction;
+import com.kainos.ea.enums.JobRoleColumn;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
 import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.services.RoleService;
@@ -59,9 +59,9 @@ public class RoleServiceTest {
             throws SQLException, FailedToRetrieveException {
         List<RoleResponse> roles = Arrays.asList();
 
-        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name())).thenReturn(roles);
+        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName())).thenReturn(roles);
 
-        List<RoleResponse> actualRoles = roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name());
+        List<RoleResponse> actualRoles = roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName());
 
         assertEquals(roles, actualRoles);
     }
@@ -69,20 +69,20 @@ public class RoleServiceTest {
     @Test
     void getAllJobRoles_shouldThrowSQLException_whenDaoThrowsSQLExceptionWithOrdering()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name())).thenThrow(SQLException.class);
+        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName())).thenThrow(SQLException.class);
 
         assertThrows(SQLException.class, () -> {
-            roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name());
+            roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName());
         });
     }
 
     @Test
     void getAllJobRoles_shouldThrowFailedToRetrieveException_whenDaoThrowsFailedToRetrieveExceptionWithOrdering()
             throws SQLException, FailedToRetrieveException {
-        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name())).thenThrow(FailedToRetrieveException.class);
+        when(roleDao.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName())).thenThrow(FailedToRetrieveException.class);
 
         assertThrows(FailedToRetrieveException.class, () -> {
-            roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.name());
+            roleService.getAllJobRoles(JobRoleColumn.ROLENAME.getColumnName(), Direction.ASC.getDirectionName());
         });
     }
 
@@ -91,13 +91,11 @@ public class RoleServiceTest {
         List<RoleResponse> roles = Arrays.asList();
 
         for (JobRoleColumn column : JobRoleColumn.values()) {
-            when(roleDao.getAllJobRoles(column.getColumnName(), Direction.ASC.name())).thenReturn(roles);
-            List<RoleResponse> actualRolesAsc = roleService.getAllJobRoles(column.getColumnName(), Direction.ASC.name());
-            assertEquals(roles, actualRolesAsc);
-
-            when(roleDao.getAllJobRoles(column.getColumnName(), Direction.DESC.name())).thenReturn(roles);
-            List<RoleResponse> actualRolesDesc = roleService.getAllJobRoles(column.getColumnName(), Direction.DESC.name());
-            assertEquals(roles, actualRolesDesc);
+            for (Direction direction : Direction.values()) {
+                when(roleDao.getAllJobRoles(column.getColumnName(), direction.getDirectionName())).thenReturn(roles);
+                List<RoleResponse> actualRoles = roleService.getAllJobRoles(column.getColumnName(), direction.getDirectionName());
+                assertEquals(roles, actualRoles);
+            }
         }
     }
 }
