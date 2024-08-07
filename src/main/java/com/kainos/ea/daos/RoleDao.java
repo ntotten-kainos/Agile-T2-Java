@@ -6,10 +6,12 @@ import com.kainos.ea.enums.Locations;
 import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.Entity;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
+import com.kainos.ea.models.JobRoleResponse;
 import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.util.DatabaseConnector;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,6 +78,38 @@ public class RoleDao {
             throw e;
         }
     }
+    public JobRoleResponse getRoleById(final int id)
+            throws SQLException, FailedToRetrieveException {
+        String query =
+                "SELECT jr.jobRoleId, jr.roleName, jr.description, "
+                        + "jr.responsibilities, jr.location, jr.specification, "
+                        + "b.bandValue AS band, c.capabilityName AS capability,"
+                        + " jr.closingDate, jr.status FROM JobRoles jr "
+                        + "JOIN Bands b ON jr.bandId = b.bandId "
+                        + "JOIN Capabilities c ON jr.capabilityId ="
+                        + " c.capabilityId WHERE jr.jobRoleId = ?";
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new JobRoleResponse(
+                        resultSet.getInt("jobRoleId"),
+                        resultSet.getString("roleName"),
+                        resultSet.getString("description"),
+                        resultSet.getString("responsibilities"),
+                        Locations.fromString(resultSet.getString("location")),
+                        resultSet.getString("band"),
+                        resultSet.getString("capability"),
+                        resultSet.getBoolean("status"),
+                        resultSet.getTimestamp("closingDate"),
+                        resultSet.getString("specification"));
+            }
+            return null;
+        } catch (DatabaseConnectionException e) {
+            throw new FailedToRetrieveException(Entity.JOB_ROLE);
+        }
+    }
 
     private static <T extends Enum<T>> boolean isValidEnumValue(
             final Class<T> enumClass, final String value) {
@@ -87,4 +121,3 @@ public class RoleDao {
         return false;
     }
 }
-

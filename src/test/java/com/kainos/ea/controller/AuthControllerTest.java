@@ -9,11 +9,9 @@ import com.kainos.ea.services.AuthService;
 import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +38,6 @@ public class AuthControllerTest {
                     .signWith(Jwts.SIG.HS256.key().build())
                     .compact()
         );
-
         Response response = authController.login(VALID_LOGIN_REQUEST);
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity().toString());
@@ -76,7 +73,6 @@ public class AuthControllerTest {
                 "invalidemail",
                 "val1d!butN0t"
         );
-
         when(mockAuthService.login(invalidEmailFormat)).thenThrow(new LoginException(Entity.LOGIN_REQUEST));
         Response response = authController.login(invalidEmailFormat);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());

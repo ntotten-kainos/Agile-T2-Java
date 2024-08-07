@@ -1,6 +1,8 @@
 package com.kainos.ea.controllers;
 
+import com.kainos.ea.exceptions.DatabaseConnectionException;
 import com.kainos.ea.exceptions.FailedToRetrieveException;
+import com.kainos.ea.exceptions.JobRoleNotFoundException;
 import com.kainos.ea.models.RoleResponse;
 import com.kainos.ea.models.UserRole;
 import com.kainos.ea.services.RoleService;
@@ -11,6 +13,7 @@ import io.swagger.annotations.Authorization;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.HttpHeaders;
@@ -23,7 +26,6 @@ import java.util.List;
 @Path("/api/job-roles")
 public class RoleController {
     private final RoleService roleService;
-
     public RoleController(final RoleService roleService) {
         this.roleService = roleService;
     }
@@ -49,6 +51,30 @@ public class RoleController {
         } catch (FailedToRetrieveException | SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("An error occurred while retrieving job roles.")
+                    .build();
+        }
+    }
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({UserRole.ADMIN_USER, UserRole.APPLICANT_USER})
+    @ApiOperation(
+            value = "Returns a Job Role by ID",
+            authorizations = @Authorization(value = HttpHeaders.AUTHORIZATION),
+            response = List.class)
+    public Response getRoleById(@PathParam("id") final int id) {
+        try {
+            return Response.ok().entity(roleService.getRoleById(id)).build();
+        } catch (FailedToRetrieveException | JobRoleNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Job role by ID has not been found.")
+                    .build();
+        } catch
+        (SQLException | DatabaseConnectionException
+                        e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("An error occurred while retrieving "
+                            + "job role by ID.")
                     .build();
         }
     }

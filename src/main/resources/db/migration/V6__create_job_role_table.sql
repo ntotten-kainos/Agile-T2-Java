@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS JobRoles (
     bandId TINYINT NOT NULL,
     capabilityId TINYINT NOT NULL,
     closingDate DATETIME NOT NULL,
-    status BOOLEAN NOT NULL,
+    `status` BOOLEAN NOT NULL,
     PRIMARY KEY (jobRoleId),
     FOREIGN KEY (bandId) REFERENCES Bands(bandId),
     FOREIGN KEY (capabilityId) REFERENCES Capabilities(capabilityId)
